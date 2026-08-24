@@ -5,3 +5,7 @@ __pycache__/
 .DS_Store
 
 data/seen_jobs.json
+google-service-account.json
+
+candidate/resumes/
+candidate/candidate_profile.json
