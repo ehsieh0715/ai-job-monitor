@@ -1,15 +1,14 @@
-from google_sheets import write_jobs
-from search_jobs import search_jobs
+from search_jobs import run_search
 
 
 def main():
-    jobs = search_jobs()
+    print(
+        "Starting AI Job Monitor..."
+    )
 
-    if jobs.empty:
-        print("No jobs found.")
-        return
+    run_search()
 
-    write_jobs(jobs)
+    print("Search completed.")
 
 
 if __name__ == "__main__":

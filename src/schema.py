@@ -1,4 +1,4 @@
-JOB_COLUMNS = [
+RAW_JOB_COLUMNS = [
     "id",
     "site",
     "title",
@@ -6,9 +6,22 @@ JOB_COLUMNS = [
     "location",
     "job_url",
     "search_term",
+    "description",
 ]
 
-SHEET_COLUMNS = [
+PENDING_COLUMNS = [
+    "job_id",
+    "found_at",
+    "site",
+    "title",
+    "company",
+    "location",
+    "search_term",
+    "job_url",
+    "description",
+]
+
+SCORED_COLUMNS = [
     "job_id",
     "found_at",
     "site",

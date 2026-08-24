@@ -9,3 +9,6 @@ google-service-account.json
 
 candidate/resumes/
 candidate/candidate_profile.json
+
+data/*.csv
+data/processed_job_ids.json
