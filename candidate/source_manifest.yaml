@@ -15,7 +15,7 @@ project_sources:
   - path: candidate/source_material/microsoft-purview-data-governance.md
     project: Microsoft Purview Data Governance
 
-  - path: candidate/source_material/ stroke-risk-analytics-aws.md
+  - path: candidate/source_material/stroke-risk-analytics-aws.md
     project: Stroke Risk Analytics on AWS
 
   - path: candidate/source_material/calfire-wildfire-damage-prediction.md
@@ -26,3 +26,6 @@ project_sources:
 
   - path: candidate/source_material/Forkcast-Smart-Restaurant-Recommender.md
     project: Forkcast - Smart Restaurant Recommender
+
+  - path: candidate/source_material/ai-human-text-detection.md
+    project: AI vs Human Text Detection
