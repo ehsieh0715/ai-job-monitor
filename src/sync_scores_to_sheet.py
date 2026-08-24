@@ -75,9 +75,6 @@ def ensure_header(worksheet):
         range_name="A1:K1",
         values=[SCORED_COLUMNS],
     )
-    
-    for _, job in jobs_to_upload.iterrows():
-        send_mac_notification(job)
 
 
 def remove_processed_from_pending(
