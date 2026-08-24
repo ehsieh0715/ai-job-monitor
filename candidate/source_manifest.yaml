@@ -1,0 +1,28 @@
+canonical_resume:
+  path: candidate/resumes/master_resume.pdf
+
+alternate_resumes:
+  - path: candidate/resumes/analytics_engineer_resume.pdf
+  - path: candidate/resumes/data_analyst_resume.pdf
+  - path: candidate/resumes/data_governance_resume.pdf
+  - path: candidate/resumes/growth_product_manager_resume.pdf
+  - path: candidate/resumes/gtm_performance_resume.pdf
+
+project_sources:
+  - path: candidate/source_material/energy-analytics-dbt.md
+    project: Energy Analytics Engineering with dbt
+
+  - path: candidate/source_material/microsoft-purview-data-governance.md
+    project: Microsoft Purview Data Governance
+
+  - path: candidate/source_material/ stroke-risk-analytics-aws.md
+    project: Stroke Risk Analytics on AWS
+
+  - path: candidate/source_material/calfire-wildfire-damage-prediction.md
+    project: California Wildfire Damage Prediction
+
+  - path: candidate/source_material/dublin-bikes-journey-planner.md
+    project: Dublin Bikes Journey Planner
+
+  - path: candidate/source_material/Forkcast-Smart-Restaurant-Recommender.md
+    project: Forkcast - Smart Restaurant Recommender
