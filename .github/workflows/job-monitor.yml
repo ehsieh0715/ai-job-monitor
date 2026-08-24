@@ -1,0 +1,38 @@
+name: AI Job Monitor
+
+on:
+  workflow_dispatch:
+
+jobs:
+  search-jobs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Search jobs
+        run: python src/search_jobs.py
+
+      - name: Show pending jobs
+        run: |
+          echo "Pending jobs:"
+          python - <<'PY'
+          import pandas as pd
+
+          jobs = pd.read_csv("data/pending_jobs.csv")
+          print(f"{len(jobs)} pending jobs")
+
+          if not jobs.empty:
+              print(jobs[["title", "company"]].to_string(index=False))
+          PY
