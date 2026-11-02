@@ -1,6 +1,6 @@
 # Career Workflow
 
-Version: 1.3. This is the end-to-end procedure for a fresh conversation or a
+Version: 1.4. This is the end-to-end procedure for a fresh conversation or a
 scheduled AI run. Standards remain in their individual policies, not copied here.
 
 ## Start every run
@@ -85,6 +85,14 @@ an authorized cleanup; do not claim that those keys still redirect paths.
 
 ## Short commands and recommended-job drafts
 
+`search` means run the configured search → prepare → evaluate → pre-sync check →
+preview → Python Sheet sync in this conversation. This explicit command authorizes
+that run's recommendation-field sync, not Profile edits or application submission.
+`search only` searches without grading/sync; `search preview` evaluates and previews
+without remote writes. If setup/access is missing, identify only the missing item.
+Do not require a pasted long prompt. Recurring schedules need separate timing and
+recurring-write authorization. Never draft documents as part of a search batch.
+
 A pasted JD or `evaluate` with a supplied/unambiguous retained JD automatically
 uses job-fit-evaluation.md. Do not require users to paste policy names or a long prompt.
 If `evaluate` has no identifiable JD, ask for it. A CV alone is not a JD.
@@ -154,16 +162,21 @@ For an authorized unattended cycle, from the repo root:
    preferences, prepare CVs/letters or submit applications unattended.
 2. Run `.venv/bin/python src/main.py` to search/archive JD text and queue new jobs.
    If search fails, stop; never upload an old scored CSV as if it were a new run.
-3. Run `.venv/bin/python src/prepare_evaluation.py`. It queues all retained known
-   jobs when Profile, reviewed project evidence, local preferences or policies differ from the
-   last successful sync; otherwise retains the new pending queue. Historical jobs
-   without retained JD text cannot be reconstructed; disclose that limit.
+3. Run `.venv/bin/python src/prepare_evaluation.py`. It prepares new/changed or
+   explicitly queued jobs, recovering retained JD text. Profile/policy changes do
+   not requeue synchronized history. New and explicitly revisited roles always
+   use current evidence/rules. Only Profile and scoring/evidence policies affect
+   unfinished-output freshness; presentation policies/preferences do not.
 4. Apply job-fit-evaluation.md to every pending row and replace scored_jobs.csv.
    Empty queue: stop successfully with no sync. Material unknowns remain provisional
    in the summary; do not ask blocking questions or award hypothetical credit.
+   No usable JD: leave score blank, label `未評分／待補 JD`, retain the URL and
+   explain that the user can paste the JD. Do not substitute 0/Skip.
 5. Run `.venv/bin/python src/prepare_evaluation.py --seal` only after actually
-   evaluating the complete current queue. The seal checks queue coverage and input
-   fingerprint and binds the CSV hash; it cannot prove AI reasoning was performed.
+   evaluating the complete current queue. The pre-sync check verifies complete columns, unique IDs, matching source
+   metadata, scores/labels and nonempty summaries, including unscored JD rows. It
+   binds the current queue/input fingerprint and output hash, but cannot prove
+   reasoning or judge semantic JD completeness.
 6. Run `.venv/bin/python src/sync_scores_to_sheet.py --dry-run` to validate and
    preview the current sealed batch against the configured Sheet. This authenticates
    with the service-account JSON and reads Google; it writes neither cells nor state.

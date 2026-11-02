@@ -74,3 +74,17 @@ These private files are created as the pipeline runs; users do not fill them in.
 | `data/processed_job_ids.json`, `data/last_synced_context.json` | Processed IDs and evaluation context recorded after successful synchronization. |
 
 The execution and evidence rules live in [career-workflow.md](../policies/career-workflow.md).
+
+## Evaluation states and refresh
+
+The fixed evaluation CSV/Sheet columns remain unchanged. For a usable JD, score
+is an integer 0–100 with its matching recommendation. For missing/insufficient JD,
+match_score is blank, recommendation is exactly `未評分／待補 JD`, and summary
+explains how to provide the full JD. This is not a rejection. Known title/company/
+URL stay visible. AI determines substantive JD completeness; Python validates the
+structural contract and rejects numeric scores when no JD text exists locally.
+
+Synchronized history is not automatically requeued on Profile/policy edits. New,
+changed-JD and explicitly revisited jobs use current data/rules. Unfinished output
+is invalidated by Profile/scoring/evidence changes; formatting/email preferences
+are excluded. Processed IDs mean already synchronized, including unscored listings.

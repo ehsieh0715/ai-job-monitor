@@ -1,278 +1,204 @@
 # AI Job Monitor
 
-Use this project for three things:
+Three features, one shared Candidate Profile:
 
-1. **Build a Candidate Profile** from your CVs, experience notes and project links.
-2. **Find and evaluate jobs** against that Profile using shared scoring rules, with
-   a Google Sheet as the recommendation destination and an AI scheduler for repeat runs.
-3. **Prepare tailored CVs and cover letters** by selecting verified experience
-   from the Profile for a new or previously reviewed job.
+- **Candidate Profile:** turn your CVs, documents and project links into maintained facts.
+- **Job Search & Evaluation:** find jobs, assess fit and update your Google Sheet.
+- **CV & Cover Letter:** prepare applications from verified experience, then export when needed.
 
-Start with setup and your Profile, test one search/evaluation cycle, then schedule
-repeat runs or bring a specific job to discuss.
+Open this repo in an AI assistant with local file/terminal access. It should read
+[AGENTS.md](AGENTS.md) and the single career-assistant skill. A normal chat without
+those tools cannot operate your local files simply from a path. No Google connector
+is required: Python searches/synchronizes; AI evaluates and writes application text.
 
-Python handles searching and Google Sheet synchronization; the AI handles Profile
-building, evaluation and application writing. No Google connector is required.
+## What do I type?
 
-## 1. Set up and build your Profile
+| Say | What happens |
+| --- | --- |
+| `profile` | Read your sources, propose a Profile, save after your approval |
+| `search` | Search with your settings, evaluate and sync recommendations to your Sheet |
+| `search preview` | Search/evaluate and preview without changing your Sheet |
+| Paste a JD, or `evaluate` + JD | Assess fit, clarify important questions, then draft for recommended jobs |
+| `evaluate only` + JD | Assess without application drafts |
+| `cv`, `cover letter`, `email` | Draft for the current identified application |
+| `save` | Save the agreed documents and application record |
+| `pdf /path/CV.md purple` | Format exact source text as PDF if export tools are available |
 
-### Copy the configuration
+No policy names or long prompts are needed. The AI reads the relevant rules each
+run. It must report missing setup/access rather than pretend an action succeeded.
 
-Clone this repository and open it in an AI coding assistant with access to local
-files and terminal commands. From the repository folder, run:
+## Candidate Profile
+
+**First-time setup:** copy `config/config.example.yaml` to
+`config/config.local.yaml`. Set `career.root` to your absolute Career folder.
+Other Career paths are fixed; no Google setup is needed for this feature.
+
+Put your existing files in:
+
+```text
+01 Career/
+└── Source Documents/
+    ├── ...your CVs, cover letters, Word/PDF files and career notes
+    └── Projects.md       # Optional: one project/repo URL per line
+```
+
+Keep your filenames. For GitHub projects, paste URLs into Projects.md; no project
+download or role form is required. AI inspects accessible README/code/tests and
+asks about actual contributions. A link alone is not proof of your authorship.
+
+Say **`profile`**. Review the proposed Markdown and approve it to create/update
+`Candidate Profile.md` under your Career root. Facts, per-project capabilities,
+achievements, limitations and sources stay in this one file. Originals remain intact.
+
+New experience is proposed for approval before updating the Profile. Reusable
+writing feedback can be remembered in private `policies/preferences.md` when you
+ask; ideas/plans never become completed achievements.
+
+## Job Search & Evaluation
+
+**One-time setup:**
+
+1. Install Python dependencies below.
+2. Edit `search` in config.local.yaml: keywords, location, sites and time range.
+3. Fill google_sheets.spreadsheet_name and worksheet; create credentials below.
+
+[Configuration reference](config/README.md) lists fields and supported job boards.
+Choose a unique spreadsheet title to avoid ambiguity. Your config/key are Git-ignored.
+
+<details>
+<summary>Install Python dependencies</summary>
+
+Run from the repo root:
 
 ```sh
-cp config/config.example.yaml config/config.local.yaml
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 ```
 
-On Windows, copy the file using your file manager and use
-`.venv\Scripts\python.exe` in place of `.venv/bin/python`.
+On Windows use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
 
-Edit `config/config.local.yaml`. Keep its search fields and change them to match
-your target roles and location. Set your Career folder and Sheet destination:
+</details>
+
+### Google Sheets setup (first time)
+
+<details>
+<summary>Create your Google service-account credential in six steps</summary>
+
+1. Open [Google Cloud Console](https://console.cloud.google.com/); select/create
+   a project, e.g. `my-job-monitor`.
+2. In **APIs & Services → Library**, enable **Google Sheets API** and **Google Drive API**.
+3. In **IAM & Admin → Service Accounts → Create service account**, name it
+   `job-monitor-sync`. Leave optional project-role/user grants empty and finish.
+4. Open **Keys → Add key → Create new key → JSON → Create**. Rename the downloaded
+   file `google-service-account.json` and put it at this repo's root beside README.md.
+5. Create/open your uniquely named Sheet with a dedicated empty `Jobs` tab. Share
+   it with the service account email (`client_email` in the JSON) as **Editor**.
+   Public link sharing is unnecessary.
+6. In config.local.yaml set, for example:
 
 ```yaml
-career:
-  root: /absolute/path/to/01 Career
-
-# Keep and edit the search section from the example.
-
 google_sheets:
   spreadsheet_name: AI Job Monitor
   worksheet: Jobs
 ```
 
-This snippet shows only the folder and Sheet settings; the copied file contains
-all required search fields. See [field definitions](config/README.md#fields).
-Career setup needs only `root`; other Career filenames are fixed by the project.
-Use the exact spreadsheet title and tab name; avoid duplicate spreadsheet titles
-in the service account's shared files. No Sheet link is needed. Keep config private.
+No credential path field is needed. The JSON is the program's Google login, not
+a server; Python runs on your computer/runner. Never commit/paste the private key
+or include it in a shared ZIP; each person needs their own key. If organization
+policy prevents keys, ask your administrator.
 
-### Google Sheets setup (first time)
-
-Python needs a Google identity to write your private Sheet. Each user creates
-one service account and downloads its JSON key once. This does not rent a server;
-Python runs on your own computer or runner.
-
-<details>
-<summary>Expand: create your Google credential in six steps</summary>
-
-1. Open [Google Cloud Console](https://console.cloud.google.com/). Select or create
-   a project, for example `my-job-monitor`.
-2. In **APIs & Services → Library**, enable **Google Sheets API** and
-   **Google Drive API** in that project.
-3. Open **IAM & Admin → Service Accounts → Create service account**. Name it
-   `job-monitor-sync`. Leave optional project roles/user-access grants empty and
-   finish; it does not need project Owner or Editor to edit a shared Sheet.
-4. Open the account's **Keys → Add key → Create new key → JSON → Create**.
-   Google downloads the credential. Rename it to `google-service-account.json`
-   and save it at this repository's root, beside README.md. It is Git-ignored.
-   Never paste its private key
-   into chat or commit the JSON. If organization policy blocks keys, ask your admin.
-5. Create/open a uniquely named Google Sheet, e.g. **AI Job Monitor**, with an
-   empty **Jobs** tab. **Share** the Sheet with the service account email shown on
-   its page (also `client_email` in the JSON), granting **Editor**. Public link
-   sharing is unnecessary.
-6. Fill `google_sheets.spreadsheet_name` and `worksheet` in
-   config/config.local.yaml as shown above. No credential-path setting is needed.
-   Do not include the JSON if you manually zip/share this folder; each user needs
-   their own key. Git-ignore does not remove previously tracked credentials.
-
-Google's [API guide](https://developers.google.com/workspace/guides/enable-apis),
-[key guide](https://docs.cloud.google.com/iam/docs/keys-create-delete) and
-[gspread authentication guide](https://docs.gspread.org/en/latest/oauth2.html)
-provide more detail if the console labels differ.
+Official help: [enable APIs](https://developers.google.com/workspace/guides/enable-apis),
+[create keys](https://docs.cloud.google.com/iam/docs/keys-create-delete),
+[gspread authentication](https://docs.gspread.org/en/latest/oauth2.html).
 
 </details>
 
-After installing dependencies, check read access from the repo root:
+Then say **`search`**. AI reads your latest Profile and runs the steps for you.
+Results update existing job IDs and preserve your manual columns. Empty/incompatible
+sheet handling and validation are automatic; errors stop the run.
+
+**No usable JD?** The listing is still shown as **未評分／待補 JD**, with a blank
+score and its link. This is not 0 or Skip. Paste the full JD later and say `evaluate`.
+Profile/scoring changes do not automatically rescore your entire history; manually
+revisited jobs use the latest Profile/rules. Changed job requirements can trigger
+reassessment. PDF colours/email wording do not affect scores.
+
+**Recurring searches:** after one successful end-to-end trial, choose frequency/
+run times and timezone in your AI scheduler (or ask AI to create the task if supported).
+Select this repo as the working directory and authorize recurring Sheet updates.
+Task instruction: follow `policies/career-workflow.md` in scheduled mode. The runner
+needs the current local files, Python, network and JSON key; cloning alone creates
+no schedule. Unchanged runs stay quiet; meaningful changes/errors/questions are reported.
+
+<details>
+<summary>Manual operation and troubleshooting</summary>
+
+The AI normally handles these steps; no need to memorize the commands:
 
 ```sh
-.venv/bin/python -c 'import sys; sys.path.insert(0, "src"); from google_sheets import get_worksheet; get_worksheet().row_values(1); print("Sheet read access OK")'
-```
-
-This only reads; it needs network access and does not prove write permission.
-If the Sheet cannot be found, check its exact name and sharing with client_email;
-if the tab cannot be found, check its tab name. Use your own credentials.
-
-### Add your source documents
-
-Create the folder you set as `career.root`, with a `Source Documents` folder inside:
-
-```text
-01 Career/
-└── Source Documents/
-    ├── ...your existing CVs, cover letters and career documents
-    └── Projects.md            # Optional project links
-```
-
-Put any existing CV versions, cover letters, work/education records, achievement
-notes and other career materials here. Keep your own filenames; no specific CV
-or notes file is required. Markdown, Word and PDF documents can be used when the
-assistant has the tools to read them.
-
-The AI consolidates these sources into one proposed `Candidate Profile.md`, asks
-about important uncertainties, and saves it after your approval. This is the input
-folder it reads; it does not scan your entire vault or computer.
-
-If you have projects, create `Source Documents/Projects.md` with one project or
-repository link per line:
-
-```text
-https://github.com/YOUR_USERNAME/PROJECT_ONE
-https://github.com/YOUR_USERNAME/PROJECT_TWO
-```
-
-Skip that file if you have no projects. The AI reviews accessible sources and
-asks about your actual contribution; a link alone does not establish authorship
-or grant access to a private repository.
-
-### Ask the AI to build your Profile
-
-Say `profile`. The AI reads your configured Source Documents and project links,
-asks material questions and proposes Candidate Profile.md for approval.
-
-Review the proposal and answer the important questions. Once you approve the
-content, the AI saves **`Candidate Profile.md`** directly under your Career root.
-This is the Profile used for later job evaluations and application documents.
-
-Expect a Markdown document with sections such as:
-
-```markdown
-# Candidate Profile
-## Summary & Target Roles
-## Work Experience
-## Projects
-### Project Name
-## Skills & Evidence
-## Education & Certifications
-## Constraints & Preferences
-## Claim Boundaries
-## Open Questions & Conflicts
-## Source Review
-```
-
-Empty sections can be omitted. Experience and projects include verified actions,
-results, sources and limitations. Unresolved claims stay marked as questions.
-Project evidence is embedded in this Profile, without a separate summary folder.
-
-As you use the project, the full Career structure will look like this:
-
-```text
-01 Career/
-├── Source Documents/                         # Your inputs
-│   ├── ...your CVs, cover letters and other career materials
-│   └── Projects.md                           # Optional project links
-├── Candidate Profile.md                      # Approved facts and project evidence
-├── applications.md                           # Application tracking table
-└── applications/
-    └── Company Name/
-        └── YYYY-MM-DD - Job Title/
-            ├── CV.md
-            ├── CV.pdf                        # When exported
-            └── Cover Letter.md               # When requested
-```
-
-The AI creates output files and application folders as the authorized work needs
-them. Folder dates are preparation dates; actual submission dates belong in
-`applications.md`. Existing or submitted documents are preserved.
-
-Optional language/style choices go in Git-ignored `policies/preferences.md`, e.g.
-“Analysis: Traditional Chinese; CV: English.” No config field is needed. Without
-this file, the AI follows the current request and document audience.
-
-## 2. Test one run, then set up recurring searches
-
-### Choose what to search
-
-In the existing `search` section of `config/config.local.yaml`, set your keywords,
-location, job boards, listing age and requested result count. For example, change
-`keywords` to `[data analyst, analytics engineer]` and `location` to your target
-city. [Configuration](config/README.md) explains every field and supported board.
-
-### Run once in the current chat
-
-After your Profile has been approved and saved, paste:
-
-> Follow career-assistant and `policies/career-workflow.md`. Use my local configuration
-> and latest Candidate Profile to run one job search, prepare the pending queue,
-> evaluate every pending job under `policies/job-fit-evaluation.md`, and seal the scores.
-> Show a concise summary of recommendations and unresolved evidence questions.
-> Preview with `src/sync_scores_to_sheet.py --dry-run`, then synchronize my
-> configured Sheet with Python. Preserve manual columns and stop on errors.
-
-The sequence is **Python search → AI evaluation → Python validation and sync**.
-After AI creates the scored CSV, the commands are:
-
-```sh
+.venv/bin/python src/main.py
+.venv/bin/python src/prepare_evaluation.py
+# AI now evaluates all pending rows and writes data/scored_jobs.csv.
 .venv/bin/python src/prepare_evaluation.py --seal
 .venv/bin/python src/sync_scores_to_sheet.py --dry-run
 .venv/bin/python src/sync_scores_to_sheet.py
 ```
 
-The AI follows policies/career-workflow.md, including preparing the queue before scoring.
-Empty queues need no upload. Test a complete run before scheduling, and run one
-writer at a time. Python main.py alone searches but does not perform AI evaluation.
+`--seal` checks that every row has valid output and still matches current scoring
+inputs. `--dry-run` reads Google and previews without writes. Calling main.py alone
+only searches; it does not perform AI evaluation. Only one run/writer at a time.
 
-### Schedule recurring searches
+Sheet not found: check title and sharing with client_email. Tab not found: check
+worksheet spelling. Missing key: put google-service-account.json at repo root.
+Stale evaluation: ask AI to reevaluate the current unfinished batch; do not bypass
+checks. Live access must be verified in your environment, not inferred from tests.
 
-After a successful end-to-end trial, choose your frequency/run times and timezone
-in your AI environment's scheduling interface. Set this repository as the working
-directory and use this short task instruction:
+</details>
 
-> Follow `.agents/skills/career-assistant/SKILL.md` and the scheduled-run procedure
-> in `policies/career-workflow.md`. Search, evaluate and sync to my configured Sheet.
+## CV & Cover Letter
 
-You may ask the AI to create the task if scheduling tools are available. Authorize
-recurring Sheet updates when setting it up; the execution rules stay in the policy.
-The scheduled environment needs Python, current Career files, network access and
-its own access to the private JSON key. A connected Google app is not required.
+Paste a JD or say **`evaluate`** for an identifiable job. AI applies the same fit
+standard as batch search. For recommended roles it asks at most three consolidated
+material questions, proposes Profile corrections for approval, and reassesses.
+If still recommended it supplies CV, useful cover-letter and application-email
+drafts. `evaluate only` stops before drafts. Batch searches never draft documents.
 
-## 3. Evaluate a job and prepare application documents
+Say **`save`** when ready. Files go under:
 
-Paste a JD, or type `evaluate` with a JD or identifiable retained job. The AI uses
-your latest Profile and shared scoring rules automatically; no policy names needed.
+```text
+01 Career/
+├── Candidate Profile.md
+├── applications.md
+└── applications/Company Name/YYYY-MM-DD - Job Title/
+    ├── CV.md
+    ├── Cover Letter.md       # When needed
+    └── Application Email.md  # When requested
+```
 
-For recommended jobs, it asks only material questions (at most three consolidated
-questions per round), proposes Profile corrections for your approval and reassesses.
-If still recommended, it directly provides CV, useful cover-letter and application-
-email drafts. Say `evaluate only` if you want assessment without drafting. Batch/
-scheduled runs never generate application documents. Ask to save the package when
-ready; nothing is submitted or emailed automatically.
+The folder date is preparation start, not submission date. Submitted files are
+preserved. No email or application is sent automatically.
 
-Short commands:
-
-- `evaluate` + JD: assess and follow the recommended-job flow.
-- `cv`, `cover letter`, `email`: draft for the current identified application.
-- `save`: save the agreed package within the fixed application structure.
-- `pdf /path/CV.md purple`: format the exact Markdown as PDF, without rewriting.
-
-PDF defaults: `CV_Name_Position.pdf` / `CoverLetter_Name_Position.pdf`, single
-column, A4, restrained readable colour, text and visual checks. Conversion requires
-available PDF tools; no standalone PDF exporter is included in this repo yet.
-
-To remember reusable corrections, ask once: “Remember my future writing feedback.”
-The AI merges confirmed preferences into private policies/preferences.md. Facts
-still require approval before Profile updates; ideas are not recorded as achievements.
+Say **`pdf /path/CV.md [colour]`** to export without rewriting. Default filenames:
+`CV_Name_Position.pdf` / `CoverLetter_Name_Position.pdf`. PDF-capable tools are
+required; this repo does not yet include a standalone exporter. AI must disclose
+missing tools/checks rather than claim successful conversion.
 
 ## Reference
 
-[Configuration](config/README.md) explains user settings. Policies use short names:
+Users start here; AI reads policies as needed. You only need to edit policies to
+change shared behavior, not for ordinary use.
 
 | Policy | Purpose |
 | --- | --- |
-| [career-workflow.md](policies/career-workflow.md) | Short commands, stages and scheduled runs |
-| [candidate-evidence-standards.md](policies/candidate-evidence-standards.md) | Facts, approval and remembered preferences |
-| [candidate-profile-generation.md](policies/candidate-profile-generation.md) | Build/update Candidate Profile |
-| [project-evidence-evaluation.md](policies/project-evidence-evaluation.md) | Review project links and contributions |
-| [job-fit-evaluation.md](policies/job-fit-evaluation.md) | Common job-fit scoring |
-| [cv-writing-and-review.md](policies/cv-writing-and-review.md) | CV writing and review |
-| [cover-letter-writing.md](policies/cover-letter-writing.md) | Cover letter writing |
-| [application-email-writing.md](policies/application-email-writing.md) | Application email drafts |
-| [application-pdf-generation.md](policies/application-pdf-generation.md) | PDF formatting, naming and checks |
+| [career-workflow.md](policies/career-workflow.md) | Commands, stages, scheduled runs |
+| [candidate-evidence-standards.md](policies/candidate-evidence-standards.md) | Facts, approval, remembered preferences |
+| [candidate-profile-generation.md](policies/candidate-profile-generation.md) | Consolidate source documents |
+| [project-evidence-evaluation.md](policies/project-evidence-evaluation.md) | Review project capabilities/contributions |
+| [job-fit-evaluation.md](policies/job-fit-evaluation.md) | Common scoring and missing-JD handling |
+| [cv-writing-and-review.md](policies/cv-writing-and-review.md) | CV writing and quality |
+| [cover-letter-writing.md](policies/cover-letter-writing.md) | Cover letters |
+| [application-email-writing.md](policies/application-email-writing.md) | Email drafts |
+| [application-pdf-generation.md](policies/application-pdf-generation.md) | PDF layout, filenames and checks |
 
-Keep local config, personal preferences, source documents, Profile, application
-files and pipeline data private. Removing a tracked file does not remove older
-copies from Git history; review history before sharing or publishing this repo.
+Keep personal files, local config, preferences, generated data and keys private.
+Git-ignore does not remove historical commits: audit history before publishing.
