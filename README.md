@@ -120,7 +120,7 @@ jobs and updates the Sheet by job ID while preserving manual columns. Invalid
 data or incompatible Sheet headers stop the run. Setup alone starts no search
 and authorizes no Sheet writes; authorize the trial and recurring updates explicitly.
 
-**No usable JD?** The listing is still shown as **未評分／待補 JD**, with a blank
+**No usable JD?** The listing is still shown as **Not assessed / JD needed**, with a blank
 score and its link. This is not 0 or Skip. Paste the full JD later and say `evaluate`.
 Profile/scoring changes do not automatically rescore your entire history; manually
 revisited jobs use the latest Profile/rules. Changed job requirements can trigger

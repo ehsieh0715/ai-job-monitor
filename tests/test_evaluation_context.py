@@ -87,7 +87,7 @@ class FreshnessTests(unittest.TestCase):
                 pd.DataFrame([result]).to_csv(root/'scored_jobs.csv',index=False)
                 with self.assertRaises(ValueError):ctx.seal()
                 from evaluation_validation import NEEDS_JD
-                result.update(match_score='',recommendation=NEEDS_JD,match_summary='請提供 JD')
+                result.update(match_score='',recommendation=NEEDS_JD,match_summary='Full JD needed.')
                 pd.DataFrame([result]).to_csv(root/'scored_jobs.csv',index=False)
                 ctx.seal()
                 self.assertTrue((root/'seal.json').exists())

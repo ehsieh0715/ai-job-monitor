@@ -77,7 +77,7 @@ class SyncExecutionTests(unittest.TestCase):
 class MissingJDTests(unittest.TestCase):
     def test_missing_jd_clears_old_score_and_is_idempotent(self):
         from evaluation_validation import NEEDS_JD
-        old=job();new=dict(old,match_score='',recommendation=NEEDS_JD,match_summary='請貼上 JD 後重新評估')
+        old=job();new=dict(old,match_score='',recommendation=NEEDS_JD,match_summary='Paste the full JD for assessment.')
         before=[SCORED_COLUMNS,[str(old[c]) for c in SCORED_COLUMNS]]
         plan=plan_sync(before,[new])
         self.assertIn({'range':'I2','values':[['']]},plan['updates'])

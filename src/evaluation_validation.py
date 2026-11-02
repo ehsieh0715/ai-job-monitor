@@ -2,7 +2,7 @@
 import math
 from schema import SCORED_COLUMNS
 
-NEEDS_JD = '未評分／待補 JD'
+NEEDS_JD = 'Not assessed / JD needed'
 
 
 def validate_evaluations(records):

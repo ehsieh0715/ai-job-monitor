@@ -17,7 +17,7 @@ class ValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError): validate_evaluations([{'job_id':'site:1'}])
 
     def test_missing_jd_has_no_numeric_score(self):
-        r=record();r.update(match_score='',recommendation=NEEDS_JD,match_summary='待補 JD，請貼上完整職缺內容。')
+        r=record();r.update(match_score='',recommendation=NEEDS_JD,match_summary='JD needed; paste the full description.')
         self.assertEqual(validate_evaluations([r])[0]['match_score'],'')
         r['match_score']='0'
         with self.assertRaises(ValueError):validate_evaluations([r])

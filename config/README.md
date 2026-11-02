@@ -79,7 +79,7 @@ The execution and evidence rules live in [career-workflow.md](../policies/career
 
 The fixed evaluation CSV/Sheet columns remain unchanged. For a usable JD, score
 is an integer 0–100 with its matching recommendation. For missing/insufficient JD,
-match_score is blank, recommendation is exactly `未評分／待補 JD`, and summary
+match_score is blank, recommendation is exactly `Not assessed / JD needed`, and summary
 explains how to provide the full JD. This is not a rejection. Known title/company/
 URL stay visible. AI determines substantive JD completeness; Python validates the
 structural contract and rejects numeric scores when no JD text exists locally.

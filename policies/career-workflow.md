@@ -179,7 +179,7 @@ For an authorized unattended cycle, from the repo root:
 4. Apply job-fit-evaluation.md to every pending row and replace scored_jobs.csv.
    Empty queue: stop successfully with no sync. Material unknowns remain provisional
    in the summary; do not ask blocking questions or award hypothetical credit.
-   No usable JD: leave score blank, label `未評分／待補 JD`, retain the URL and
+   No usable JD: leave score blank, label `Not assessed / JD needed`, retain the URL and
    explain that the user can paste the JD. Do not substitute 0/Skip.
 5. Run `.venv/bin/python src/prepare_evaluation.py --seal` only after actually
    evaluating the complete current queue. The pre-sync check verifies complete columns, unique IDs, matching source

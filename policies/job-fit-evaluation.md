@@ -9,7 +9,7 @@ an existing CV is required. The score measures the value of preparing and applyi
 Use a complete supplied/local JD first. Fetch an official source only for material
 omissions; do not repeatedly browse complete local descriptions. If JD is absent
 or too incomplete to identify substantive duties and requirements, do not assign
-any numeric score or Apply/Skip advice. Use `未評分／待補 JD`, leave match_score
+any numeric score or Apply/Skip advice. Use `Not assessed / JD needed`, leave match_score
 blank, preserve the URL/company/title and explain that the user may paste the JD
 for evaluation. A title or generic company description is not sufficient. Never
 use 0/Skip as a missing-information placeholder. In conversation invite the user
@@ -152,7 +152,7 @@ job_id,found_at,site,title,company,location,search_term,job_url,match_score,reco
 
 Preserve the first eight fields from pending input, excluding description. Scores
 are integers 0–100 with the policy's four allowed labels for assessable JDs.
-For `未評分／待補 JD`, score must be blank and summary explains the missing JD
+For `Not assessed / JD needed`, score must be blank and summary explains the missing JD
 and how to supply it. These rows are synchronized so users can still inspect the
 listing; processed means synchronized, not that a fit assessment was possible. Use the requested
 summary language or local policies/preferences.md. The summary normally uses
