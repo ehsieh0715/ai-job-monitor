@@ -3,13 +3,13 @@
 Three core features help you move from career evidence to a prepared application:
 
 1. **Build and update your Candidate Profile** — consolidate your documents and
-   confirmed experience into one Markdown profile at your chosen location.
+   confirmed experience into one Markdown profile under your chosen Career root.
 2. **Find and evaluate jobs** — assess searched jobs or any pasted job description
    against your latest Profile using shared scoring rules, and sync recommendations
    to your Google Sheet. Recurring runs require a separately configured scheduler.
 3. **Prepare CVs and cover letters** — discuss fit, clarify missing evidence and
    update your Profile, then generate or revise application documents after you
-   confirm you want to proceed. Save them in your chosen application folder.
+   confirm you want to proceed. Save them in the fixed application structure under that root.
 
 Personal documents live in your external Career folder (an Obsidian vault works
 well). The repository supplies code, shared policies and one AI skill entry point.
@@ -28,27 +28,26 @@ notes or old candidate JSON in `Source Documents/`:
 01 Career/
   Source Documents/
     ...your original files
-    Projects.md             # Optional: one GitHub repo URL per line
+    Projects.md             # Optional: one project/repository URL per line
 ```
 
-For GitHub projects, add plain repo links to `Source Documents/Projects.md`:
+If you have projects to review, create `Source Documents/Projects.md` and put
+one project/repository link per line, for example:
 
 ```text
 https://github.com/YOUR_USERNAME/PROJECT_ONE
 https://github.com/YOUR_USERNAME/PROJECT_TWO
 ```
 
-Copy the [link-only example](examples/Projects.md) if useful. No project download,
-role form or skill checklist is needed. The AI follows
-[project-evidence.md](policies/project-evidence.md): read README and relevant code,
-tests/config/docs, ask about unknown personal contributions, and propose a separate
-Profile subsection for each project. Private repos require authorized access.
-For later updates it compares inspected commits and proposes edits to that same
-project section rather than adding duplicates. README-only access is labelled.
+This is your input link list, not a generated report. Skip it if you have no
+projects. The AI reviews accessible sources, asks about your contributions and
+proposes project sections inside Candidate Profile.md. No separate project report
+folder is needed; [project-evidence.md](policies/project-evidence.md) defines the
+review rules.
 
 Copy `config/config.example.yaml` to `config/config.local.yaml`. For Profile
-initialization, only change `career.root`; keep the other Career paths at their
-defaults unless your files are elsewhere. Grant read access to the sources and
+initialization, set only `career.root`; all other Career paths are fixed by the
+project. `Source Documents/` is the required input entry. Grant read access to the sources and
 write access to the intended Profile. Setting a path does not grant permission.
 
 Ask in ordinary language, for example:
@@ -57,14 +56,17 @@ Ask in ordinary language, for example:
 > Read Source Documents and build/update Candidate Profile.md there, following
 > policies/profile-building.md. Preserve my original files and existing confirmed
 > facts; flag conflicts and ask about important missing evidence. Show the proposed
-> Markdown and wait for my approval before writing Profile or Project Evidence.
+> Markdown and wait for my approval before writing Candidate Profile.md, including
+> its project sections.
 
 You can give the Career root in conversation and ask the AI assistant to configure
 it for you. The assistant reviews your sources, asks about important uncertainties,
 and shows the proposed Profile for approval before saving. Original files stay intact.
 
-Optional: set `preferences_path` to a private Markdown file for your preferred
-language, structure and writing style; see [example](config/preferences.example.md).
+Optional personal language/style preferences go in local `policies/preferences.md`
+(Git-ignored), e.g. “Analysis: Traditional Chinese; CV: English.” No config field
+is needed. The AI reads it when present; explicit instructions for the current
+task take precedence. A fresh clone does not contain your personal preferences.
 
 ## Job Search & Evaluation
 
@@ -84,15 +86,15 @@ Use `config/config.local.yaml` for your own settings (copy the example if needed
 
 | Setting | What to provide |
 | --- | --- |
-| `career.root` and `career.profile` | Your Career folder and latest Candidate Profile location |
+| `career.root` | Your Career folder; all internal paths are fixed |
 | `search` | Keywords, location, sites, listing age and desired result count |
 | `google_sheets.spreadsheet` | Your Google Sheet URL or ID |
 | `google_sheets.worksheet` | Exact destination tab name |
-| `google_sheets.credentials_path` | Your private service-account JSON path |
 
 See [configuration](config/README.md) for supported site values. Complete the
 [one-time Google setup](#google-sheets-setup-first-time) below before syncing.
-Keep personal settings and credentials private.
+Keep personal settings private. The destination is configured only in this YAML;
+do not repeat it in prompts or schedules.
 
 ### Ask AI to run it now
 
@@ -103,8 +105,14 @@ In an AI environment with local file/command and network access, ask:
 > the results, preview changes and synchronize recommendations to my configured
 > Google Sheet. Preserve manual columns and stop if required access is unavailable.
 
-The AI runs Python for search and Sheet synchronization and performs the evaluation
-between those steps. Python main.py alone does not evaluate jobs. The first run
+The intended flow is **Python search → pending CSV → AI evaluation → Python
+validation → AI connector writes → verified local completion**. Python main.py
+alone does not evaluate jobs or use the connector.
+
+**Migration status:** this change documents the connector workflow; the current
+Python synchronization command still uses a service account. Connector plan,
+readback verification and local-completion integration remain to be implemented.
+Do not treat connecting Drive as completing that migration. The first run
 may require filesystem/network authorization; permissions are separate from paths.
 
 ### Schedule recurring runs
@@ -122,11 +130,12 @@ First complete a successful interactive run. Then choose either:
   [scheduled-run prompt](examples/scheduled-run.md), replacing its repo path.
 
 A scheduled AI runner needs the same repo, private config, latest Profile,
-Python dependencies, Google credentials, file permissions and network access as
+Python dependencies, connected Google Drive tools, file permissions and network access as
 an interactive run. A cloud task does not automatically have your local vault.
 Do not overlap runs. Cron calling main.py only searches; it does not add AI scoring.
 Cloning the repo does not itself install or activate a schedule. Tool availability
-and account permissions depend on the execution environment.
+and account permissions depend on the execution environment. Connector-based
+schedules must wait until the synchronization integration described below is implemented.
 
 ### Run the pipeline manually
 
@@ -148,188 +157,94 @@ Search retains local JD history and queues new jobs. Run:
 ```
 
 Ask career-assistant to evaluate every pending row under the shared policy. After
-it creates data/scored_jobs.csv, seal and preview:
+it creates data/scored_jobs.csv, seal the current batch:
 
 ```sh
 .venv/bin/python src/prepare_evaluation.py --seal
-.venv/bin/python src/sync_scores_to_sheet.py --dry-run
 ```
 
-Configure your Sheet URL/ID, tab and service-account JSON path in config.local.yaml.
-[Google setup instructions](#google-sheets-setup-first-time) cover enabling
-APIs, creating credentials and sharing the Sheet. When ready/authorized, run:
+This checks queue coverage and binds the scores to the current inputs. It does not
+write to Google Sheets or prove that the AI applied the scoring rules correctly.
+The remaining connector handoff is specified in [workflow.md](policies/workflow.md).
+Its programmatic planning, readback and completion integration is pending; no new
+connector CLI command is available yet.
 
-```sh
-.venv/bin/python src/sync_scores_to_sheet.py
-```
+The existing `sync_scores_to_sheet.py` command (including `--dry-run`) still
+requires service-account credentials. It is the legacy implementation, not the
+keyless connector path. Do not run it expecting it to use the connected account.
+Do not manually mark jobs processed just because a connector write was attempted.
 
-Sync updates existing IDs and appends new ones, preserving custom columns. An
-incompatible Sheet stops rather than having its header overwritten. Changes to
-Profile/evidence/preferences/policies queue retained jobs for reevaluation; stale
-or altered sealed scores cannot sync. Old jobs without retained descriptions
-cannot be recovered automatically. Run only one writer at a time.
-
-Actual job-board and Google access must be verified in your own environment;
-offline tests do not establish successful live authentication. Empty queues stop
-without uploading old scores.
+Changes to Profile/project evidence/policies queue retained jobs for
+reevaluation. Old jobs without retained descriptions cannot be recovered
+automatically. Run only one writer at a time. Empty queues stop without uploading
+old scores. Offline tests do not establish successful live Google access.
 
 </details>
 
 ### Google Sheets setup (first time)
 
-**Supported method: Python + your own Google service account.** Set this up once,
-then reuse it for future runs. You need a Google account, your own Sheet and a
-private location for the downloaded credential file. MCP sync is not implemented.
+The connector workflow uses your connected Google account. It does not require
+creating a Google Cloud project, service account or downloaded JSON key.
+**The setup below configures the intended workflow; the synchronization integration
+is still pending, as described above.**
 
-<details>
-<summary>Expand: create a service account and connect your Google Sheet step by step</summary>
-
-This project's Python connector uses a **service account**, not an API-key string
-or an OAuth desktop-client JSON. The code runs on your computer/chosen runner;
-Google Cloud supplies the identity and API access, not a server for this pipeline.
-Each user should create their own credentials and use their own Sheet.
-
-#### Step 1 — Select a Google Cloud project and enable APIs
-
-1. Sign in to [Google Cloud Console](https://console.cloud.google.com/).
-2. Open the project selector at the top. Select an existing project or choose
-   **New project**, enter a name such as `job-monitor`, and create/select it.
-3. Open **APIs & Services → Library**. Search for **Google Sheets API**, open it,
-   and click **Enable**. If already enabled, leave it enabled.
-4. Return to Library and enable **Google Drive API** in the same project.
-5. Check **APIs & Services → Enabled APIs & services** for both entries.
-
-Keep that project selected throughout setup. If controls are unavailable, ask the
-project administrator for permission to enable services. See Google's
-[API enablement guide](https://developers.google.com/workspace/guides/enable-apis).
-
-#### Step 2 — Create the service account
-
-1. Open **IAM & Admin → Service Accounts** and click **Create service account**.
-2. Enter a name such as `job-monitor-sync`; leave the generated account ID as-is
-   unless you need another ID, then click **Create and continue**.
-3. For this shared-Sheet workflow, leave optional project-role and user-access
-   grants empty (use **Continue** / **Done** to finish). Do not grant project
-   Owner/Editor just to edit a Sheet:
-   file access is granted in step 4.
-4. Open the account and note its email, shaped like
-   `job-monitor-sync@YOUR_PROJECT_ID.iam.gserviceaccount.com`.
-
-You do not need an OAuth consent-screen setup or domain-wide delegation for this
-explicitly shared-Sheet workflow. See Google's
-[credential guide](https://developers.google.com/workspace/guides/create-credentials).
-
-#### Step 3 — Download and store a JSON key
-
-1. In that service account, open **Keys → Add key → Create new key**.
-2. Select **JSON**, click **Create**, and save the downloaded file.
-3. Store it outside the repo and vault, for example:
-   `/Users/YOUR_NAME/.config/ai-job-monitor/google-service-account.json` on macOS,
-   or a private directory on your own OS. Use your actual path in step 5.
-4. Confirm locally that the JSON contains `"type": "service_account"` and a
-   `client_email`. Do not paste the file or its private key into chat or Git.
-
-If key creation is blocked by organization policy, ask your administrator about an
-approved authentication method; the current connector expects a JSON key and
-cannot bypass that policy. If you lose the downloaded key, create a replacement
-and revoke the old one rather than expecting to download it again. See Google's
-[key management guide](https://docs.cloud.google.com/iam/docs/keys-create-delete).
-
-#### Step 4 — Create and share your spreadsheet
-
-1. Create/open your own Google Sheet. Add a dedicated, empty tab named `Jobs`
-   (or choose another exact tab name).
-2. Click **Share** and add the service account email from step 2 (also available
-   as `client_email` in the JSON). Set its file permission to **Editor**.
-3. Keep general link access restricted; public sharing is not required.
-4. Copy the spreadsheet URL from the address bar, not merely its display name.
-
-The service identity is separate from your personal Google login, so you must
-share the file with it even when you own the Sheet. See
-[gspread service-account authentication](https://docs.gspread.org/en/latest/oauth2.html).
-
-#### Step 5 — Fill your private configuration
-
-If not already done, copy config/config.example.yaml to config/config.local.yaml.
-Add/edit this section without deleting your Career and search settings:
+1. Enable/connect the **Google Drive** connector in the AI environment used for
+   this project. It must expose Google Sheets read and write tools, not only search.
+2. Connect the Google account that has **Editor** access to the destination Sheet.
+   Public link sharing is not required. Organization policies and protected ranges
+   may still limit writes.
+3. Create/open the destination Sheet and a dedicated tab, such as `Jobs`. Avoid
+   using your application tracker tab for search recommendations.
+4. Set the destination once in private `config/config.local.yaml`:
 
 ```yaml
 google_sheets:
   spreadsheet: "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"
   worksheet: "Jobs"
-  credentials_path: "/absolute/private/path/google-service-account.json"
 ```
 
-The spreadsheet ID is the segment between `/d/` and `/edit`; either the full URL
-or just that ID works. `worksheet` is the bottom tab name, not the document title;
-the URL's `gid` does not select a tab for this connector. Credentials must exist
-on the machine running the task. Do not commit config.local.yaml or the key.
+`spreadsheet` accepts the full URL or its ID. `worksheet` is the exact bottom-tab
+name, including spaces and capitalization; a URL's `gid` does not override it.
+Prompts and schedules refer to this configuration rather than carrying a second
+copy of the destination. Keep the local configuration out of Git.
 
-#### Step 6 — Check the connection without changing the Sheet
+Before synchronization, the AI must read the configured spreadsheet metadata and
+confirm the exact tab through the connector. A read proves read access only;
+actual writes and readback are required to verify successful synchronization.
 
-After installing dependencies, run this from the repository root (macOS/Linux):
-
-```sh
-.venv/bin/python -c 'import sys; sys.path.insert(0, "src"); from google_sheets import get_worksheet; get_worksheet().row_values(1); print("Google Sheet read access OK")'
-```
-
-On Windows, use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
-This authenticates and reads the configured tab; it needs network access but no
-Profile or scored CSV. It does not write cells or prove write permission.
-
-#### Step 7 — Preview and perform the first synchronization
-
-Complete the search → prepare → AI evaluation → seal steps in [Run the pipeline manually](#run-the-pipeline-manually) first.
-Then run:
-
-```sh
-.venv/bin/python src/sync_scores_to_sheet.py --dry-run
-```
-
-This reads the Sheet and validates the sealed evaluation; it writes neither
-cells nor local processed state. Check the target and reported changes. To apply:
-
-```sh
-.venv/bin/python src/sync_scores_to_sheet.py
-```
-
-An empty tab receives the required header on this first write. Existing compatible
-tabs are matched by column names; extra manual columns are preserved. Incompatible
-headers stop the sync. Do not use your application tracker tab as the search tab.
-
-#### Troubleshooting
+The planned handoff validates the sealed batch, previews changes, writes only
+owned recommendation fields, reads back the affected data, and updates local
+processed/pending state only after verification. It preserves manual columns,
+rejects duplicate IDs and incompatible headers, and reconciles partial writes on
+retry. See [the workflow contract](policies/workflow.md#connector-synchronization-contract-migration-target).
 
 | Symptom | Check |
 | --- | --- |
-| Credential file not found | Use the real JSON path on this runner; expand/move it locally, not into the repo. |
-| SpreadsheetNotFound / 404 | Confirm URL/ID and share that exact file with the JSON's client_email. |
-| WorksheetNotFound | Create the tab; match spelling, spaces and capitalization in worksheet. |
-| API disabled / SERVICE_DISABLED | Enable the named API in the project that owns the credential. |
-| Permission denied / 403 | Check Editor file access, protected ranges and organization sharing restrictions. |
-| Invalid grant / invalid JWT | Check key/account revocation and machine clock; replace credentials if necessary. |
-| Incompatible Sheet header | Use a dedicated empty tab or the required columns from src/schema.py. |
-| Missing/stale seal or changed queue | Prepare, reevaluate and seal current jobs; do not reuse an old scored CSV. |
-| Key creation unavailable | Ask your organization administrator; do not disable policy as a workaround. |
+| Connector or Sheets write tools unavailable | Connect Google Drive in the actual interactive/scheduled execution environment; stop synchronization if tools remain unavailable. |
+| File unavailable / permission denied | Check the configured URL/ID, connected account, Editor access, protected ranges and organization restrictions. |
+| Destination tab missing | Create the tab and match its exact name in config. |
+| Incompatible header or duplicate IDs | Resolve the conflict before writing; never overwrite unrelated data to bypass validation. |
+| Missing/stale seal or changed queue | Prepare, reevaluate and seal current jobs. |
+| Legacy command asks for a JSON key | It still uses the old Python transport; connector migration is not yet implemented. |
 
-Cloud Console labels can change; use the linked Google guides if the screens differ.
-This setup enables Google access only. Recurring execution still needs the
-[scheduler and available AI runner](examples/scheduled-run.md).
-
-</details>
+Existing service-account keys are not deleted by this documentation change.
+Recurring execution also needs an available AI runner with local files and
+connector tools; see [the scheduled-run requirements](examples/scheduled-run.md).
 
 ## CV & Cover Letter
 
 Say “Proceed with a CV for this role”. The assistant composes relevant verified
 Profile/project evidence under the writing rules; no single base CV is required.
-A cover letter is optional. Save/export files when requested or already authorized:
+A cover letter is optional. The project creates the following fixed structure as
+needed within authorized scope. Users configure only the root, not these individual paths:
 
 ```text
 01 Career/
   Candidate Profile.md
   Source Documents/
-  Project Evidence/          # Reviewed project summaries; repositories stay in place
-  Applications/
-    Applications.md          # Existing application tracker
+    Projects.md              # Optional project links; originals stay here
+  applications.md            # Root-level application tracker
+  applications/
     Company Name/
       YYYY-MM-DD - Job Title/
         CV.md
@@ -337,7 +252,12 @@ A cover letter is optional. Save/export files when requested or already authoriz
         Cover Letter.md      # When useful/requested
 ```
 
-Folder date is preparation start; actual submission date is in the tracker.
+Folder date is preparation start; actual submission date is in root applications.md.
+Reviewed project evidence is embedded in Candidate Profile.md. The AI creates
+application subfolders and the tracker when the authorized work needs them.
+Use lowercase applications/ and applications.md exactly. Legacy custom paths and
+old Applications/ or Project Evidence/ files are not migrated automatically; see
+[configuration and migration](config/README.md#fixed-career-layout).
 Preserve submitted versions. No separate JD, analysis or progress notes are created
 by default. Existing full notes need not be split or moved into this layout.
 
@@ -349,7 +269,7 @@ entry point; it selects the references below without duplicating their rules.
 | Policy | Purpose |
 | --- | --- |
 | [Workflow](policies/workflow.md) | Interactive stages and scheduled search/evaluate/sync |
-| [Profile building](policies/profile-building.md) | Initialize/merge documents into the configured Profile |
+| [Profile building](policies/profile-building.md) | Initialize/merge documents into root Candidate Profile.md |
 | [Project evidence](policies/project-evidence.md) | Link-only repo input, source review and per-project approved updates |
 | [Evidence](policies/evidence-policy.md) | Sources, claim boundaries, questions and updates |
 | [Job evaluation](policies/job-evaluation.md) | Same scoring standard for manual JDs and batches |
@@ -357,8 +277,8 @@ entry point; it selects the references below without duplicating their rules.
 | [Resume review](policies/resume-review.md) | Check evidence, relevance and quality |
 | [Cover letter](policies/cover-letter-writing.md) | Value, narrative and writing standards |
 
-Presentation preferences can change language, tone, length and order; they cannot
-relax evidence standards. Defaults: Traditional Chinese analysis, English CV/letter.
+Local `policies/preferences.md` can set language, tone, length and order; it cannot
+relax shared evidence or scoring standards. Personal preferences are not published.
 The earlier ai-job-monitor and career-application rules are consolidated here.
 
 ## Privacy and sharing

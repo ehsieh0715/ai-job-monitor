@@ -1,11 +1,6 @@
 # Copy to config.local.yaml; set your own Career and Google settings.
 career:
   root: /absolute/path/to/01 Career
-  profile: Candidate Profile.md
-  source_documents: Source Documents
-  project_evidence: Project Evidence
-  applications: Applications
-  application_tracker: Applications/Applications.md
 search:
   keywords:
   - data analyst
@@ -21,8 +16,8 @@ search:
   results_wanted: 100
   country_indeed: Ireland
   linkedin_fetch_description: true
-preferences_path: null
+# Target connector setup; legacy Python sync still requires credentials_path.
+# See README migration status before attempting synchronization.
 google_sheets:
   spreadsheet: https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit
   worksheet: Jobs
-  credentials_path: /absolute/private/path/google-service-account.json

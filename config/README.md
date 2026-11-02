@@ -1,106 +1,75 @@
-# Career data paths
+# Configuration
 
-Copy `config.example.yaml` to `config.local.yaml` and edit `career.root`.
-The local file contains private settings and must not be committed.
-For AI-assisted Profile initialization, only career.root needs changing when the
-default folder names fit. See policies/profile-building.md (relative to the repo
-root). A root alone does not configure Google authorization or search preferences.
+Copy `config.example.yaml` to `config.local.yaml` and fill in your settings.
+`config.local.yaml` is private and Git-ignored. Career setup needs only a root;
+job search and Sheet synchronization need their respective sections too.
 
-`root` is an absolute path. All other paths are relative to `root`, or may
-be absolute paths when the data is stored elsewhere. Use ordinary filesystem
-paths, not Obsidian URLs. Filesystem access must be authorized separately.
+## Fields
 
-| Key | Purpose |
-| --- | --- |
-| `profile` | Verified candidate facts in Markdown |
-| `source_documents` | Original CVs, Word/PDF files and other source material |
-| `project_evidence` | Reviewed project evidence summaries with source references |
-| `applications` | Per-application CV and cover-letter files |
-| `application_tracker` | Application status table in Markdown |
-
-Source documents are retained as evidence, not automatically treated as verified
-facts. Project repositories remain at their original locations.
-Place plain repository URLs (one per line) in Projects.md inside source_documents;
-see [example](../examples/Projects.md). AI reviews under
-[project-evidence.md](../policies/project-evidence.md) and presents exact proposed
-Profile/Project Evidence edits for approval before writing.
-
-## Search settings
-
-The `search` section of config.local.yaml replaces the old search_terms.yaml.
-All fields are required; config.example.yaml supplies a complete example:
-
-| Key | Purpose |
-| --- | --- |
-| `keywords` | Non-empty list of job search terms |
-| `location` | Search location |
-| `sites` | Non-empty list of site names supported by JobSpy |
-| `hours_old` | Positive integer; listing age filter in hours |
-| `results_wanted` | Positive integer; requested results per keyword |
-| `country_indeed` | Indeed country name supported by JobSpy |
-| `linkedin_fetch_description` | Boolean; fetch LinkedIn descriptions |
-
-## Site values
-
-For the pinned `python-jobspy==1.1.82`, use these exact lowercase identifiers.
-Choose a subset; listing every site does not improve coverage in every country.
-
-| Value | Service | Region / limitations |
+| Field | Definition | Example / default |
 | --- | --- | --- |
-| `linkedin` | LinkedIn | Global; uses `location` |
-| `indeed` | Indeed | Multiple countries; uses `country_indeed` and `location` |
-| `glassdoor` | Glassdoor | Supported country domains, including Ireland; uses `country_indeed` and `location` |
-| `zip_recruiter` | ZipRecruiter | US and Canada |
-| `bayt` | Bayt | Location coverage depends on the board; e.g. Dubai, UAE or Saudi Arabia |
-| `naukri` | Naukri | India |
-| `bdjobs` | BDJobs | Bangladesh |
-| `google` | Google Jobs | Recognized by the pinned library, but not usable in this pipeline: it does not expose `google_search_term`; current upstream also reports Google Jobs unavailable |
+| `career.root` | Absolute path to your Career folder. All Career filenames below are fixed by the project. | `/absolute/path/to/01 Career` |
+| `search.keywords` | Non-empty list of job search terms. Each term runs a search. | `[data analyst, analytics engineer]` |
+| `search.location` | Location sent to the job boards. | `Dublin, Ireland` |
+| `search.sites` | Non-empty list of job board identifiers; see supported values below. | `[linkedin, indeed]` |
+| `search.hours_old` | Listing age filter in hours; positive integer. | `6` |
+| `search.results_wanted` | Requested results per keyword; positive integer, not a guaranteed count. | `100` |
+| `search.country_indeed` | Country name used by Indeed and Glassdoor. | `Ireland` |
+| `search.linkedin_fetch_description` | Whether to fetch LinkedIn job descriptions. | `true` |
+| `google_sheets.spreadsheet` | Destination Google Sheet URL or ID. | `https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit` |
+| `google_sheets.worksheet` | Exact tab name inside that Sheet, including capitalization and spaces. | `Jobs` |
 
-Example: `sites: [linkedin, indeed, glassdoor]`. The default remains LinkedIn and
-Indeed; no additional site was enabled automatically. Supported identifiers do
-not guarantee successful scraping or consistent filter support. No live board
-availability was tested for this documentation change.
+Search fields are all required when running the crawler. Supported `sites` values
+for pinned JobSpy 1.1.82:
 
-The list was checked against the installed 1.1.82 `Site` enum and scraper mapping.
-[Upstream documentation](https://github.com/speedyapply/JobSpy/blob/main/README.md)
-explains geographic coverage and current service limitations. Newer upstream
-versions include `hellowork`, but this project's pinned version does not; do not
-add it without upgrading and verifying compatibility.
+| Value | Coverage |
+| --- | --- |
+| `linkedin` | Global; uses `location` |
+| `indeed` | Multiple countries; uses `country_indeed` |
+| `glassdoor` | Supported country domains, including Ireland; uses `country_indeed` |
+| `zip_recruiter` | US and Canada |
+| `bayt` | Coverage depends on the board, e.g. Middle East locations |
+| `naukri` | India |
+| `bdjobs` | Bangladesh |
 
-Your old keywords were migrated to private local configuration. The public
-example uses generic keywords. Search configuration is validated before any
-search request; invalid or missing configuration fails with setup guidance.
+`google` is not usable in this pipeline. Board availability and filter support
+can vary. No Google account credentials belong in this YAML: the intended Sheet
+workflow uses the connected Google Drive account with Sheets read/write access.
+**Connector sync integration is pending; the existing Python sync command still
+requires a service-account key.** See [current status and setup](../README.md#google-sheets-setup-first-time).
 
-## Private presentation preferences
+Personal presentation preferences are optional and live at the fixed, Git-ignored
+`policies/preferences.md` path, outside config. No preferences path field is needed.
 
-`preferences_path` is optional (null disables it). Copy preferences.example.md to
-Git-ignored config/preferences.local.md, or choose another private file. Paths are
-absolute or relative to the repo root. AI reads it at the start of every workflow;
-new conversations can reuse Profile organization, language and writing preferences.
+## Career files and folders
 
-## Google Sheets setup
+These paths are fixed relative to `career.root`; users do not configure them.
 
-Set `google_sheets.spreadsheet` to the full Google Sheet URL or its ID,
-`worksheet` to the exact tab name and `credentials_path` to your service-account
-JSON file. Credential paths are absolute (recommended outside repo/vault) or
-relative to repo root; `~` is expanded. Do not put credential contents in YAML.
-For legacy installations only, an empty spreadsheet plus explicit spreadsheet_name
-opens by name; URL/ID avoids ambiguous titles.
+| Path | Purpose / who creates it |
+| --- | --- |
+| `Source Documents/` | Required input folder. The AI can create the empty folder; users put original CVs and other source documents here. |
+| `Source Documents/Projects.md` | Optional user input listing project links, one per line. Only needed when supplying projects; see the short README example. |
+| `Candidate Profile.md` | AI writes approved personal facts and reviewed project evidence here after content approval. |
+| `applications.md` | AI creates/updates the application tracker when authorized. |
+| `applications/Company Name/YYYY-MM-DD - Job Title/` | AI creates application folders when saving requested documents. Date is preparation start; submission date is recorded in the tracker. |
+| `…/CV.md`, `…/Cover Letter.md` | AI-generated application documents when requested. |
+| `…/CV.pdf` | Exported only when requested/needed. |
 
-Follow the [complete Google setup walkthrough](../README.md#google-sheets-setup-first-time)
-for Cloud project selection, API enablement, service-account/key creation, Sheet
-sharing, read-only connection checks, preview and troubleshooting. The walkthrough
-is maintained in the main README only.
+Use lowercase `applications` exactly. Project evidence stays inside Candidate
+Profile.md. Existing files are preserved; old custom paths are no longer used and
+are not automatically migrated. Filesystem permissions are separate from config.
 
-## Runtime state and synchronization
+## Working files in the repository
 
-Search and synchronization now read local settings; Career paths and preferences
-are consumed by AI workflow and evaluation fingerprinting. Sync supports updates
-by job_id, preserves additional manual columns, and refuses incompatible headers
-rather than overwriting them. Empty worksheets may be initialized. Processed
-state changes only after remote success. Only one writer/run at a time is supported.
+These private files are created as the pipeline runs; users do not fill them in.
 
-Private data/job_history.csv retains observed JDs for reassessment. Input and score
-hashes in data/*context.json prevent stale scores from being synchronized. Follow
-policies/workflow.md for prepare/evaluate/seal/preview/sync order. Historical
-processed jobs with no surviving JD cannot be reconstructed automatically.
+| Path | Purpose |
+| --- | --- |
+| `data/raw_jobs.csv` | Crawler search results. |
+| `data/job_history.csv` | Retained job descriptions for later reassessment. |
+| `data/pending_jobs.csv` | Jobs waiting for AI evaluation. |
+| `data/scored_jobs.csv` | AI evaluation output. |
+| `data/evaluation_context.json`, `data/scored_context.json` | Queue/input fingerprints and sealed score hash used for validation. |
+| `data/processed_job_ids.json`, `data/last_synced_context.json` | Processed IDs and evaluation context recorded after successful synchronization. |
+
+The execution and evidence rules live in [workflow.md](../policies/workflow.md).
