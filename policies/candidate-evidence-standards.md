@@ -1,6 +1,6 @@
 # Candidate Evidence Standards
 
-Version: 1.2. Applies to every assessment and application document.
+Version: 1.3. Applies to every assessment and application document.
 
 ## Sources and access
 
@@ -25,6 +25,11 @@ links recorded in its Projects.md when a material claim needs
 verification. An incomplete profile calls for source review or questions, not an
 assumption that the candidate has no experience. CVs are presentations of facts,
 not authoritative facts; repetition across files adds no evidence strength.
+For the same JD, confirmed facts and scoring rules, changes only to CV/Profile
+wording, length, order, keyword density or repetition must not increase or reduce
+capability credit. Clearer writing can reveal a claim that needs checking, but
+only new/corrected substantive evidence or a corrected assessment can change fit;
+explain the reason. Review document quality separately from candidate capability.
 
 ## Claim boundaries
 
@@ -55,8 +60,11 @@ specific claim requires deeper review. Never invent a checked commit.
 ## Questions and updates
 
 Missing evidence is unverified, not a confirmed absence. Award no assumed credit.
-In conversation ask focused questions only where answers could materially change
-fit: context, owned action, completion, scope/result and supporting source.
+In conversation ask focused questions where answers could materially change
+fit or complete relevant candidate evidence: context, owned action, completion,
+scope/result and supporting source. This applies at every recommendation level,
+including Consider/Skip when unrecorded experience could support applying.
+Prioritize decision-changing questions; avoid collecting irrelevant biography.
 Do not repeatedly ask facts already recorded. In unattended runs mark pending
 questions without guessing answers or blocking the entire batch.
 

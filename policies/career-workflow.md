@@ -1,6 +1,6 @@
 # Career Workflow
 
-Version: 1.4. This is the end-to-end procedure for a fresh conversation or a
+Version: 1.5. This is the end-to-end procedure for a fresh conversation or a
 scheduled AI run. Standards remain in their individual policies, not copied here.
 
 ## Start every run
@@ -77,7 +77,7 @@ an authorized cleanup; do not claim that those keys still redirect paths.
    explain changed judgments. An answer alone does not authorize writing. Mark unknowns,
    do not invent answers. Context changes invalidate earlier batch output.
 4. Apply the short-command interactive contract below. Documents follow
-   cv-writing-and-review.md/cv-writing-and-review.md, cover-letter-writing.md and application-email-writing.md.
+   cv-writing-and-review.md, cover-letter-writing.md and application-email-writing.md.
    PDF conversion follows application-pdf-generation.md; it does not rewrite approved text.
 5. A Profile/CV question or automatic document draft does not authorize Sheet writes,
    email sending or application submission. Sync remains a separate requested or
@@ -101,15 +101,19 @@ normal interactive continuation. Scheduled/batch runs never draft documents.
 
 Give the common weighted score and recommendation, three strongest supported
 advantages (fewer if evidence is insufficient), material concerns and application
-value. The score is not interview probability. For Apply/Strong Apply, check the
-Profile and relevant sources before asking at most three consolidated material
-questions in a round; don't invent questions or repeat recorded facts. This limit
-is not permission to assume an unanswered fact. Nonessential unknowns need not block.
+value. The score is not interview probability. At every recommendation level,
+check the Profile and relevant sources for material unknowns. Ask when an answer
+could change the score, recommendation, eligibility or understanding of relevant
+experience, especially when existing but unrecorded experience could move
+Consider/Skip to Apply/Strong Apply. Do not wait for an Apply label to ask.
+Ask at most three consolidated material questions in a round; don't invent
+questions or repeat recorded facts. This limit is not permission to assume an
+unanswered fact. Nonessential unknowns need not block.
 
 After answers, show exact proposed Profile corrections under candidate-evidence-standards.md
 and get content approval before writing. Recompute and explain any changed score.
 If no Profile change is required, do not create an artificial approval step.
-If the final judgment remains Apply/Strong Apply with no unresolved material gate,
+If the final judgment is Apply/Strong Apply with no unresolved material gate,
 continue directly with CV, tailored cover-letter and application-email drafts in
 conversation, following their separate policies. This interactive contract authorizes
 drafting without an additional 'do you want a CV?' question. An optional low-value

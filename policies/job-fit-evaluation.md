@@ -1,6 +1,6 @@
 # Job Fit Evaluation
 
-Version: 1.1. Read with `candidate-evidence-standards.md`. The same standard applies to batch
+Version: 1.2. Read with `candidate-evidence-standards.md`. The same standard applies to batch
 search results, pasted JDs and manually found jobs; neither Sheet membership nor
 an existing CV is required. The score measures the value of preparing and applying.
 
@@ -112,8 +112,12 @@ confirmed evidence, corrected interpretation or policy version; do not change
 judgment simply because the user selected the job.
 
 For material unknown experience give a **provisional** score based only on known
-evidence, identify pending questions and ask before finalizing. No hypothetical
-credit or automatic failure. Batch runs record this limitation in the summary.
+evidence, identify pending questions and ask before finalizing, regardless of
+the initial recommendation. In particular, ask about plausible unrecorded
+experience that could turn Consider/Skip into Apply/Strong Apply; never assume
+that experience exists or award hypothetical credit. Follow the shared evidence
+policy for Profile proposals and approval. Batch runs record these questions and
+the provisional limitation in the summary without blocking other jobs.
 
 For a single JD lead with score/recommendation (a reasoned priority estimate,
 not interview probability), up to three supported strengths, material concerns
@@ -127,7 +131,9 @@ versions. Existing CSV fields remain unchanged; put necessary context in summary
 When structural/non-waivable gaps make preparation low-value, say `reconsider
 applying` and stop before document drafting. Give the strongest transferable
 point, decisive gap, why wording cannot fix it and any narrow condition worth
-checking. This stop rule does not apply to ordinary stretches. For drafting and its confirmation/automatic-continuation conditions, follow the
+checking. Resolve material unknowns before treating a gap as confirmed; this stop
+rule must not suppress those questions. It does not apply to ordinary stretches.
+For drafting and its confirmation/automatic-continuation conditions, follow the
 interactive contract in career-workflow.md; explicit user constraints take precedence.
 
 ## Unattended batch
