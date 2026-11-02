@@ -1,15 +1,15 @@
-# Build and update Candidate Profile
+# Candidate Profile Generation
 
-Version: 1.2. Apply `evidence.md`; this file owns profile initialization.
+Version: 1.2. Apply `candidate-evidence-standards.md`; this file owns profile initialization.
 This is an AI-assisted document workflow, not a Python conversion command.
 
 ## Input and destination
 
 A user-supplied absolute Career root is sufficient to start profile initialization.
 For initialization only, a missing local configuration or Profile is expected:
-these bootstrap rules replace the existing-file prerequisite in evidence.md.
+these bootstrap rules replace the existing-file prerequisite in candidate-evidence-standards.md.
 Use the supplied root and fixed layout to inspect and propose content. Create Profile
-only after approval under evidence.md; still stop for unavailable sources
+only after approval under candidate-evidence-standards.md; still stop for unavailable sources
 or filesystem permission.
 Use the fixed paths relative to root: `Candidate Profile.md`, `Source Documents/`,
 optional `Source Documents/Projects.md`, `applications.md` and `applications/`.
@@ -22,7 +22,7 @@ When initializing configuration, preserve existing search/other settings; copy
 missing fields from the public example, but never invent personal preferences.
 
 A build/update request authorizes inspection and a proposal, not writing unseen
-Profile content (including project evidence). Apply evidence.md's approval gate,
+Profile content (including project evidence). Apply candidate-evidence-standards.md's approval gate,
 including initial creation. Local filesystem permission is separately required.
 Resolve a file URL to its local path; do not invent remote access.
 
@@ -51,7 +51,7 @@ copies.
    not silently into factual sections. Ask focused high-impact questions and
    propose the rest as unresolved; initialization need not wait for every detail.
 5. Read optional `<career.root>/Source Documents/Projects.md` and follow
-   projects.md for each listed project. Plain URLs are sufficient.
+   project-evidence-evaluation.md for each listed project. Plain URLs are sufficient.
    Read existing Profile project sections first, inspect relevant source when required, then
    propose one Profile subsection per project; no automatic summary-file creation.
 6. Present the proposed Markdown and precise destination/change list. Ask material
@@ -68,7 +68,7 @@ Use these sections as a compact consistent structure, omitting empty subsections
   suggested directions. Do not invent preferences or motivation.
 - **Work Experience:** employer, actual title, dates, employment type/location;
   responsibilities, owned contributions, achievements, technologies and limits.
-- **Projects:** one named subsection per project, using projects.md
+- **Projects:** one named subsection per project, using project-evidence-evaluation.md
   for role/contribution, capabilities, achievements, limits, sources and commit.
 - **Skills & Evidence:** capability, evidence type and relevant experience/project
   reference, depth and boundaries; learning is not implementation.
@@ -92,7 +92,7 @@ original titles and technical terms where needed for accuracy.
 ## Ongoing use
 
 After generation, the Profile is the maintained shared factual entry point;
-raw documents remain references. Follow evidence.md for later confirmed
+raw documents remain references. Follow candidate-evidence-standards.md for later confirmed
 experience updates and do not re-read all originals on every assessment. An
 incomplete Profile supports only provisional evaluations until material questions
 are resolved. Requesting initialization does not authorize job searches, Sheet
@@ -106,4 +106,4 @@ access. Do not create an empty Profile as a substitute for an approved proposal.
 Create applications/ subfolders and root applications.md when an authorized
 application save/tracker update needs them, not during unrelated profile work.
 If old path overrides, Applications/ or Project Evidence/ already exist, follow
-the migration safeguards in workflow.md; never move or merge them silently.
+the migration safeguards in career-workflow.md; never move or merge them silently.

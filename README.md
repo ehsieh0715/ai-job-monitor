@@ -196,9 +196,9 @@ city. [Configuration](config/README.md) explains every field and supported board
 
 After your Profile has been approved and saved, paste:
 
-> Follow career-assistant and `policies/workflow.md`. Use my local configuration
+> Follow career-assistant and `policies/career-workflow.md`. Use my local configuration
 > and latest Candidate Profile to run one job search, prepare the pending queue,
-> evaluate every pending job under `policies/evaluation.md`, and seal the scores.
+> evaluate every pending job under `policies/job-fit-evaluation.md`, and seal the scores.
 > Show a concise summary of recommendations and unresolved evidence questions.
 > Preview with `src/sync_scores_to_sheet.py --dry-run`, then synchronize my
 > configured Sheet with Python. Preserve manual columns and stop on errors.
@@ -212,7 +212,7 @@ After AI creates the scored CSV, the commands are:
 .venv/bin/python src/sync_scores_to_sheet.py
 ```
 
-The AI follows policies/workflow.md, including preparing the queue before scoring.
+The AI follows policies/career-workflow.md, including preparing the queue before scoring.
 Empty queues need no upload. Test a complete run before scheduling, and run one
 writer at a time. Python main.py alone searches but does not perform AI evaluation.
 
@@ -223,7 +223,7 @@ in your AI environment's scheduling interface. Set this repository as the workin
 directory and use this short task instruction:
 
 > Follow `.agents/skills/career-assistant/SKILL.md` and the scheduled-run procedure
-> in `policies/workflow.md`. Search, evaluate and sync to my configured Sheet.
+> in `policies/career-workflow.md`. Search, evaluate and sync to my configured Sheet.
 
 You may ask the AI to create the task if scheduling tools are available. Authorize
 recurring Sheet updates when setting it up; the execution rules stay in the policy.
@@ -263,15 +263,15 @@ still require approval before Profile updates; ideas are not recorded as achieve
 
 | Policy | Purpose |
 | --- | --- |
-| [workflow.md](policies/workflow.md) | Short commands, stages and scheduled runs |
-| [evidence.md](policies/evidence.md) | Facts, approval and remembered preferences |
-| [profile.md](policies/profile.md) | Build/update Candidate Profile |
-| [projects.md](policies/projects.md) | Review project links and contributions |
-| [evaluation.md](policies/evaluation.md) | Common job-fit scoring |
-| [cv.md](policies/cv.md) | CV writing and review |
-| [cover-letter.md](policies/cover-letter.md) | Cover letter writing |
-| [email.md](policies/email.md) | Application email drafts |
-| [pdf.md](policies/pdf.md) | PDF formatting, naming and checks |
+| [career-workflow.md](policies/career-workflow.md) | Short commands, stages and scheduled runs |
+| [candidate-evidence-standards.md](policies/candidate-evidence-standards.md) | Facts, approval and remembered preferences |
+| [candidate-profile-generation.md](policies/candidate-profile-generation.md) | Build/update Candidate Profile |
+| [project-evidence-evaluation.md](policies/project-evidence-evaluation.md) | Review project links and contributions |
+| [job-fit-evaluation.md](policies/job-fit-evaluation.md) | Common job-fit scoring |
+| [cv-writing-and-review.md](policies/cv-writing-and-review.md) | CV writing and review |
+| [cover-letter-writing.md](policies/cover-letter-writing.md) | Cover letter writing |
+| [application-email-writing.md](policies/application-email-writing.md) | Application email drafts |
+| [application-pdf-generation.md](policies/application-pdf-generation.md) | PDF formatting, naming and checks |
 
 Keep local config, personal preferences, source documents, Profile, application
 files and pipeline data private. Removing a tracked file does not remove older

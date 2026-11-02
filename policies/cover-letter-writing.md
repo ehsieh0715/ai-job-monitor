@@ -1,10 +1,10 @@
-# Cover letter writing
+# Cover Letter Writing
 
-Version: 1.0. Read `evidence.md` and the current job assessment first.
+Version: 1.0. Read `candidate-evidence-standards.md` and the current job assessment first.
 
-Assess current fit under evaluation.md first; its uncertainty and structural-gap
+Assess current fit under job-fit-evaluation.md first; its uncertainty and structural-gap
 stop rules apply. Asking whether a letter helps is not a request to draft.
-Draft when requested or authorized by workflow.md's recommended-job continuation. Decide
+Draft when requested or authorized by career-workflow.md's recommended-job continuation. Decide
 whether it adds context beyond the CV; if optional and repetitive, say low value.
 Do not use a letter to disguise structural gaps or invent motivation.
 
@@ -50,9 +50,9 @@ opening/close; and length. Markdown goes to the fixed
 <career.root>/applications/Company Name/YYYY-MM-DD - Job Title/Cover Letter.md only within authorized scope. Export when needed/requested with
 CV-consistent typography and inspect the result. Preserve submitted versions.
 
-Use the folder naming/date and preservation rules in workflow.md. Ask about
+Use the folder naming/date and preservation rules in career-workflow.md. Ask about
 ambiguous company/title/start date. Create/update root applications.md only within
 authorized scope, preserving unrelated fields. Do not alter Google Sheets, queues,
 program files or shared policies as a side effect.
 
-PDF layout, source fidelity, colour and naming follow pdf.md.
+PDF layout, source fidelity, colour and naming follow application-pdf-generation.md.

@@ -1,7 +1,7 @@
-# Application email
+# Application Email Writing
 
 Use for a requested email draft or the interactive recommended-job package in
-workflow.md. Apply evidence.md; this policy owns email wording only.
+career-workflow.md. Apply candidate-evidence-standards.md; this policy owns email wording only.
 
 Provide a subject and a concise professional body naming the role, stating the
 strongest relevant fit and referring to the CV/cover letter that actually exist

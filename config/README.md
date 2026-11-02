@@ -73,4 +73,4 @@ These private files are created as the pipeline runs; users do not fill them in.
 | `data/evaluation_context.json`, `data/scored_context.json` | Queue/input fingerprints and sealed score hash used for validation. |
 | `data/processed_job_ids.json`, `data/last_synced_context.json` | Processed IDs and evaluation context recorded after successful synchronization. |
 
-The execution and evidence rules live in [workflow.md](../policies/workflow.md).
+The execution and evidence rules live in [career-workflow.md](../policies/career-workflow.md).

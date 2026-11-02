@@ -1,11 +1,11 @@
-# CV writing and review
+# CV Writing and Review
 
-Version: 1.0. Read `evidence.md` and the current job assessment first.
+Version: 1.0. Read `candidate-evidence-standards.md` and the current job assessment first.
 
 ## Content selection
 
-Assess the current JD under evaluation.md first; its questions and drafting
-gate and workflow.md's interactive continuation apply. Once drafting is authorized, compose the CV from Candidate Profile and its relevant
+Assess the current JD under job-fit-evaluation.md first; its questions and drafting
+gate and career-workflow.md's interactive continuation apply. Once drafting is authorized, compose the CV from Candidate Profile and its relevant
 verified project sections for the JD. No Master CV, existing CV or single base
 version is required. Consult relevant old CVs for useful expression only; do not
 read every version by default or treat their repetition as evidence.
@@ -62,9 +62,9 @@ Create/update <career.root>/applications.md only when requested or already autho
 do not guess dates, NofD or status.
 
 Create needed application directories within authorized scope using the fixed
-layout and safe naming rules in workflow.md; users do not configure these paths.
+layout and safe naming rules in career-workflow.md; users do not configure these paths.
 
-PDF conversion, colour, content fidelity and filenames are owned by pdf.md.
+PDF conversion, colour, content fidelity and filenames are owned by application-pdf-generation.md.
 
 ## Review before delivery
 
@@ -89,4 +89,4 @@ complete replacement sections when useful, not a compulsory long checklist or
 arbitrary resume 'match score'. Mark work needing source or layout verification
 rather than claiming it passed.
 
-For PDF exports also apply pdf.md; do not rewrite source during conversion.
+For PDF exports also apply application-pdf-generation.md; do not rewrite source during conversion.

@@ -1,6 +1,6 @@
-# Project evidence review
+# Project Evidence Evaluation
 
-Version: 1.1. Apply evidence.md and its approval-before-write rule.
+Version: 1.1. Apply candidate-evidence-standards.md and its approval-before-write rule.
 
 ## Link-only input
 
