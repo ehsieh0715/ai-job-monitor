@@ -55,28 +55,12 @@ Ask in ordinary language, for example:
 > facts; flag conflicts and ask about important missing evidence. Show the proposed
 > Markdown and wait for my approval before writing Profile or Project Evidence.
 
-You may also supply the root in conversation and ask the assistant to create the
-private configuration using the example. A Profile request starts inspection and
-a proposal; only explicit approval of the displayed content authorizes saving
-Profile/Project Evidence Markdown. Answering factual questions alone is not approval.
-Configuration changes need their own requested/authorized scope; no searching or
-uploading is implied.
-No Master CV or existing Profile is required. Initialization needs an AI assistant
-and document-reading capabilities; running Python alone does not generate it.
+You can give the Career root in conversation and ask the AI assistant to configure
+it for you. The assistant reviews your sources, asks about important uncertainties,
+and shows the proposed Profile for approval before saving. Original files stay intact.
 
-The assistant reads available materials, consolidates evidence, presents the
-proposed Markdown Profile and saves it after your approval. Unknown claims stay marked; it does not turn every CV assertion
-or README feature into verified experience. Subsequent experience is proposed and approved before updating
-this same Profile rather than another JSON database. Original sources stay intact.
-
-The old project's exact Profile-generation prompt was not found in the reviewed
-project documents or Git history; profile-building.md defines the new repeatable
-workflow. It carries forward the old JSON's summary, roles, experience, skills,
-projects, education, constraints, tailoring boundaries and conflict information.
-
-For lasting generation/style preferences, set `preferences_path` to a private
-Markdown file; see [example](config/preferences.example.md). The assistant reads
-it each time. Shared evidence requirements still apply.
+Optional: set `preferences_path` to a private Markdown file for your preferred
+language, structure and writing style; see [example](config/preferences.example.md).
 
 ## 2. Evaluate a job in the same conversation
 
