@@ -5,8 +5,8 @@ Version: 1.0. Read `evidence-policy.md` and the current job assessment first.
 ## Content selection
 
 Assess the current JD under job-evaluation.md first; its questions and drafting
-gate apply. After confirmation to proceed, compose the CV from Candidate Profile and relevant
-verified Project Evidence for the JD. No Master CV, existing CV or single base
+gate apply. After confirmation to proceed, compose the CV from Candidate Profile and its relevant
+verified project sections for the JD. No Master CV, existing CV or single base
 version is required. Consult relevant old CVs for useful expression only; do not
 read every version by default or treat their repetition as evidence.
 
@@ -52,11 +52,14 @@ Return a concise positioning rationale and the complete Markdown CV; apply
 resume-review.md before delivery. Ask about ambiguous company/title/start date.
 Do not alter Google Sheets, queues, program files or shared policies as a side effect.
 
-Draft Markdown first. Save only when requested/authorized, to the configured
-Applications / Company Name / YYYY-MM-DD - Job Title / CV.md. Folder date is the
+Draft Markdown first. Save only when requested/authorized, to the fixed
+<career.root>/applications/Company Name/YYYY-MM-DD - Job Title/CV.md. Folder date is the
 preparation start date; actual application date belongs in the tracker. Export
 PDF when requested/needed for submission; honor employer format requirements.
 Do not create JD, analysis, progress or index notes by default. Preserve submitted
 versions; if revising after submission, use an explicitly separate draft/version.
-Update the existing application tracker only when requested or already authorized;
+Create/update <career.root>/applications.md only when requested or already authorized;
 do not guess dates, NofD or status.
+
+Create needed application directories within authorized scope using the fixed
+layout and safe naming rules in workflow.md; users do not configure these paths.

@@ -4,7 +4,7 @@ import hashlib
 import json
 
 import pandas as pd
-from configuration import REPO_ROOT, load_config
+from configuration import REPO_ROOT, load_config, load_career_paths
 from schema import PENDING_COLUMNS
 from job_history import merge_jobs
 
@@ -17,28 +17,10 @@ HISTORY = DATA / 'job_history.csv'
 
 def fingerprint():
     config = load_config()
-    career = config['career']
-    from pathlib import Path
-    root = Path(career['root']).expanduser()
-    if not root.is_absolute():
-        raise ValueError('career.root must be absolute')
-    def career_path(key, default):
-        p = Path(career.get(key, default)).expanduser()
-        return p if p.is_absolute() else root / p
-    profile = career_path('profile', 'Candidate Profile.md')
+    profile = load_career_paths(config=config)['profile']
     if not profile.is_file():
         raise FileNotFoundError(f'Initialize Profile first: {profile}')
     files = [profile] + sorted((REPO_ROOT / 'policies').glob('*.md'))
-    evidence = career_path('project_evidence', 'Project Evidence')
-    if evidence.exists():
-        files += sorted(evidence.rglob('*.md'))
-    preferences = config.get('preferences_path')
-    if preferences:
-        p = Path(preferences).expanduser()
-        p = p if p.is_absolute() else REPO_ROOT / p
-        if not p.is_file():
-            raise FileNotFoundError(f'Missing preferences: {p}')
-        files.append(p)
     digest = hashlib.sha256()
     for p in files:
         digest.update(str(p).encode()); digest.update(p.read_bytes())

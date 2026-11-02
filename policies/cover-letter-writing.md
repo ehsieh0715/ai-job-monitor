@@ -25,7 +25,9 @@ For short text boxes, normally 200–275 words unless the form says otherwise.
 Limits and user preferences override these defaults. Shorten secondary detail,
 not evidence boundaries or role specificity.
 
-Use direct professional English and natural supported JD terms. Calibrate tone
+Use direct professional wording in the requested or employer-required language,
+consulting local policies/preferences.md when present, and natural supported JD
+terms. Calibrate tone
 to the employer. Avoid generic praise, ornate enthusiasm, keyword stuffing and
 apologetic 'Although I lack...' framing. Discuss gaps in application strategy;
 bridge adjacent evidence accurately in the letter. Mention new practical work
@@ -44,10 +46,11 @@ helpful; avoid duplicate CVs, portfolio dumps and unsolicited references.
 
 Before delivery check every factual/company claim, ownership and metric; clear
 professional/project separation; no repeated evidence across paragraphs; a specific
-opening/close; and length. Markdown goes to the configured application folder as
-Cover Letter.md only within authorized scope. Export when needed/requested with
+opening/close; and length. Markdown goes to the fixed
+<career.root>/applications/Company Name/YYYY-MM-DD - Job Title/Cover Letter.md only within authorized scope. Export when needed/requested with
 CV-consistent typography and inspect the result. Preserve submitted versions.
 
-Ask about ambiguous company/title/start date. Update the tracker only within
+Use the folder naming/date and preservation rules in workflow.md. Ask about
+ambiguous company/title/start date. Create/update root applications.md only within
 authorized scope, preserving unrelated fields. Do not alter Google Sheets, queues,
 program files or shared policies as a side effect.

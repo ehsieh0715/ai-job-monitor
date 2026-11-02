@@ -23,6 +23,29 @@ def load_config(path=None):
     return config
 
 
+def load_career_paths(path=None, *, config=None):
+    """Resolve the repository-owned layout; legacy path overrides are ignored.
+
+    Resolving paths never creates folders or approved candidate content.
+    """
+    config = load_config(path) if config is None else config
+    career = config.get('career')
+    value = career.get('root') if isinstance(career, dict) else None
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError('Set career.root to an absolute Career folder path')
+    root = Path(value).expanduser()
+    if not root.is_absolute():
+        raise ValueError('career.root must be absolute')
+    return {
+        'root': root,
+        'profile': root / 'Candidate Profile.md',
+        'source_documents': root / 'Source Documents',
+        'projects': root / 'Source Documents' / 'Projects.md',
+        'applications': root / 'applications',
+        'application_tracker': root / 'applications.md',
+    }
+
+
 def load_search_config(path=None):
     config = load_config(path)
     if not isinstance(config, dict) or not isinstance(config.get('search'), dict):

@@ -8,6 +8,13 @@ description: Use when initializing or updating a Candidate Profile from source d
 Resolve all references below from the repository root. Read `config/README.md`
 for local configuration, start with `policies/workflow.md`, and always apply
 `policies/evidence-policy.md`.
+Career configuration requires only `career.root`; resolve every generated path
+from the fixed layout in `policies/workflow.md`. Read original inputs only through
+`Source Documents/` and its optional `Projects.md` links; keep reviewed project
+evidence in `Candidate Profile.md`. The tracker is root `applications.md`, and
+documents belong under lowercase `applications/`. Never ask users to configure
+individual Career paths or silently migrate legacy files.
+
 Read only the additional policies relevant to the request:
 
 | Request | Policies |

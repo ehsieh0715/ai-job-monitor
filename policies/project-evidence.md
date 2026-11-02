@@ -1,13 +1,17 @@
 # Project evidence review
 
-Version: 1.0. Apply evidence-policy.md and its approval-before-write rule.
+Version: 1.1. Apply evidence-policy.md and its approval-before-write rule.
 
 ## Link-only input
 
-Read `Projects.md` inside the configured source_documents directory (default:
-Source Documents/Projects.md). Each nonempty line may contain just a repository
-URL; no role, contribution or target-skill fields are required. Also accept ordinary
-Markdown links or a directly supplied repo URL. Deduplicate equivalent repo URLs
+Read optional `<career.root>/Source Documents/Projects.md`. Create this input
+file only when project links need to be recorded and writing it is authorized;
+users can create it themselves. Each nonempty line may contain just a project
+or repository URL; no role, contribution or target-skill fields are required. Also accept ordinary
+Markdown links. For directly supplied links, review them when requested and offer
+to record them in this single input file within authorized scope. For non-repository
+project links, inspect accessible artifacts, state evidence limits and do not claim
+a code review or commit verification without repository access. Deduplicate equivalent repo URLs
 (host casing/ending slash/.git), retaining explicit branch/commit restrictions.
 Do not lowercase case-sensitive repository paths or refs. Never
 rewrite the user's list automatically. Missing file is not an initialization
@@ -57,10 +61,10 @@ Under `## Projects`, propose one `### Project Name` section per project containi
 - Reviewed commit/date, source files/links and outstanding questions.
 
 This replaces the legacy JSON's per-project entries with readable Markdown;
-Candidate Profile remains the common factual entry point. Optional detailed
-Project Evidence summaries are useful only when the Profile would become too
-large. Do not create one for every project automatically; propose its exact path
-and content along with the Profile edit if needed.
+Candidate Profile remains the common factual entry point. Store reviewed evidence
+in the corresponding Profile section with concise source references; do not create
+a separate Project Evidence folder or per-project summary file. The input link list
+stays in Source Documents/Projects.md; it is not a second evidence database.
 
 ## Approval and refresh
 
@@ -70,7 +74,7 @@ and content along with the Profile edit if needed.
 2. Present the exact proposed additions/replacements/removals, target file paths,
    source basis and open questions in conversation. Ask focused questions, revise
    the proposal after answers, and obtain explicit approval of the resulting edit
-   before any Profile or Project Evidence Markdown write. An answer about facts
+   before any Profile Markdown write (including its project sections). An answer about facts
    or a request to inspect/update is not approval of unseen content.
 3. Preserve unrelated projects and confirmed history. Never promote a new feature
    from repository capability to the candidate's contribution without confirmation.
@@ -85,4 +89,4 @@ and content along with the Profile edit if needed.
    changes if explicitly included), check for duplicate project identity and report
    what was written. Changed Profile/evidence triggers the normal reevaluation
    workflow. In unattended runs report proposed updates/questions without writing
-   Profile or Project Evidence and without scoring unapproved new claims as facts.
+   the Profile and without scoring unapproved new claims as facts.

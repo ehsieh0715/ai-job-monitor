@@ -1,6 +1,6 @@
 # Build and update Candidate Profile
 
-Version: 1.1. Apply `evidence-policy.md`; this file owns profile initialization.
+Version: 1.2. Apply `evidence-policy.md`; this file owns profile initialization.
 This is an AI-assisted document workflow, not a Python conversion command.
 
 ## Input and destination
@@ -8,26 +8,30 @@ This is an AI-assisted document workflow, not a Python conversion command.
 A user-supplied absolute Career root is sufficient to start profile initialization.
 For initialization only, a missing local configuration or Profile is expected:
 these bootstrap rules replace the existing-file prerequisite in evidence-policy.md.
-Use the supplied root/defaults to inspect and propose content. Create Profile
+Use the supplied root and fixed layout to inspect and propose content. Create Profile
 only after approval under evidence-policy.md; still stop for unavailable sources
 or filesystem permission.
-Use explicit paths if supplied; otherwise use these paths relative to that root:
-`Candidate Profile.md`, `Source Documents/`, `Project Evidence/`,
-`Applications/`, `Applications/Applications.md`.
+Use the fixed paths relative to root: `Candidate Profile.md`, `Source Documents/`,
+optional `Source Documents/Projects.md`, `applications.md` and `applications/`.
+Only career.root is configurable; do not ask users to fill in individual paths.
+Do not create a separate Project Evidence directory or summary files: reviewed
+project evidence belongs in the Profile's Projects sections.
 Use `config/config.local.yaml` when already configured; if an explicit root differs,
 ask whether to switch rather than silently reading/mixing two people's data.
 When initializing configuration, preserve existing search/other settings; copy
 missing fields from the public example, but never invent personal preferences.
 
 A build/update request authorizes inspection and a proposal, not writing unseen
-Profile/Project Evidence content. Apply evidence-policy.md's approval gate,
+Profile content (including project evidence). Apply evidence-policy.md's approval gate,
 including initial creation. Local filesystem permission is separately required.
 Resolve a file URL to its local path; do not invent remote access.
 
-Inventory only the configured Source Documents subtree, without following symlinks
-outside it. If missing/empty, explain where to put files or request an explicit
-alternative source directory. Do not recursively scan the entire vault/computer,
-clone repositories, move originals or create synchronized copies.
+Inventory only `<career.root>/Source Documents/`, without following symlinks
+outside it. This is the required source entry. If missing, create the empty folder
+when authorized; if missing/empty, explain where the user must put source files.
+Do not choose or request an alternative source directory. Do not recursively scan
+the entire vault/computer, clone repositories, move originals or create synchronized
+copies.
 
 ## Consolidation
 
@@ -46,9 +50,9 @@ clone repositories, move originals or create synchronized copies.
    unverified older claim; uncertain dates/titles/metrics go in Open Questions,
    not silently into factual sections. Ask focused high-impact questions and
    propose the rest as unresolved; initialization need not wait for every detail.
-5. Read Source Documents/Projects.md (relative to configured source_documents)
-   and follow project-evidence.md for every listed repo. Plain URLs are sufficient.
-   Read existing summaries first, inspect relevant source when required, then
+5. Read optional `<career.root>/Source Documents/Projects.md` and follow
+   project-evidence.md for each listed project. Plain URLs are sufficient.
+   Read existing Profile project sections first, inspect relevant source when required, then
    propose one Profile subsection per project; no automatic summary-file creation.
 6. Present the proposed Markdown and precise destination/change list. Ask material
    questions and revise the proposal; write only after explicit approval of that
@@ -64,7 +68,7 @@ Use these sections as a compact consistent structure, omitting empty subsections
   suggested directions. Do not invent preferences or motivation.
 - **Work Experience:** employer, actual title, dates, employment type/location;
   responsibilities, owned contributions, achievements, technologies and limits.
-- **Projects:** one named subsection per repository, using project-evidence.md
+- **Projects:** one named subsection per project, using project-evidence.md
   for role/contribution, capabilities, achievements, limits, sources and commit.
 - **Skills & Evidence:** capability, evidence type and relevant experience/project
   reference, depth and boundaries; learning is not implementation.
@@ -81,8 +85,9 @@ Use these sections as a compact consistent structure, omitting empty subsections
 
 Keep enough concrete evidence to support assessments and multiple CV directions,
 not a finished resume or a copy of every raw document. Link to full sources when
-needed. Profile language follows the user's preference (default Traditional
-Chinese analysis, preserving titles/technical terms); later CV wording is English.
+needed. Choose Profile and document languages from the current request and local
+policies/preferences.md when present; otherwise match the audience. Preserve
+original titles and technical terms where needed for accuracy.
 
 ## Ongoing use
 
@@ -93,3 +98,12 @@ incomplete Profile supports only provisional evaluations until material question
 are resolved. Requesting initialization does not authorize job searches, Sheet
 writes, application drafting or submission. Those use their respective policies
 and separate search/Google settings.
+
+## Creation and legacy layout
+
+Create the root/Source Documents scaffold only within authorized filesystem
+access. Do not create an empty Profile as a substitute for an approved proposal.
+Create applications/ subfolders and root applications.md when an authorized
+application save/tracker update needs them, not during unrelated profile work.
+If old path overrides, Applications/ or Project Evidence/ already exist, follow
+the migration safeguards in workflow.md; never move or merge them silently.
