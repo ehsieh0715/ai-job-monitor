@@ -1,7 +1,16 @@
 # AI Job Monitor
 
-Turn your own career documents into a maintained Candidate Profile, evaluate jobs
-against one evidence standard, and prepare job-specific CVs and cover letters.
+Three core features help you move from career evidence to a prepared application:
+
+1. **Build and update your Candidate Profile** — consolidate your documents and
+   confirmed experience into one Markdown profile at your chosen location.
+2. **Find and evaluate jobs** — assess searched jobs or any pasted job description
+   against your latest Profile using shared scoring rules, and sync recommendations
+   to your Google Sheet. Recurring runs require a separately configured scheduler.
+3. **Prepare CVs and cover letters** — discuss fit, clarify missing evidence and
+   update your Profile, then generate or revise application documents after you
+   confirm you want to proceed. Save them in your chosen application folder.
+
 Personal documents live in your external Career folder (an Obsidian vault works
 well). The repository supplies code, shared policies and one AI skill entry point.
 
