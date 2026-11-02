@@ -6,7 +6,8 @@ description: Use when initializing or updating a Candidate Profile from source d
 # Career assistant
 
 Resolve all references below from the repository root. Read `config/README.md`
-for local configuration and always apply `policies/evidence-policy.md`.
+for local configuration, start with `policies/workflow.md`, and always apply
+`policies/evidence-policy.md`.
 Read only the additional policies relevant to the request:
 
 | Request | Policies |

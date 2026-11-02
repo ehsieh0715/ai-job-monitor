@@ -67,9 +67,45 @@ Your old keywords were migrated to private local configuration. The public
 example uses generic keywords. Search configuration is validated before any
 search request; invalid or missing configuration fails with setup guidance.
 
-## Integration status
+## Private presentation preferences
 
-AI skills read Career configuration directly; the Python search pipeline now
-loads `search` from config.local.yaml independently of the working directory.
-Career permissions still require separate authorization. Google Sheets and
-credential settings remain in src/google_sheets.py pending their integration.
+`preferences_path` is optional (null disables it). Copy preferences.example.md to
+Git-ignored config/preferences.local.md, or choose another private file. Paths are
+absolute or relative to the repo root. AI reads it at the start of every workflow;
+new conversations can reuse Profile organization, language and writing preferences.
+
+## Google Sheets setup
+
+Set `google_sheets.spreadsheet` to the full Google Sheet URL or its ID,
+`worksheet` to the exact tab name and `credentials_path` to your service-account
+JSON file. Credential paths are absolute (recommended outside repo/vault) or
+relative to repo root; `~` is expanded. Do not put credential contents in YAML.
+For legacy installations only, an empty spreadsheet plus explicit spreadsheet_name
+opens by name; URL/ID avoids ambiguous titles.
+
+1. Create/select a Google Cloud project; enable Google Sheets API and Google Drive API.
+2. Create a service account and download a JSON key when your organization allows
+   that authentication method. Keep the key private on the executing machine.
+3. Share the target Sheet with the JSON's client_email as Editor. This gives the
+   service identity access to that file; it does not require public link sharing.
+4. Create/select a compatible worksheet and fill the local configuration.
+5. After AI evaluates and seals current scores, run sync with --dry-run before
+   the first write. This still authenticates and reads Google; it is not offline.
+
+See [gspread authentication](https://docs.gspread.org/en/latest/oauth2.html).
+This uses Google API credentials, not a hosted Google server. Your local computer
+or chosen runner executes Python. A schedule and an available execution environment
+are separate from the Google identity. Do not use another person's JSON key.
+
+## Runtime state and synchronization
+
+Search and synchronization now read local settings; Career paths and preferences
+are consumed by AI workflow and evaluation fingerprinting. Sync supports updates
+by job_id, preserves additional manual columns, and refuses incompatible headers
+rather than overwriting them. Empty worksheets may be initialized. Processed
+state changes only after remote success. Only one writer/run at a time is supported.
+
+Private data/job_history.csv retains observed JDs for reassessment. Input and score
+hashes in data/*context.json prevent stale scores from being synchronized. Follow
+policies/workflow.md for prepare/evaluate/seal/preview/sync order. Historical
+processed jobs with no surviving JD cannot be reconstructed automatically.

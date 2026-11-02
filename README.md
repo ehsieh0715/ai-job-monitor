@@ -45,6 +45,10 @@ project documents or Git history; profile-building.md defines the new repeatable
 workflow. It carries forward the old JSON's summary, roles, experience, skills,
 projects, education, constraints, tailoring boundaries and conflict information.
 
+For lasting generation/style preferences, set `preferences_path` to a private
+Markdown file; see [example](config/preferences.example.md). The assistant reads
+it each time. Shared evidence requirements still apply.
+
 ## 2. Evaluate a job in the same conversation
 
 Paste any complete JD and say “評估這份工作”. It need not appear in a Sheet or CSV.
@@ -65,21 +69,41 @@ python3 -m venv .venv
 .venv/bin/python src/main.py
 ```
 
-Search writes local pending jobs. Ask career-assistant to evaluate the pending
-batch under policies/job-evaluation.md; it produces `data/scored_jobs.csv`.
-Then, with a correctly configured Sheet and credentials, run:
+Search retains local JD history and queues new jobs. Run:
+
+```sh
+.venv/bin/python src/prepare_evaluation.py
+```
+
+Ask career-assistant to evaluate every pending row under the shared policy. After
+it creates data/scored_jobs.csv, seal and preview:
+
+```sh
+.venv/bin/python src/prepare_evaluation.py --seal
+.venv/bin/python src/sync_scores_to_sheet.py --dry-run
+```
+
+Configure your Sheet URL/ID, tab and service-account JSON path in config.local.yaml.
+[Google setup instructions](config/README.md#google-sheets-setup) cover enabling
+APIs, creating credentials and sharing the Sheet. When ready/authorized, run:
 
 ```sh
 .venv/bin/python src/sync_scores_to_sheet.py
 ```
 
-**Current limit:** Google Sheet name/worksheet/credential path still live in
-`src/google_sheets.py`; they are not yet externalized. The sync appends new IDs
-and may overwrite the header. Verify a compatible sheet before using it. Career
-paths are read directly by the AI; Python loads the private search configuration.
-This is not yet a fully automatic clone-and-run setup. A root path alone is enough
-for Profile initialization, not for Google authorization, custom searches or sync.
-No LLM API evaluation service or scheduler is installed by this workflow.
+Sync updates existing IDs and appends new ones, preserving custom columns. An
+incompatible Sheet stops rather than having its header overwritten. Changes to
+Profile/evidence/preferences/policies queue retained jobs for reevaluation; stale
+or altered sealed scores cannot sync. Old jobs without retained descriptions
+cannot be recovered automatically. Run only one writer at a time.
+
+For recurring runs use the [scheduled AI prompt](examples/scheduled-run.md), with
+your chosen scheduler, repo path, interval and timezone. It follows
+[workflow.md](policies/workflow.md). Cloning does not install a scheduler or LLM
+service. The runner needs access to the machine/files, Python, network and Google
+credentials; calling main.py alone performs no AI evaluation. Empty queues stop
+without uploading old scores. Actual board/Google access must be verified in your
+own environment; offline tests do not establish successful live authentication.
 
 ## 4. Prepare an application after deciding to proceed
 
@@ -112,6 +136,7 @@ entry point; it selects the references below without duplicating their rules.
 
 | Policy | Purpose |
 | --- | --- |
+| [Workflow](policies/workflow.md) | Interactive stages and scheduled search/evaluate/sync |
 | [Profile building](policies/profile-building.md) | Initialize/merge documents into the configured Profile |
 | [Evidence](policies/evidence-policy.md) | Sources, claim boundaries, questions and updates |
 | [Job evaluation](policies/job-evaluation.md) | Same scoring standard for manual JDs and batches |

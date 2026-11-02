@@ -9,7 +9,8 @@ as an absolute path; other career paths are relative to it unless absolute.
 Missing configuration, files or permission: identify the exact missing path;
 do not guess a fallback or silently use another person's data. Configuration
 is not permission. AI skills read this configuration directly; Python integration
-is tracked separately in the README.
+is tracked separately in the README. Read optional preferences_path as described
+in config/README.md; presentation preferences never override evidence rules.
 
 Read the configured Candidate Profile first, then only relevant Project Evidence
 summaries. Consult Source Documents or original code when a material claim needs
