@@ -1,6 +1,6 @@
 # Candidate Evidence Standards
 
-Version: 1.3. Applies to every assessment and application document.
+Version: 1.4. Applies to every assessment and application document.
 
 ## Sources and access
 
@@ -65,8 +65,13 @@ fit or complete relevant candidate evidence: context, owned action, completion,
 scope/result and supporting source. This applies at every recommendation level,
 including Consider/Skip when unrecorded experience could support applying.
 Prioritize decision-changing questions; avoid collecting irrelevant biography.
-Do not repeatedly ask facts already recorded. In unattended runs mark pending
-questions without guessing answers or blocking the entire batch.
+Do not repeatedly ask facts already recorded. In unattended runs record material
+uncertainty without guessing answers or blocking the entire batch. For decisive
+early-stop cases under job-fit-evaluation.md, a short "reassess if you have X"
+condition replaces routine questions; unrecorded required capabilities remain
+unverified rather than confirmed absences. Do not inspect every secondary gap
+after a decisive screen. Non-screened interactive assessments retain focused
+questions where existing evidence or plausible equivalence could change the decision.
 
 When the user supplies experience, first prepare a source-linked proposed edit to
 Candidate Profile.md (including project sections), with context, limits and

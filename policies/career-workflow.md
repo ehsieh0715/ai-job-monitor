@@ -1,6 +1,6 @@
 # Career Workflow
 
-Version: 1.6. This is the end-to-end procedure for a fresh conversation or a
+Version: 1.7. This is the end-to-end procedure for a fresh conversation or a
 scheduled AI run. Standards remain in their individual policies, not copied here.
 
 ## Start every run
@@ -101,7 +101,11 @@ job-fit-evaluation.md. If no JD is identifiable, ask for it; a CV alone is not a
 JD. Evaluation provides fit advice and clarification, not automatic CV/letter/email
 creation, even for Apply/Strong Apply.
 
-Give the common weighted score and recommendation, three strongest supported
+Apply job-fit-evaluation.md's decision screen first. For early-stop roles, give
+the compact score, decisive gap and at most one reassessment condition, then stop;
+do not require a strengths list, routine questions or improvement plan.
+For roles continuing to detailed assessment, give the common weighted score and
+recommendation, three strongest supported
 advantages (fewer if evidence is insufficient), material concerns and application
 value. The score is not interview probability. At every recommendation level,
 check the Profile and relevant sources for material unknowns. Ask when an answer
@@ -117,7 +121,9 @@ and get content approval before writing. Recompute and explain any changed score
 If no Profile change is required, do not create an artificial approval step.
 Once material questions are resolved, state the recommendation and stop after
 advice. For confirmed structural/non-waivable gaps explain why applying is low-value.
-Do not suppress material questions merely because the initial label is Consider/Skip.
+For roles continuing beyond the screen, do not suppress material questions merely
+because the initial label is Consider/Skip. The early-stop exception does not
+permit treating unrecorded capabilities as confirmed absences.
 Never present planned improvement as completed evidence.
 
 A request for a CV, cover letter or email authorizes generating and saving that
@@ -176,9 +182,12 @@ For an authorized unattended cycle, from the repo root:
    not requeue synchronized history. New and explicitly revisited roles always
    use current evidence/rules. Only Profile and scoring/evidence policies affect
    unfinished-output freshness; presentation policies/preferences do not.
-4. Apply job-fit-evaluation.md to every pending row and replace scored_jobs.csv.
+4. Screen every pending row under job-fit-evaluation.md, stop early for decisive
+   gaps, deeply assess the remaining roles, and replace scored_jobs.csv.
    Empty queue: stop successfully with no sync. Material unknowns remain provisional
-   in the summary; do not ask blocking questions or award hypothetical credit.
+   through short decision-relevant conditions; do not ask blocking questions,
+   append stock disclaimers or award hypothetical credit. Record common policy
+   version/Profile provenance once in the batch report.
    No usable JD: leave score blank, label `Not assessed / JD needed`, retain the URL and
    explain that the user can paste the JD. Do not substitute 0/Skip.
 5. Run `.venv/bin/python src/prepare_evaluation.py --seal` only after actually

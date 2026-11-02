@@ -1,6 +1,6 @@
 # Job Fit Evaluation
 
-Version: 1.2. Read with `candidate-evidence-standards.md`. The same standard applies to batch
+Version: 1.3. Read with `candidate-evidence-standards.md`. The same standard applies to batch
 search results, pasted JDs and manually found jobs; neither Sheet membership nor
 an existing CV is required. The score measures the value of preparing and applying.
 
@@ -25,7 +25,42 @@ For public appointments inspect referenced official booklets/application packs
 for citizenship, qualifications, post-qualification years, licences, vetting and
 clearance. Unavailable eligibility is unverified, not a confirmed failure.
 
-Identify requirements from the JD before comparing the candidate. Group roughly
+## Screening before detailed assessment
+
+Screen each job's substantive role description and mandatory requirements against
+the current Profile first. This is not a title/keyword filter: check whether a
+restriction is mandatory, preferred, flexible, or contradicted elsewhere in the JD.
+Stop reading secondary duties, benefits, and improvement opportunities once a
+decisive requirement makes applying low-value on the recorded evidence.
+
+Examples include ten years of relevant commercial ownership against a clearly
+shorter career without equivalent scope, required professional registration, or
+required language proficiency unsupported by the Profile. A modest years gap,
+senior title, missing preferred tool, or ambiguous wording such as "native-level"
+is not alone a stop condition. Count actual transferable responsibilities; do not
+convert project work into commercial years.
+
+For confirmed failure, state the decisive requirement and stop. If a required
+capability is not recorded, do not claim it is absent: stop provisionally with a
+short condition, e.g. "German is required; no evidence is recorded. Reassess if
+you have working proficiency." Do not investigate secondary gaps or ask routine
+questions just to establish the absence of unrecorded experience. Continue when
+existing evidence makes equivalence or a different interpretation plausible;
+ask a focused question only to resolve that ambiguity. A user may explicitly
+reopen any screened role for deeper assessment.
+
+Early-stop roles still receive an evidence-based numeric score and `Skip` under
+the existing CSV contract, not the missing-JD state. Use a compact weighted
+assessment of 3–5 decisive groups totaling 100, including the decisive requirement
+and strongest transferable evidence, rather than a full 5–8-group breakdown.
+Do not invent requirements from unread details. If a screening adjustment is
+needed to keep the score in the Skip band, explain the specific reason briefly.
+An unverified gate is a provisional priority decision, not a verified legal or
+qualification failure. Do not assign a fixed score to all early stops or invent
+weights to obtain a label. Both routes retain the same evidence anchors and bands.
+
+For roles not stopped by the screen, identify requirements from the JD before
+comparing the candidate. Group roughly
 5–8 material capabilities; classify each as explicit mandatory, core success
 criterion, or preferred/wish-list. Ambiguous wording is not an automatic gate.
 A repeated keyword is not an independent capability. Recognize a role-defining
@@ -97,11 +132,14 @@ platform/domain foundation. Group material gaps; omit irrelevant missing tools.
 Before suggesting a project, ask whether its correctly labelled evidence would
 actually change viability or merely prepare for interviews. If the decisive
 production/domain gap remains, it cannot materially raise the recommendation.
-Use one rating: No project needed (default), Optional improvement, High-value
+When improvement advice is useful, use one rating: No project needed (default),
+Optional improvement, High-value
 project, or Priority project. Consider JD importance, recurring career value,
 existing adjacent evidence, effort and interview-preparation alternatives.
 Suggest at most one extension/project normally, with scope, value and timing;
 never delay an application for an optional improvement.
+For early-stop roles omit improvement plans, project suggestions and default
+"No project needed" labels. Do not investigate closing structural gaps unless asked.
 
 ## Conversation, uncertainty and consistency
 
@@ -111,37 +149,42 @@ then compare with available prior results. Explain changes through new JD detail
 confirmed evidence, corrected interpretation or policy version; do not change
 judgment simply because the user selected the job.
 
-For material unknown experience give a **provisional** score based only on known
-evidence, identify pending questions and ask before finalizing, regardless of
+For roles proceeding beyond the screen, give a **provisional** score for material
+unknown experience based only on known evidence, identify pending questions and
+ask before finalizing, regardless of
 the initial recommendation. In particular, ask about plausible unrecorded
 experience that could turn Consider/Skip into Apply/Strong Apply; never assume
 that experience exists or award hypothetical credit. Follow the shared evidence
-policy for Profile proposals and approval. Batch runs record these questions and
-the provisional limitation in the summary without blocking other jobs.
+policy for Profile proposals and approval. Batch runs use a concise reassessment
+condition only where it could change the decision, not question lists. The
+early-stop route does not require routine follow-up questions.
 
 For a single JD lead with score/recommendation (a reasoned priority estimate,
 not interview probability), up to three supported strengths, material concerns
 and application value. Follow career-workflow.md for interactive request handling.
 Keep the response concise; expose weights/evidence mapping when useful
 or requested. Prioritize eligibility, mandatory gaps, core work, seniority, then
-preferred familiarity. State policy version and whether provisional; record the
-JD source and profile/evidence version or review date when available, never invent
-versions. Existing CSV fields remain unchanged; put necessary context in summary.
+preferred familiarity. State policy version and Profile review date once in the
+batch context/report, not in every row. For a single JD, disclose meaningful
+uncertainty in plain language without stock version/date disclaimers; provide
+provenance and weights when requested. A short reassessment condition is enough
+to identify an early-stop result as provisional. Existing CSV fields remain unchanged.
 
 When structural/non-waivable gaps make preparation low-value, say `reconsider
 applying` and stop before document drafting. Give the strongest transferable
-point, decisive gap, why wording cannot fix it and any narrow condition worth
-checking. Resolve material unknowns before treating a gap as confirmed; this stop
-rule must not suppress those questions. It does not apply to ordinary stretches.
+point if useful, decisive gap and at most one narrow reassessment condition.
+Unknowns remain unknown; early stopping does not require resolving every unknown
+or investigating improvement plans. It does not apply to ordinary stretches.
 For drafting and its request and saving conditions, follow the
 interactive contract in career-workflow.md; explicit user constraints take precedence.
 
 ## Unattended batch
 
-Read every row of `data/pending_jobs.csv`; use stored description first. Preserve
+Screen every row of `data/pending_jobs.csv`; use stored description first and
+perform detailed assessment only when the screen is not decisive. Preserve
 separate job IDs across sites even when substantive assessment can be reused.
-Apply the same policy; record pending questions, eligibility/JD uncertainty and
-provisional status in match_summary without assuming answers or updating Profile.
+Apply the same policy; retain decision-relevant eligibility/JD uncertainty through
+short gap or reassessment wording, without assuming answers or updating Profile.
 JD-insufficient rows use the unscored state above, not a provisional numeric score.
 
 Create/replace only `data/scored_jobs.csv` with these exact columns:
@@ -155,9 +198,14 @@ are integers 0–100 with the policy's four allowed labels for assessable JDs.
 For `Not assessed / JD needed`, score must be blank and summary explains the missing JD
 and how to supply it. These rows are synchronized so users can still inspect the
 listing; processed means synchronized, not that a fit assessment was possible. Use the requested
-summary language or local policies/preferences.md. The summary normally uses
-2–4 sentences and includes relevant uncertainty and policy
-version. Do not change pending rows, source documents, tracker, processed IDs or
+summary language or local policies/preferences.md. Use 1–2 short sentences for
+early-stop roles and normally 2 short sentences otherwise: strongest fit and
+decisive gap, with at most one extra reassessment condition if material. Do not
+append routine questions, version/Profile-date statements, generic work-permission
+checks, "unverified experience receives no credit", or default project ratings.
+Mention work permission only for a specific decision issue in the JD or known
+circumstances. Common provenance and limitations belong in the batch report once.
+Do not change pending rows, source documents, tracker, processed IDs or
 Google Sheets; synchronization is a separate action.
 
 Validate one output row per input row, preserved job IDs/metadata, no extra jobs,
