@@ -2,6 +2,9 @@
 
 Copy `config.example.yaml` to `config.local.yaml` and edit `career.root`.
 The local file contains private settings and must not be committed.
+For AI-assisted Profile initialization, only career.root needs changing when the
+default folder names fit. See policies/profile-building.md (relative to the repo
+root). A root alone does not configure Google authorization or search preferences.
 
 `root` is an absolute path. All other paths are relative to `root`, or may
 be absolute paths when the data is stored elsewhere. Use ordinary filesystem

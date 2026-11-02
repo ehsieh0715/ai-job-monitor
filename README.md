@@ -1,83 +1,131 @@
 # AI Job Monitor
 
-Search for jobs, assess application value and prepare evidence-based applications
-using your own Career Markdown folder. No web interface is required.
+Turn your own career documents into a maintained Candidate Profile, evaluate jobs
+against one evidence standard, and prepare job-specific CVs and cover letters.
+Personal documents live in your external Career folder (an Obsidian vault works
+well). The repository supplies code, shared policies and one AI skill entry point.
 
-## Shared standards
+## 1. Create your Profile first
 
-| File | Purpose |
-| --- | --- |
-| [Evidence policy](policies/evidence-policy.md) | Facts, sources, contributions, questions and profile updates |
-| [Job evaluation](policies/job-evaluation.md) | One scoring standard for batch results and any pasted JD |
-| [Resume writing](policies/resume-writing.md) | Compose a job-specific CV from verified evidence |
-| [Resume review](policies/resume-review.md) | Check claims, relevance and document quality |
-| [Cover letter writing](policies/cover-letter-writing.md) | Value, narrative, writing and attachment standards |
+Clone this repo and open it in an AI coding assistant with local file access.
+Create a Career folder and place your original CVs, Word/PDF files, experience
+notes or old candidate JSON in `Source Documents/`:
 
-`.agents/skills/career-assistant/SKILL.md` is the single entry point. It selects
-the relevant policy files; all standards and workflow details live in policies.
-The policies consolidate the earlier ai-job-monitor evaluation rules and
-career-application playbook/writing guidance. They replace the old requirement to
-select exactly one base CV: a Master CV or existing CV is not required. Initial
-and deep assessments use the same score; newly confirmed evidence can change it
-with an explanation. Personal facts belong outside this repo.
+```text
+01 Career/
+  Source Documents/
+    ...your original files
+```
 
-## Configure your own data
+Copy `config/config.example.yaml` to `config/config.local.yaml`. For Profile
+initialization, only change `career.root`; keep the other Career paths at their
+defaults unless your files are elsewhere. Grant read access to the sources and
+write access to the intended Profile. Setting a path does not grant permission.
 
-Copy `config/config.example.yaml` to `config/config.local.yaml`, set your Career
-root, and grant the assistant necessary filesystem access. See
-[configuration](config/README.md). Keep the local file and credentials private.
-A configured path does not grant access. Suggested external layout:
+Ask in ordinary language, for example:
+
+> Use career-assistant. My Career root is `/absolute/path/to/01 Career`.
+> Read Source Documents and build/update Candidate Profile.md there, following
+> policies/profile-building.md. Preserve my original files and existing confirmed
+> facts; flag conflicts and ask about important missing evidence.
+
+You may also supply the root in conversation and ask the assistant to create the
+private configuration using the example. This initial request authorizes writing
+the Profile/configuration within granted access, not searching or uploading data.
+No Master CV or existing Profile is required. Initialization needs an AI assistant
+and document-reading capabilities; running Python alone does not generate it.
+
+The assistant reads available materials, consolidates evidence and saves a
+Markdown Profile. Unknown claims stay marked; it does not turn every CV assertion
+or README feature into verified experience. Subsequent confirmed experience updates
+this same Profile rather than another JSON database. Original sources stay intact.
+
+The old project's exact Profile-generation prompt was not found in the reviewed
+project documents or Git history; profile-building.md defines the new repeatable
+workflow. It carries forward the old JSON's summary, roles, experience, skills,
+projects, education, constraints, tailoring boundaries and conflict information.
+
+## 2. Evaluate a job in the same conversation
+
+Paste any complete JD and say “評估這份工作”. It need not appear in a Sheet or CSV.
+The assistant reads the Profile and relevant evidence, gives a common score and
+recommendation, and asks about experience that could materially change the result.
+Unknowns receive no assumed credit; a changed judgment includes its reason.
+If the Profile is incomplete, the assessment is provisional rather than invented.
+
+## 3. Search and synchronize recommendations
+
+Edit `search` in config.local.yaml: keywords, location, sites and time range.
+See [configuration](config/README.md) for all supported site identifiers/limits.
+Install Python dependencies in a virtual environment:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python src/main.py
+```
+
+Search writes local pending jobs. Ask career-assistant to evaluate the pending
+batch under policies/job-evaluation.md; it produces `data/scored_jobs.csv`.
+Then, with a correctly configured Sheet and credentials, run:
+
+```sh
+.venv/bin/python src/sync_scores_to_sheet.py
+```
+
+**Current limit:** Google Sheet name/worksheet/credential path still live in
+`src/google_sheets.py`; they are not yet externalized. The sync appends new IDs
+and may overwrite the header. Verify a compatible sheet before using it. Career
+paths are read directly by the AI; Python loads the private search configuration.
+This is not yet a fully automatic clone-and-run setup. A root path alone is enough
+for Profile initialization, not for Google authorization, custom searches or sync.
+No LLM API evaluation service or scheduler is installed by this workflow.
+
+## 4. Prepare an application after deciding to proceed
+
+Say “Proceed with a CV for this role”. The assistant composes relevant verified
+Profile/project evidence under the writing rules; no single base CV is required.
+A cover letter is optional. Save/export files when requested or already authorized:
 
 ```text
 01 Career/
   Candidate Profile.md
-  Source Documents/       # Original CV, Word/PDF and other source materials
-  Project Evidence/       # Reviewed summaries, sources, limitations and commit
+  Source Documents/
+  Project Evidence/          # Reviewed project summaries; repositories stay in place
   Applications/
-    Applications.md       # Existing application tracker
+    Applications.md          # Existing application tracker
     Company Name/
       YYYY-MM-DD - Job Title/
         CV.md
-        CV.pdf             # When exported
-        Cover Letter.md    # Only when useful/requested
+        CV.pdf               # When exported
+        Cover Letter.md      # When useful/requested
 ```
 
-Folder date means preparation start; the tracker records actual submission date.
-Preserve submitted versions. Do not copy entire project repositories into Career.
-Do not commit profiles, source documents, generated applications or credentials.
+Folder date is preparation start; actual submission date is in the tracker.
+Preserve submitted versions. No separate JD, analysis or progress notes are created
+by default. Existing full notes need not be split or moved into this layout.
 
-## AI conversation workflow
+## Where to change behavior
 
-Use an assistant that can read local files and this repo's skills. For example:
+[career-assistant](.agents/skills/career-assistant/SKILL.md) is the sole skill
+entry point; it selects the references below without duplicating their rules.
 
-- “Use career-assistant to assess this JD.” A pasted JD needs no Sheet entry.
-- “I actually implemented this; here is my contribution.” Confirmed evidence can
-  update the shared Profile and change the assessment.
-- “Proceed with a CV for this role.” Compose relevant evidence under the writing
-  rules, then save when authorized. A letter is optional.
+| Policy | Purpose |
+| --- | --- |
+| [Profile building](policies/profile-building.md) | Initialize/merge documents into the configured Profile |
+| [Evidence](policies/evidence-policy.md) | Sources, claim boundaries, questions and updates |
+| [Job evaluation](policies/job-evaluation.md) | Same scoring standard for manual JDs and batches |
+| [Resume writing](policies/resume-writing.md) | Select and compose relevant factual content |
+| [Resume review](policies/resume-review.md) | Check evidence, relevance and quality |
+| [Cover letter](policies/cover-letter-writing.md) | Value, narrative and writing standards |
 
-Language defaults are Traditional Chinese analysis and English application text;
-users can change presentation preferences without weakening evidence rules.
-Skills are instructions for an assistant, not a built-in LLM evaluation service.
+Presentation preferences can change language, tone, length and order; they cannot
+relax evidence standards. Defaults: Traditional Chinese analysis, English CV/letter.
+The earlier ai-job-monitor and career-application rules are consolidated here.
 
-## Current Python pipeline and limits
+## Privacy and sharing
 
-Install dependencies from `requirements.txt` in a virtual environment.
-Run `python src/main.py` to search into local `data/` CSVs. The career-assistant skill in batch evaluation mode
-can produce `data/scored_jobs.csv`; `python src/sync_scores_to_sheet.py` then
-synchronizes scores. This requires network access and valid Google credentials.
-
-Career paths are currently read directly by AI skills, not by Python scripts.
-Search parameters are loaded from the private configuration (see
-[configuration](config/README.md)). Google Sheet name/worksheet/credential path
-remain in `src/google_sheets.py`.
-The Python pipeline is therefore **not yet fully configurable for another user**.
-Sync currently appends new IDs and may overwrite the header; verify a compatible
-sheet before running. Updating existing assessments/fully configurable sync are
-future implementation work. No scheduler is installed by this change.
-
-## Before sharing publicly
-
-The working tree and Git history need a separate personal-data/secret audit.
-Moving files out of the repo does not remove historical copies. Do not publish or
-rewrite history until the audit and a history-handling plan have been reviewed.
+Keep config.local.yaml, profiles, raw documents, applications, cache and credentials
+private. This repo's Git history still needs a personal-data/secret audit; moving
+files out does not remove historical copies. Do not publish or rewrite history
+until the audit and handling plan have been reviewed.
