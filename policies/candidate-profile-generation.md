@@ -99,6 +99,14 @@ are resolved. Requesting initialization does not authorize job searches, Sheet
 writes, application drafting or submission. Those use their respective policies
 and separate search/Google settings.
 
+After saving an approved Profile, briefly report its path and offer the next
+step: check search/Google setup, then run a user-authorized first search,
+evaluation and Sheet sync under career-workflow.md. Point to README.md's
+"Try your first search" example; do not require users to know
+Python commands or policy names. Do not execute that step merely because the
+Profile was saved. Mention scheduling only as an option after a successful trial;
+frequency, timezone and recurring-write authorization remain the user's choice.
+
 ## Creation and legacy layout
 
 Create the root/Source Documents scaffold only within authorized filesystem
