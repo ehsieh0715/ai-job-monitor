@@ -115,3 +115,28 @@ applying` and stop before document drafting. Give the strongest transferable
 point, decisive gap, why wording cannot fix it and any narrow condition worth
 checking. This stop rule does not apply to ordinary stretches. Draft only after
 the user confirms proceeding (or explicitly requests drafting for this job).
+
+## Unattended batch
+
+Read every row of `data/pending_jobs.csv`; use stored description first. Preserve
+separate job IDs across sites even when substantive assessment can be reused.
+Apply the same policy; record pending questions, eligibility/JD uncertainty and
+provisional status in match_summary without assuming answers or updating Profile.
+
+Create/replace only `data/scored_jobs.csv` with these exact columns:
+
+```text
+job_id,found_at,site,title,company,location,search_term,job_url,match_score,recommendation,match_summary
+```
+
+Preserve the first eight fields from pending input, excluding description. Scores
+are integers 0–100 with the policy's four allowed labels. Traditional Chinese
+summary normally uses 2–4 sentences and includes relevant uncertainty and policy
+version. Do not change pending rows, source documents, tracker, processed IDs or
+Google Sheets; synchronization is a separate action.
+
+Validate one output row per input row, preserved job IDs/metadata, no extra jobs,
+exact column order, valid score/label agreement, required uncertainty disclosures
+and supported claims. Report total, counts per recommendation and counts with
+incomplete JD, pending evidence, eligibility or structural gaps; do not dump all
+job text. Invalid/ambiguous input identifiers must be reported, not silently lost.

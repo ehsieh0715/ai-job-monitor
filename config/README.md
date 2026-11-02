@@ -18,10 +18,28 @@ paths, not Obsidian URLs. Filesystem access must be authorized separately.
 Source documents are retained as evidence, not automatically treated as verified
 facts. Project repositories remain at their original locations.
 
+## Search settings
+
+The `search` section of config.local.yaml replaces the old search_terms.yaml.
+All fields are required; config.example.yaml supplies a complete example:
+
+| Key | Purpose |
+| --- | --- |
+| `keywords` | Non-empty list of job search terms |
+| `location` | Search location |
+| `sites` | Non-empty list of site names supported by JobSpy |
+| `hours_old` | Positive integer; listing age filter in hours |
+| `results_wanted` | Positive integer; requested results per keyword |
+| `country_indeed` | Indeed country name supported by JobSpy |
+| `linkedin_fetch_description` | Boolean; fetch LinkedIn descriptions |
+
+Your old keywords were migrated to private local configuration. The public
+example uses generic keywords. Search configuration is validated before any
+search request; invalid or missing configuration fails with setup guidance.
+
 ## Integration status
 
-AI skills read this configuration directly to locate Career data. Python scripts
-still do not load it; a shared validated runtime loader is future work. Search,
-Google Sheets and credential settings remain in their existing locations until
-that integration is implemented. Missing configuration/data/access must be
-reported rather than falling back to the removed candidate directory.
+AI skills read Career configuration directly; the Python search pipeline now
+loads `search` from config.local.yaml independently of the working directory.
+Career permissions still require separate authorization. Google Sheets and
+credential settings remain in src/google_sheets.py pending their integration.

@@ -1,43 +1,29 @@
 import json
 from datetime import datetime
-from pathlib import Path
 
 import pandas as pd
-import yaml
 from jobspy import scrape_jobs
 
 from schema import PENDING_COLUMNS, RAW_JOB_COLUMNS
+from configuration import load_search_config, REPO_ROOT
 
 
-SEARCH_TERMS_PATH = Path("config/search_terms.yaml")
-
-RAW_JOBS_PATH = Path("data/raw_jobs.csv")
-PENDING_JOBS_PATH = Path("data/pending_jobs.csv")
-PROCESSED_IDS_PATH = Path("data/processed_job_ids.json")
+RAW_JOBS_PATH = REPO_ROOT / "data/raw_jobs.csv"
+PENDING_JOBS_PATH = REPO_ROOT / "data/pending_jobs.csv"
+PROCESSED_IDS_PATH = REPO_ROOT / "data/processed_job_ids.json"
 
 
-def load_search_terms():
-    with open(
-        SEARCH_TERMS_PATH,
-        "r",
-        encoding="utf-8",
-    ) as file:
-        config = yaml.safe_load(file)
-
-    return config["keywords"]
-
-
-def search_keyword(keyword):
+def search_keyword(keyword, settings=None):
+    settings = load_search_config() if settings is None else settings
     print(f"Searching: {keyword}")
-
     return scrape_jobs(
-        site_name=["linkedin", "indeed"],
+        site_name=settings["sites"],
         search_term=keyword,
-        location="Dublin, Ireland",
-        results_wanted=100,
-        hours_old=6,
-        country_indeed="Ireland",
-        linkedin_fetch_description=True,
+        location=settings["location"],
+        results_wanted=settings["results_wanted"],
+        hours_old=settings["hours_old"],
+        country_indeed=settings["country_indeed"],
+        linkedin_fetch_description=settings["linkedin_fetch_description"],
         verbose=0,
     )
 
@@ -70,8 +56,9 @@ def load_pending_jobs():
 def search_jobs():
     results = []
 
-    for keyword in load_search_terms():
-        jobs = search_keyword(keyword)
+    settings = load_search_config()
+    for keyword in settings["keywords"]:
+        jobs = search_keyword(keyword, settings)
 
         if jobs.empty:
             continue

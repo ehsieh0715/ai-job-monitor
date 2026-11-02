@@ -13,7 +13,8 @@ using your own Career Markdown folder. No web interface is required.
 | [Resume review](policies/resume-review.md) | Check claims, relevance and document quality |
 | [Cover letter writing](policies/cover-letter-writing.md) | Value, narrative, writing and attachment standards |
 
-`.agents/skills/` contains short workflow entry points that reference these files.
+`.agents/skills/career-assistant/SKILL.md` is the single entry point. It selects
+the relevant policy files; all standards and workflow details live in policies.
 The policies consolidate the earlier ai-job-monitor evaluation rules and
 career-application playbook/writing guidance. They replace the old requirement to
 select exactly one base CV: a Master CV or existing CV is not required. Initial
@@ -49,7 +50,7 @@ Do not commit profiles, source documents, generated applications or credentials.
 
 Use an assistant that can read local files and this repo's skills. For example:
 
-- “Use evaluate-jobs to assess this JD.” A pasted JD needs no Sheet entry.
+- “Use career-assistant to assess this JD.” A pasted JD needs no Sheet entry.
 - “I actually implemented this; here is my contribution.” Confirmed evidence can
   update the shared Profile and change the assessment.
 - “Proceed with a CV for this role.” Compose relevant evidence under the writing
@@ -62,13 +63,14 @@ Skills are instructions for an assistant, not a built-in LLM evaluation service.
 ## Current Python pipeline and limits
 
 Install dependencies from `requirements.txt` in a virtual environment.
-Run `python src/main.py` to search into local `data/` CSVs. The evaluate-jobs skill
+Run `python src/main.py` to search into local `data/` CSVs. The career-assistant skill in batch evaluation mode
 can produce `data/scored_jobs.csv`; `python src/sync_scores_to_sheet.py` then
 synchronizes scores. This requires network access and valid Google credentials.
 
 Career paths are currently read directly by AI skills, not by Python scripts.
-Search parameters still include hard-coded defaults in `src/search_jobs.py`;
-Google Sheet name/worksheet/credential path remain in `src/google_sheets.py`.
+Search parameters are loaded from the private configuration (see
+[configuration](config/README.md)). Google Sheet name/worksheet/credential path
+remain in `src/google_sheets.py`.
 The Python pipeline is therefore **not yet fully configurable for another user**.
 Sync currently appends new IDs and may overwrite the header; verify a compatible
 sheet before running. Updating existing assessments/fully configurable sync are

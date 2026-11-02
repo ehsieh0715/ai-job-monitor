@@ -1,10 +1,21 @@
-# Copy to config/config.local.yaml and set your own paths.
-# root must be absolute. Other paths are relative to root unless absolute.
-# Paths do not grant filesystem permission; authorize access separately.
+# Copy to config/config.local.yaml and edit your own paths and search.
+# career.root is absolute; other career paths are relative unless absolute.
 career:
-  root: "/absolute/path/to/01 Career"
-  profile: "Candidate Profile.md"
-  source_documents: "Source Documents"
-  project_evidence: "Project Evidence"
-  applications: "Applications"
-  application_tracker: "Applications/Applications.md"
+  root: /absolute/path/to/01 Career
+  profile: Candidate Profile.md
+  source_documents: Source Documents
+  project_evidence: Project Evidence
+  applications: Applications
+  application_tracker: Applications/Applications.md
+search:
+  keywords:
+  - data analyst
+  - analytics engineer
+  location: Dublin, Ireland
+  sites:
+  - linkedin
+  - indeed
+  hours_old: 6
+  results_wanted: 100
+  country_indeed: Ireland
+  linkedin_fetch_description: true

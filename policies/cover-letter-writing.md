@@ -2,6 +2,8 @@
 
 Version: 1.0. Read `evidence-policy.md` and the current job assessment first.
 
+Assess current fit under job-evaluation.md first; its uncertainty and structural-gap
+stop rules apply. Asking whether a letter helps is not a request to draft.
 Draft after the user confirms proceeding or explicitly requests a letter. Decide
 whether it adds context beyond the CV; if optional and repetitive, say low value.
 Do not use a letter to disguise structural gaps or invent motivation.
@@ -45,3 +47,7 @@ professional/project separation; no repeated evidence across paragraphs; a speci
 opening/close; and length. Markdown goes to the configured application folder as
 Cover Letter.md only within authorized scope. Export when needed/requested with
 CV-consistent typography and inspect the result. Preserve submitted versions.
+
+Ask about ambiguous company/title/start date. Update the tracker only within
+authorized scope, preserving unrelated fields. Do not alter Google Sheets, queues,
+program files or shared policies as a side effect.
