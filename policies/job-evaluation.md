@@ -130,8 +130,9 @@ job_id,found_at,site,title,company,location,search_term,job_url,match_score,reco
 ```
 
 Preserve the first eight fields from pending input, excluding description. Scores
-are integers 0–100 with the policy's four allowed labels. Traditional Chinese
-summary normally uses 2–4 sentences and includes relevant uncertainty and policy
+are integers 0–100 with the policy's four allowed labels. Use the requested
+summary language or local policies/preferences.md. The summary normally uses
+2–4 sentences and includes relevant uncertainty and policy
 version. Do not change pending rows, source documents, tracker, processed IDs or
 Google Sheets; synchronization is a separate action.
 

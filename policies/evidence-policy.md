@@ -1,19 +1,22 @@
 # Evidence policy
 
-Version: 1.1. Applies to every assessment and application document.
+Version: 1.2. Applies to every assessment and application document.
 
 ## Sources and access
 
 Read `config/config.local.yaml` (see `config/README.md`). Resolve `career.root`
-as an absolute path; other career paths are relative to it unless absolute.
+as an absolute path. It is the only configurable Career path. Use the fixed
+layout in workflow.md; legacy per-file path overrides are not supported.
 Missing configuration, files or permission: identify the exact missing path;
 do not guess a fallback or silently use another person's data. Configuration
-is not permission. AI skills read this configuration directly; Python integration
-is tracked separately in the README. Read optional preferences_path as described
-in config/README.md; presentation preferences never override evidence rules.
+is not permission. AI skills and Python path resolution use this same layout.
+Read optional local `policies/preferences.md` for presentation preferences;
+current task instructions take precedence. Preferences never override evidence
+rules or change scoring standards.
 
-Read the configured Candidate Profile first, then only relevant Project Evidence
-summaries. Consult Source Documents or original code when a material claim needs
+Read `<career.root>/Candidate Profile.md` first, including relevant project
+sections. Consult originals only in `<career.root>/Source Documents/` or project
+links recorded in its Projects.md when a material claim needs
 verification. An incomplete profile calls for source review or questions, not an
 assumption that the candidate has no experience. CVs are presentations of facts,
 not authoritative facts; repetition across files adds no evidence strength.
@@ -53,7 +56,8 @@ Do not repeatedly ask facts already recorded. In unattended runs mark pending
 questions without guessing answers or blocking the entire batch.
 
 When the user supplies experience, first prepare a source-linked proposed edit to
-Profile or Project Evidence, with context, limits and confirmation provenance.
+Candidate Profile.md (including project sections), with context, limits and
+confirmation provenance.
 Present exact target paths and additions/replacements/removals for approval.
 Answering factual questions is not permission to write. A general build/update
 request is permission to inspect and propose, not to save unseen Markdown content.
@@ -66,13 +70,15 @@ change separately authorized CV/letter/tracker or pipeline writes. Filesystem
 permission is still required. Until approval, keep the proposal in conversation,
 not an unapproved draft file; distinguish hypothetical/pending evidence from the
 saved Profile in any provisional discussion. Never let unattended runs update
-these Markdown sources or treat unapproved new claims as established evidence.
+the Candidate Profile or treat unapproved new claims as established evidence.
 Reassess confirmed saved changes and explain changed judgments. If blocked, report
 it rather than claiming an update. Project review follows project-evidence.md.
 
-## Language and preferences
+## Personal preferences and shared rules
 
-Default analysis: Traditional Chinese; CV/letter wording: professional English.
-User preferences can change language, length, tone and section order. Shared
-rule changes must apply to batch and conversational evaluation together; style
-preferences never relax factual boundaries. Keep personal facts out of policies.
+Personal language, tone and formatting choices belong in Git-ignored
+`policies/preferences.md`, not shared policies. If absent, follow the current
+request, document audience and employer requirements; ask only when necessary.
+Do not assume a specific user's language for people who clone this project.
+Shared rule changes apply equally to batch and conversational evaluation.
+Style preferences never relax factual boundaries or establish candidate facts.
