@@ -122,12 +122,19 @@ own environment; offline tests do not establish successful live authentication.
 
 ## Google Sheets setup (first time)
 
+**Supported method: Python + your own Google service account.** Set this up once,
+then reuse it for future runs. You need a Google account, your own Sheet and a
+private location for the downloaded credential file. MCP sync is not implemented.
+
+<details>
+<summary>Expand: create a service account and connect your Google Sheet step by step</summary>
+
 This project's Python connector uses a **service account**, not an API-key string
 or an OAuth desktop-client JSON. The code runs on your computer/chosen runner;
 Google Cloud supplies the identity and API access, not a server for this pipeline.
 Each user should create their own credentials and use their own Sheet.
 
-### A. Select a Google Cloud project and enable APIs
+### Step 1 — Select a Google Cloud project and enable APIs
 
 1. Sign in to [Google Cloud Console](https://console.cloud.google.com/).
 2. Open the project selector at the top. Select an existing project or choose
@@ -141,13 +148,15 @@ Keep that project selected throughout setup. If controls are unavailable, ask th
 project administrator for permission to enable services. See Google's
 [API enablement guide](https://developers.google.com/workspace/guides/enable-apis).
 
-### B. Create the service account
+### Step 2 — Create the service account
 
 1. Open **IAM & Admin → Service Accounts** and click **Create service account**.
-2. Enter a name such as `job-monitor-sync`, then **Create and continue**.
+2. Enter a name such as `job-monitor-sync`; leave the generated account ID as-is
+   unless you need another ID, then click **Create and continue**.
 3. For this shared-Sheet workflow, leave optional project-role and user-access
-   grants empty and finish. Do not grant project Owner/Editor just to edit a Sheet:
-   file access is granted in step D.
+   grants empty (use **Continue** / **Done** to finish). Do not grant project
+   Owner/Editor just to edit a Sheet:
+   file access is granted in step 4.
 4. Open the account and note its email, shaped like
    `job-monitor-sync@YOUR_PROJECT_ID.iam.gserviceaccount.com`.
 
@@ -155,13 +164,13 @@ You do not need an OAuth consent-screen setup or domain-wide delegation for this
 explicitly shared-Sheet workflow. See Google's
 [credential guide](https://developers.google.com/workspace/guides/create-credentials).
 
-### C. Download and store a JSON key
+### Step 3 — Download and store a JSON key
 
 1. In that service account, open **Keys → Add key → Create new key**.
 2. Select **JSON**, click **Create**, and save the downloaded file.
 3. Store it outside the repo and vault, for example:
    `/Users/YOUR_NAME/.config/ai-job-monitor/google-service-account.json` on macOS,
-   or a private directory on your own OS. Use your actual path in step E.
+   or a private directory on your own OS. Use your actual path in step 5.
 4. Confirm locally that the JSON contains `"type": "service_account"` and a
    `client_email`. Do not paste the file or its private key into chat or Git.
 
@@ -171,11 +180,11 @@ cannot bypass that policy. If you lose the downloaded key, create a replacement
 and revoke the old one rather than expecting to download it again. See Google's
 [key management guide](https://docs.cloud.google.com/iam/docs/keys-create-delete).
 
-### D. Create and share your spreadsheet
+### Step 4 — Create and share your spreadsheet
 
 1. Create/open your own Google Sheet. Add a dedicated, empty tab named `Jobs`
    (or choose another exact tab name).
-2. Click **Share** and add the service account email from step B (also available
+2. Click **Share** and add the service account email from step 2 (also available
    as `client_email` in the JSON). Set its file permission to **Editor**.
 3. Keep general link access restricted; public sharing is not required.
 4. Copy the spreadsheet URL from the address bar, not merely its display name.
@@ -184,7 +193,7 @@ The service identity is separate from your personal Google login, so you must
 share the file with it even when you own the Sheet. See
 [gspread service-account authentication](https://docs.gspread.org/en/latest/oauth2.html).
 
-### E. Fill your private configuration
+### Step 5 — Fill your private configuration
 
 If not already done, copy config/config.example.yaml to config/config.local.yaml.
 Add/edit this section without deleting your Career and search settings:
@@ -201,7 +210,7 @@ or just that ID works. `worksheet` is the bottom tab name, not the document titl
 the URL's `gid` does not select a tab for this connector. Credentials must exist
 on the machine running the task. Do not commit config.local.yaml or the key.
 
-### F. Check the connection without changing the Sheet
+### Step 6 — Check the connection without changing the Sheet
 
 After installing dependencies, run this from the repository root (macOS/Linux):
 
@@ -213,7 +222,7 @@ On Windows, use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
 This authenticates and reads the configured tab; it needs network access but no
 Profile or scored CSV. It does not write cells or prove write permission.
 
-### G. Preview and perform the first synchronization
+### Step 7 — Preview and perform the first synchronization
 
 Complete the search → prepare → AI evaluation → seal steps in section 3 first.
 Then run:
@@ -250,6 +259,8 @@ headers stop the sync. Do not use your application tracker tab as the search tab
 Cloud Console labels can change; use the linked Google guides if the screens differ.
 This setup enables Google access only. Recurring execution still needs the
 [scheduler and available AI runner](examples/scheduled-run.md).
+
+</details>
 
 ## 4. Prepare an application after deciding to proceed
 
