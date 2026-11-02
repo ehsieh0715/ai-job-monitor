@@ -41,7 +41,7 @@ Accent is limited to name, headings, dates, category labels and subtle divider r
 body remains #222222 or #1A1A1A. Compute accent contrast against white, minimum
 4.5:1 (aim 7:1); if requested colour fails, propose a darker alternative. Do not
 silently substitute it or impose a universal favourite colour. Persist agreed
-colour choices under evidence-policy.md's personal-preference rule.
+colour choices under evidence.md's personal-preference rule.
 
 ## Naming and destination
 

@@ -77,7 +77,7 @@ not an unapproved draft file; distinguish hypothetical/pending evidence from the
 saved Profile in any provisional discussion. Never let unattended runs update
 the Candidate Profile or treat unapproved new claims as established evidence.
 Reassess confirmed saved changes and explain changed judgments. If blocked, report
-it rather than claiming an update. Project review follows project-evidence.md.
+it rather than claiming an update. Project review follows projects.md.
 
 ## Personal preferences and shared rules
 

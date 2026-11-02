@@ -198,7 +198,7 @@ After your Profile has been approved and saved, paste:
 
 > Follow career-assistant and `policies/workflow.md`. Use my local configuration
 > and latest Candidate Profile to run one job search, prepare the pending queue,
-> evaluate every pending job under `policies/job-evaluation.md`, and seal the scores.
+> evaluate every pending job under `policies/evaluation.md`, and seal the scores.
 > Show a concise summary of recommendations and unresolved evidence questions.
 > Preview with `src/sync_scores_to_sheet.py --dry-run`, then synchronize my
 > configured Sheet with Python. Preserve manual columns and stop on errors.
@@ -259,11 +259,19 @@ still require approval before Profile updates; ideas are not recorded as achieve
 
 ## Reference
 
-- [Configuration fields and generated files](config/README.md)
-- [Career workflow](policies/workflow.md) and [evidence standards](policies/evidence-policy.md)
-- [Profile building](policies/profile-building.md) and [project review](policies/project-evidence.md)
-- [Job scoring](policies/job-evaluation.md)
-- [CV writing](policies/resume-writing.md), [CV review](policies/resume-review.md), [cover letters](policies/cover-letter-writing.md), [application emails](policies/application-email.md) and [PDF export](policies/document-export.md)
+[Configuration](config/README.md) explains user settings. Policies use short names:
+
+| Policy | Purpose |
+| --- | --- |
+| [workflow.md](policies/workflow.md) | Short commands, stages and scheduled runs |
+| [evidence.md](policies/evidence.md) | Facts, approval and remembered preferences |
+| [profile.md](policies/profile.md) | Build/update Candidate Profile |
+| [projects.md](policies/projects.md) | Review project links and contributions |
+| [evaluation.md](policies/evaluation.md) | Common job-fit scoring |
+| [cv.md](policies/cv.md) | CV writing and review |
+| [cover-letter.md](policies/cover-letter.md) | Cover letter writing |
+| [email.md](policies/email.md) | Application email drafts |
+| [pdf.md](policies/pdf.md) | PDF formatting, naming and checks |
 
 Keep local config, personal preferences, source documents, Profile, application
 files and pipeline data private. Removing a tracked file does not remove older

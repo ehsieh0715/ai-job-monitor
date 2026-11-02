@@ -1,6 +1,6 @@
 # Job evaluation
 
-Version: 1.0. Read with `evidence-policy.md`. The same standard applies to batch
+Version: 1.0. Read with `evidence.md`. The same standard applies to batch
 search results, pasted JDs and manually found jobs; neither Sheet membership nor
 an existing CV is required. The score measures the value of preparing and applying.
 

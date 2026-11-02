@@ -1,8 +1,8 @@
 # Cover letter writing
 
-Version: 1.0. Read `evidence-policy.md` and the current job assessment first.
+Version: 1.0. Read `evidence.md` and the current job assessment first.
 
-Assess current fit under job-evaluation.md first; its uncertainty and structural-gap
+Assess current fit under evaluation.md first; its uncertainty and structural-gap
 stop rules apply. Asking whether a letter helps is not a request to draft.
 Draft when requested or authorized by workflow.md's recommended-job continuation. Decide
 whether it adds context beyond the CV; if optional and repetitive, say low value.
@@ -55,4 +55,4 @@ ambiguous company/title/start date. Create/update root applications.md only with
 authorized scope, preserving unrelated fields. Do not alter Google Sheets, queues,
 program files or shared policies as a side effect.
 
-PDF layout, source fidelity, colour and naming follow document-export.md.
+PDF layout, source fidelity, colour and naming follow pdf.md.

@@ -1,10 +1,10 @@
-# Resume writing
+# CV writing and review
 
-Version: 1.0. Read `evidence-policy.md` and the current job assessment first.
+Version: 1.0. Read `evidence.md` and the current job assessment first.
 
 ## Content selection
 
-Assess the current JD under job-evaluation.md first; its questions and drafting
+Assess the current JD under evaluation.md first; its questions and drafting
 gate and workflow.md's interactive continuation apply. Once drafting is authorized, compose the CV from Candidate Profile and its relevant
 verified project sections for the JD. No Master CV, existing CV or single base
 version is required. Consult relevant old CVs for useful expression only; do not
@@ -49,7 +49,7 @@ links and selectable body-text contact details. Avoid layout tables, text boxes,
 icons and graphics; verify actual reading order rather than promising ATS success. Prefer content prioritization over tiny fonts.
 
 Return a concise positioning rationale and the complete Markdown CV; apply
-resume-review.md before delivery. Ask about ambiguous company/title/start date.
+the review checklist below before delivery. Ask about ambiguous company/title/start date.
 Do not alter Google Sheets, queues, program files or shared policies as a side effect.
 
 Draft Markdown first. Save only when requested/authorized, to the fixed
@@ -64,4 +64,29 @@ do not guess dates, NofD or status.
 Create needed application directories within authorized scope using the fixed
 layout and safe naming rules in workflow.md; users do not configure these paths.
 
-PDF conversion, colour, content fidelity and filenames are owned by document-export.md.
+PDF conversion, colour, content fidelity and filenames are owned by pdf.md.
+
+## Review before delivery
+
+Check:
+
+1. The content addresses the actual JD's most important work and preserves the
+   fit assessment; prose cannot erase a structural or eligibility gap.
+2. Facts, dates, titles, metrics, completion and personal ownership have sources.
+   Project/academic/learning evidence is visibly distinct from professional work.
+3. Summary and section order support the positioning; bullets identify action,
+   method and value without invented impact. Recover relevant verified metrics.
+4. Skills are supported, correctly named and readable; important JD terminology
+   is natural, with no generic filler or unnecessary component lists.
+5. Keep strong content; remove repetition before changing layout/font size.
+6. Markdown links and rendering are readable. For exported files inspect page
+   layout and text extraction; never claim PDF/ATS validation without doing it.
+7. The intended output path is correct and cannot overwrite a submitted version.
+
+For review-only requests, return only material corrections and unresolved
+verification questions. For drafting, deliver the complete CV as specified above. Supply
+complete replacement sections when useful, not a compulsory long checklist or
+arbitrary resume 'match score'. Mark work needing source or layout verification
+rather than claiming it passed.
+
+For PDF exports also apply pdf.md; do not rewrite source during conversion.
