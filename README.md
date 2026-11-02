@@ -14,7 +14,11 @@ Three core features help you move from career evidence to a prepared application
 Personal documents live in your external Career folder (an Obsidian vault works
 well). The repository supplies code, shared policies and one AI skill entry point.
 
-## 1. Create your Profile first
+For first-time use, build your Candidate Profile. After that, choose job evaluation,
+search or application preparation as needed; searching is not required to use a
+JD you already have.
+
+## Candidate Profile
 
 Clone this repo and open it in an AI coding assistant with local file access.
 Create a Career folder and place your original CVs, Word/PDF files, experience
@@ -62,7 +66,9 @@ and shows the proposed Profile for approval before saving. Original files stay i
 Optional: set `preferences_path` to a private Markdown file for your preferred
 language, structure and writing style; see [example](config/preferences.example.md).
 
-## 2. Evaluate a job in the same conversation
+## Job Search & Evaluation
+
+### Evaluate a job in conversation
 
 Paste any complete JD and say “評估這份工作”. It need not appear in a Sheet or CSV.
 The assistant reads the Profile and relevant evidence, gives a common score and
@@ -72,10 +78,61 @@ answer those questions.
 Unknowns receive no assumed credit; a changed judgment includes its reason.
 If the Profile is incomplete, the assessment is provisional rather than invented.
 
-## 3. Search and synchronize recommendations
+### Configure search and Google Sheets
 
-Edit `search` in config.local.yaml: keywords, location, sites and time range.
-See [configuration](config/README.md) for all supported site identifiers/limits.
+Use `config/config.local.yaml` for your own settings (copy the example if needed):
+
+| Setting | What to provide |
+| --- | --- |
+| `career.root` and `career.profile` | Your Career folder and latest Candidate Profile location |
+| `search` | Keywords, location, sites, listing age and desired result count |
+| `google_sheets.spreadsheet` | Your Google Sheet URL or ID |
+| `google_sheets.worksheet` | Exact destination tab name |
+| `google_sheets.credentials_path` | Your private service-account JSON path |
+
+See [configuration](config/README.md) for supported site values. Complete the
+[one-time Google setup](#google-sheets-setup-first-time) below before syncing.
+Keep personal settings and credentials private.
+
+### Ask AI to run it now
+
+In an AI environment with local file/command and network access, ask:
+
+> Follow career-assistant and policies/workflow.md. Use my local configuration
+> and latest Candidate Profile to search jobs, evaluate every pending job, seal
+> the results, preview changes and synchronize recommendations to my configured
+> Google Sheet. Preserve manual columns and stop if required access is unavailable.
+
+The AI runs Python for search and Sheet synchronization and performs the evaluation
+between those steps. Python main.py alone does not evaluate jobs. The first run
+may require filesystem/network authorization; permissions are separate from paths.
+
+### Schedule recurring runs
+
+First complete a successful interactive run. Then choose either:
+
+- **Ask the AI to create a schedule:** in an environment with scheduling tools,
+  specify the repo path, frequency, timezone and permission to update the target
+  Sheet. For example: “Create a recurring task every 6 hours, Europe/Dublin, for
+  this repo. Use examples/scheduled-run.md and my private configuration.” The AI
+  should report the created schedule; without a scheduling tool it must explain
+  the limitation rather than claim it was created.
+- **Create it yourself:** open your environment's Scheduled tasks/Automations
+  interface, add a task, select the interval/timezone and use the
+  [scheduled-run prompt](examples/scheduled-run.md), replacing its repo path.
+
+A scheduled AI runner needs the same repo, private config, latest Profile,
+Python dependencies, Google credentials, file permissions and network access as
+an interactive run. A cloud task does not automatically have your local vault.
+Do not overlap runs. Cron calling main.py only searches; it does not add AI scoring.
+Cloning the repo does not itself install or activate a schedule. Tool availability
+and account permissions depend on the execution environment.
+
+### Run the pipeline manually
+
+<details>
+<summary>Expand: Python commands and the AI evaluation handoff</summary>
+
 Install Python dependencies in a virtual environment:
 
 ```sh
@@ -112,15 +169,13 @@ Profile/evidence/preferences/policies queue retained jobs for reevaluation; stal
 or altered sealed scores cannot sync. Old jobs without retained descriptions
 cannot be recovered automatically. Run only one writer at a time.
 
-For recurring runs use the [scheduled AI prompt](examples/scheduled-run.md), with
-your chosen scheduler, repo path, interval and timezone. It follows
-[workflow.md](policies/workflow.md). Cloning does not install a scheduler or LLM
-service. The runner needs access to the machine/files, Python, network and Google
-credentials; calling main.py alone performs no AI evaluation. Empty queues stop
-without uploading old scores. Actual board/Google access must be verified in your
-own environment; offline tests do not establish successful live authentication.
+Actual job-board and Google access must be verified in your own environment;
+offline tests do not establish successful live authentication. Empty queues stop
+without uploading old scores.
 
-## Google Sheets setup (first time)
+</details>
+
+### Google Sheets setup (first time)
 
 **Supported method: Python + your own Google service account.** Set this up once,
 then reuse it for future runs. You need a Google account, your own Sheet and a
@@ -134,7 +189,7 @@ or an OAuth desktop-client JSON. The code runs on your computer/chosen runner;
 Google Cloud supplies the identity and API access, not a server for this pipeline.
 Each user should create their own credentials and use their own Sheet.
 
-### Step 1 — Select a Google Cloud project and enable APIs
+#### Step 1 — Select a Google Cloud project and enable APIs
 
 1. Sign in to [Google Cloud Console](https://console.cloud.google.com/).
 2. Open the project selector at the top. Select an existing project or choose
@@ -148,7 +203,7 @@ Keep that project selected throughout setup. If controls are unavailable, ask th
 project administrator for permission to enable services. See Google's
 [API enablement guide](https://developers.google.com/workspace/guides/enable-apis).
 
-### Step 2 — Create the service account
+#### Step 2 — Create the service account
 
 1. Open **IAM & Admin → Service Accounts** and click **Create service account**.
 2. Enter a name such as `job-monitor-sync`; leave the generated account ID as-is
@@ -164,7 +219,7 @@ You do not need an OAuth consent-screen setup or domain-wide delegation for this
 explicitly shared-Sheet workflow. See Google's
 [credential guide](https://developers.google.com/workspace/guides/create-credentials).
 
-### Step 3 — Download and store a JSON key
+#### Step 3 — Download and store a JSON key
 
 1. In that service account, open **Keys → Add key → Create new key**.
 2. Select **JSON**, click **Create**, and save the downloaded file.
@@ -180,7 +235,7 @@ cannot bypass that policy. If you lose the downloaded key, create a replacement
 and revoke the old one rather than expecting to download it again. See Google's
 [key management guide](https://docs.cloud.google.com/iam/docs/keys-create-delete).
 
-### Step 4 — Create and share your spreadsheet
+#### Step 4 — Create and share your spreadsheet
 
 1. Create/open your own Google Sheet. Add a dedicated, empty tab named `Jobs`
    (or choose another exact tab name).
@@ -193,7 +248,7 @@ The service identity is separate from your personal Google login, so you must
 share the file with it even when you own the Sheet. See
 [gspread service-account authentication](https://docs.gspread.org/en/latest/oauth2.html).
 
-### Step 5 — Fill your private configuration
+#### Step 5 — Fill your private configuration
 
 If not already done, copy config/config.example.yaml to config/config.local.yaml.
 Add/edit this section without deleting your Career and search settings:
@@ -210,7 +265,7 @@ or just that ID works. `worksheet` is the bottom tab name, not the document titl
 the URL's `gid` does not select a tab for this connector. Credentials must exist
 on the machine running the task. Do not commit config.local.yaml or the key.
 
-### Step 6 — Check the connection without changing the Sheet
+#### Step 6 — Check the connection without changing the Sheet
 
 After installing dependencies, run this from the repository root (macOS/Linux):
 
@@ -222,9 +277,9 @@ On Windows, use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
 This authenticates and reads the configured tab; it needs network access but no
 Profile or scored CSV. It does not write cells or prove write permission.
 
-### Step 7 — Preview and perform the first synchronization
+#### Step 7 — Preview and perform the first synchronization
 
-Complete the search → prepare → AI evaluation → seal steps in section 3 first.
+Complete the search → prepare → AI evaluation → seal steps in [Run the pipeline manually](#run-the-pipeline-manually) first.
 Then run:
 
 ```sh
@@ -242,7 +297,7 @@ An empty tab receives the required header on this first write. Existing compatib
 tabs are matched by column names; extra manual columns are preserved. Incompatible
 headers stop the sync. Do not use your application tracker tab as the search tab.
 
-### Troubleshooting
+#### Troubleshooting
 
 | Symptom | Check |
 | --- | --- |
@@ -262,7 +317,7 @@ This setup enables Google access only. Recurring execution still needs the
 
 </details>
 
-## 4. Prepare an application after deciding to proceed
+## CV & Cover Letter
 
 Say “Proceed with a CV for this role”. The assistant composes relevant verified
 Profile/project evidence under the writing rules; no single base CV is required.
