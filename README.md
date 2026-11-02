@@ -11,6 +11,17 @@ Open this repo in an AI assistant with local file/terminal access. It should rea
 those tools cannot operate your local files simply from a path. No Google connector
 is required: Python searches/synchronizes; AI evaluates and writes application text.
 
+## Getting started
+
+You can follow the setup sections below or ask your AI assistant to guide you:
+
+> Help me set up this project. Check the project instructions and tell me what
+> configuration or permissions are missing before making changes or running anything.
+
+The assistant follows [AGENTS.md](AGENTS.md) and
+[career-workflow.md](policies/career-workflow.md) to check your setup and guide
+you through the features you want to use. No long prompt is needed.
+
 ## How the workflows are guided
 
 Describe what you need in ordinary language; the examples below are shortcuts,
