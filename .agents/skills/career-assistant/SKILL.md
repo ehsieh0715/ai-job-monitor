@@ -22,7 +22,7 @@ Read only the additional policies relevant to the request:
 | --- | --- |
 | Initialize/merge source documents into Candidate Profile | `policies/candidate-profile-generation.md` |
 | Review Projects.md links or refresh a project section | `policies/project-evidence-evaluation.md` |
-| search / search preview | `policies/career-workflow.md`, `policies/job-fit-evaluation.md` |
+| Set up/run scheduled search, trial or explicitly requested one-off search | `policies/career-workflow.md`, `policies/job-fit-evaluation.md` |
 | Pasted JD / evaluate / job fit / pending batch | `policies/job-fit-evaluation.md` |
 | Prepare or revise CV | `policies/job-fit-evaluation.md`, `policies/cv-writing-and-review.md` |
 | Review an existing CV | `policies/cv-writing-and-review.md`; add `policies/job-fit-evaluation.md` when assessing fit |

@@ -11,21 +11,22 @@ Open this repo in an AI assistant with local file/terminal access. It should rea
 those tools cannot operate your local files simply from a path. No Google connector
 is required: Python searches/synchronizes; AI evaluates and writes application text.
 
-## What do I type?
+## How the workflows are guided
 
-| Say | What happens |
+Describe what you need in ordinary language; the examples below are shortcuts,
+not required commands. Policies hold the reusable prompts and rules, so you can
+maintain them without pasting a long prompt into every conversation.
+
+| Workflow / example request | Guiding policies and result |
 | --- | --- |
-| `profile` | Read your sources, propose a Profile, save after your approval |
-| `search` | Search with your settings, evaluate and sync recommendations to your Sheet |
-| `search preview` | Search/evaluate and preview without changing your Sheet |
-| Paste a JD, or `evaluate` + JD | Assess fit, clarify important questions, then draft for recommended jobs |
-| `evaluate only` + JD | Assess without application drafts |
-| `cv`, `cover letter`, `email` | Draft for the current identified application |
-| `save` | Save the agreed documents and application record |
-| `pdf /path/CV.md purple` | Format exact source text as PDF if export tools are available |
+| Build/update my Profile (`profile`) | [candidate-profile-generation.md](policies/candidate-profile-generation.md) turns `Source Documents/` into a proposed `Candidate Profile.md`; save after your approval. Project links follow [project-evidence-evaluation.md](policies/project-evidence-evaluation.md). |
+| Set up recurring job searches | Complete the setup below, choose run times/timezone, then follow [career-workflow.md](policies/career-workflow.md) for a trial and scheduled search → evaluation → Sheet sync. |
+| Assess this JD (`evaluate` + JD) | [job-fit-evaluation.md](policies/job-fit-evaluation.md) assesses fit, asks decision-changing questions and reassesses confirmed evidence. If unsuitable, explain why applying is low-value; evaluation alone does not create documents. |
+| Prepare a CV, cover letter or email | [cv-writing-and-review.md](policies/cv-writing-and-review.md), [cover-letter-writing.md](policies/cover-letter-writing.md) or [application-email-writing.md](policies/application-email-writing.md) generates the requested Markdown in the identified application folder. |
+| Convert `/path/CV.md` to PDF, with purple accents | [application-pdf-generation.md](policies/application-pdf-generation.md) exports the specified Markdown without rewriting, if export tools are available. |
 
-No policy names or long prompts are needed. The AI reads the relevant rules each
-run. It must report missing setup/access rather than pretend an action succeeded.
+Every workflow follows [candidate-evidence-standards.md](policies/candidate-evidence-standards.md).
+The AI must report missing setup/access rather than pretend an action succeeded.
 
 ## Candidate Profile
 
@@ -113,9 +114,11 @@ Official help: [enable APIs](https://developers.google.com/workspace/guides/enab
 
 </details>
 
-Then say **`search`**. AI reads your latest Profile and runs the steps for you.
-Results update existing job IDs and preserve your manual columns. Empty/incompatible
-sheet handling and validation are automatic; errors stop the run.
+After setup, ask the AI to test the complete pipeline, then configure recurring
+runs as described below. Each run reads your latest Profile, evaluates pending
+jobs and updates the Sheet by job ID while preserving manual columns. Invalid
+data or incompatible Sheet headers stop the run. Setup alone starts no search
+and authorizes no Sheet writes; authorize the trial and recurring updates explicitly.
 
 **No usable JD?** The listing is still shown as **未評分／待補 JD**, with a blank
 score and its link. This is not 0 or Skip. Paste the full JD later and say `evaluate`.
@@ -157,13 +160,19 @@ checks. Live access must be verified in your environment, not inferred from test
 
 ## CV & Cover Letter
 
-Paste a JD or say **`evaluate`** for an identifiable job. AI applies the same fit
-standard as batch search. For recommended roles it asks at most three consolidated
-material questions, proposes Profile corrections for approval, and reassesses.
-If still recommended it supplies CV, useful cover-letter and application-email
-drafts. `evaluate only` stops before drafts. Batch searches never draft documents.
+Paste a JD or ask to evaluate an identifiable job. AI follows
+[job-fit-evaluation.md](policies/job-fit-evaluation.md), the same standard used by
+scheduled searches. It asks material questions at any recommendation level,
+proposes relevant Profile corrections for approval, then reassesses. If confirmed
+gaps make applying low-value, it explains why; it does not invent missing experience.
 
-Say **`save`** when ready. Files go under:
+When ready to proceed, ask for a **CV**, **cover letter** or **email** (ordinary
+language works too). AI follows the matching writing policy and saves the requested
+Markdown under the identified application folder. Ask only for an in-chat draft
+if you do not want files saved. Evaluation and scheduled searches do not create
+application documents by themselves. A later request to save agreed drafts works too.
+
+Files go under:
 
 ```text
 01 Career/
@@ -190,7 +199,7 @@ change shared behavior, not for ordinary use.
 
 | Policy | Purpose |
 | --- | --- |
-| [career-workflow.md](policies/career-workflow.md) | Commands, stages, scheduled runs |
+| [career-workflow.md](policies/career-workflow.md) | Workflow routing, stages, scheduled runs |
 | [candidate-evidence-standards.md](policies/candidate-evidence-standards.md) | Facts, approval, remembered preferences |
 | [candidate-profile-generation.md](policies/candidate-profile-generation.md) | Consolidate source documents |
 | [project-evidence-evaluation.md](policies/project-evidence-evaluation.md) | Review project capabilities/contributions |

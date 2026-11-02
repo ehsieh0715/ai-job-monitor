@@ -4,7 +4,7 @@ Version: 1.0. Read `candidate-evidence-standards.md` and the current job assessm
 
 Assess current fit under job-fit-evaluation.md first; its uncertainty and structural-gap
 stop rules apply. Asking whether a letter helps is not a request to draft.
-Draft when requested or authorized by career-workflow.md's recommended-job continuation. Decide
+Draft when requested under career-workflow.md's document-creation rules. Decide
 whether it adds context beyond the CV; if optional and repetitive, say low value.
 Do not use a letter to disguise structural gaps or invent motivation.
 

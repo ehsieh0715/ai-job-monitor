@@ -121,7 +121,7 @@ the provisional limitation in the summary without blocking other jobs.
 
 For a single JD lead with score/recommendation (a reasoned priority estimate,
 not interview probability), up to three supported strengths, material concerns
-and application value. Follow career-workflow.md for short-command continuation.
+and application value. Follow career-workflow.md for interactive request handling.
 Keep the response concise; expose weights/evidence mapping when useful
 or requested. Prioritize eligibility, mandatory gaps, core work, seniority, then
 preferred familiarity. State policy version and whether provisional; record the
@@ -133,7 +133,7 @@ applying` and stop before document drafting. Give the strongest transferable
 point, decisive gap, why wording cannot fix it and any narrow condition worth
 checking. Resolve material unknowns before treating a gap as confirmed; this stop
 rule must not suppress those questions. It does not apply to ordinary stretches.
-For drafting and its confirmation/automatic-continuation conditions, follow the
+For drafting and its request and saving conditions, follow the
 interactive contract in career-workflow.md; explicit user constraints take precedence.
 
 ## Unattended batch

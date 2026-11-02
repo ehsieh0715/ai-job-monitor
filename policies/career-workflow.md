@@ -1,6 +1,6 @@
 # Career Workflow
 
-Version: 1.5. This is the end-to-end procedure for a fresh conversation or a
+Version: 1.6. This is the end-to-end procedure for a fresh conversation or a
 scheduled AI run. Standards remain in their individual policies, not copied here.
 
 ## Start every run
@@ -76,28 +76,30 @@ an authorized cleanup; do not claim that those keys still redirect paths.
    obtain explicit approval of that content, write within scope, then reassess and
    explain changed judgments. An answer alone does not authorize writing. Mark unknowns,
    do not invent answers. Context changes invalidate earlier batch output.
-4. Apply the short-command interactive contract below. Documents follow
+4. Apply the interactive workflow contract below. Documents follow
    cv-writing-and-review.md, cover-letter-writing.md and application-email-writing.md.
    PDF conversion follows application-pdf-generation.md; it does not rewrite approved text.
-5. A Profile/CV question or automatic document draft does not authorize Sheet writes,
+5. A Profile/CV question or requested document draft does not authorize Sheet writes,
    email sending or application submission. Sync remains a separate requested or
    scheduled action. Job-fit scores and document-quality review are distinct.
 
-## Short commands and recommended-job drafts
+## Interactive requests and document creation
 
-`search` means run the configured search → prepare → evaluate → pre-sync check →
-preview → Python Sheet sync in this conversation. This explicit command authorizes
-that run's recommendation-field sync, not Profile edits or application submission.
-`search only` searches without grading/sync; `search preview` evaluates and previews
-without remote writes. If setup/access is missing, identify only the missing item.
-Do not require a pasted long prompt. Recurring schedules need separate timing and
-recurring-write authorization. Never draft documents as part of a search batch.
+Interpret ordinary language by intent; short words such as `profile`, `evaluate`,
+`cv`, `cover letter`, `email` or a request to convert a file to PDF are optional
+examples, not a command grammar. Route to the relevant policy without requiring
+users to name it or paste a long prompt.
 
-A pasted JD or `evaluate` with a supplied/unambiguous retained JD automatically
-uses job-fit-evaluation.md. Do not require users to paste policy names or a long prompt.
-If `evaluate` has no identifiable JD, ask for it. A CV alone is not a JD.
-An explicit `evaluate only`, `no drafts` or other current constraint overrides the
-normal interactive continuation. Scheduled/batch runs never draft documents.
+Search is normally initialized once and run by an authorized schedule under the
+section below. A request to set up a schedule does not itself run a search or
+update Google Sheets. An explicitly requested trial or one-off run may use the
+same pipeline; confirm missing execution/write scope before remote writes.
+A preview request never authorizes Sheet writes. Batch runs never draft documents.
+
+A pasted JD or request to evaluate a supplied/unambiguous retained JD uses
+job-fit-evaluation.md. If no JD is identifiable, ask for it; a CV alone is not a
+JD. Evaluation provides fit advice and clarification, not automatic CV/letter/email
+creation, even for Apply/Strong Apply.
 
 Give the common weighted score and recommendation, three strongest supported
 advantages (fewer if evidence is insufficient), material concerns and application
@@ -113,20 +115,23 @@ unanswered fact. Nonessential unknowns need not block.
 After answers, show exact proposed Profile corrections under candidate-evidence-standards.md
 and get content approval before writing. Recompute and explain any changed score.
 If no Profile change is required, do not create an artificial approval step.
-If the final judgment is Apply/Strong Apply with no unresolved material gate,
-continue directly with CV, tailored cover-letter and application-email drafts in
-conversation, following their separate policies. This interactive contract authorizes
-drafting without an additional 'do you want a CV?' question. An optional low-value
-cover letter may be omitted with a reason. Save the package/tracker only when the
-user asks to save or has already authorized application-file creation; preserve
-submitted versions. Consider/Skip stops after advice unless proceeding is requested.
-Do not present planned improvement as completed evidence to trigger drafting.
+Once material questions are resolved, state the recommendation and stop after
+advice. For confirmed structural/non-waivable gaps explain why applying is low-value.
+Do not suppress material questions merely because the initial label is Consider/Skip.
+Never present planned improvement as completed evidence.
 
-`profile` initializes/reviews the configured Profile under candidate-profile-generation.md;
-it still requires approval before saving.
-`cv`, `cover letter`, `email` use the identified current application and the matching
-writing policy. `pdf <Markdown path> [colour]` selects application-pdf-generation.md. Ask only
-for missing identity/source/role details that cannot be resolved from current context.
+A request for a CV, cover letter or email authorizes generating and saving that
+requested Markdown in the identified application folder under the matching writing
+policy, unless the user asks for conversation-only drafting. Resolve missing
+company, role, JD and preparation date before writing; preserve submitted versions.
+Report actual saved paths. A combined request to evaluate and prepare documents
+can authorize both stages, subject to evidence and fit gates. Tracker changes
+remain separately requested/authorized; preparing files is not submission.
+
+`profile` follows candidate-profile-generation.md and still needs displayed-content
+approval before saving. A request to save agreed drafts saves only that scope.
+A specified Markdown file plus a PDF request follows application-pdf-generation.md;
+read that exact file, preserve its text and use the policy's naming/layout checks.
 
 ## Scheduled search / evaluation / sync
 

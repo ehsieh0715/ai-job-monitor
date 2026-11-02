@@ -1,6 +1,6 @@
 # Application Email Writing
 
-Use for a requested email draft or the interactive recommended-job package in
+Use for a requested email draft or explicitly requested application package under
 career-workflow.md. Apply candidate-evidence-standards.md; this policy owns email wording only.
 
 Provide a subject and a concise professional body naming the role, stating the
@@ -11,6 +11,6 @@ Never invent recipient names/addresses, familiarity, motivation or achievements.
 Use a neutral greeting if the contact is unknown. Keep facts, titles and claims
 consistent with the CV and letter. Do not repeat the full cover letter.
 
-Return the draft in conversation. Save Application Email.md in the same application
-folder only when saving the package is requested/authorized. Never send email as
+Save the requested Markdown as Application Email.md in the identified application
+folder under career-workflow.md, unless conversation-only drafting was requested. Never send email as
 a side effect of evaluation, drafting or export; sending needs explicit instruction.
