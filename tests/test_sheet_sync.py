@@ -44,10 +44,6 @@ class SheetSyncTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             plan_sync([SCORED_COLUMNS, row, row], [job()])
 
-
-if __name__ == '__main__':
-    unittest.main()
-
 class SyncExecutionTests(unittest.TestCase):
     def test_dry_run_and_remote_failure_do_not_mark_processed(self):
         import tempfile
@@ -87,3 +83,7 @@ class MissingJDTests(unittest.TestCase):
         self.assertIn({'range':'I2','values':[['']]},plan['updates'])
         after=[SCORED_COLUMNS,[str(new[c]) for c in SCORED_COLUMNS]]
         self.assertEqual(plan_sync(after,[new])['updates'],[])
+
+
+if __name__ == '__main__':
+    unittest.main()
