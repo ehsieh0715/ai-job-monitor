@@ -171,7 +171,7 @@ For an authorized unattended cycle, from the repo root:
    preferences, prepare CVs/letters or submit applications unattended.
 2. Run `.venv/bin/python src/main.py` to search/archive JD text and queue new jobs.
    If search fails, stop; never upload an old scored CSV as if it were a new run.
-3. Run `.venv/bin/python src/prepare_evaluation.py`. It prepares new/changed or
+3. Run `.venv/bin/python src/prepare_evaluation.py`. It prepares new or
    explicitly queued jobs, recovering retained JD text. Profile/policy changes do
    not requeue synchronized history. New and explicitly revisited roles always
    use current evidence/rules. Only Profile and scoring/evidence policies affect

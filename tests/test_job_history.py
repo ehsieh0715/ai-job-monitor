@@ -19,7 +19,7 @@ class HistoryTests(unittest.TestCase):
         self.assertEqual(row['description'],'Full SQL JD')
         self.assertEqual(row['title'],'New')
 
-    def test_changed_processed_job_requeued(self):
+    def test_changed_processed_job_is_not_requeued(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder); (root/'data').mkdir()
             row={c:'' for c in PENDING_COLUMNS};row.update(job_id='site:1',description='old')
@@ -30,8 +30,7 @@ class HistoryTests(unittest.TestCase):
             with patch.multiple(search_jobs,REPO_ROOT=root,PENDING_JOBS_PATH=pending,PROCESSED_IDS_PATH=processed):
                 search_jobs.update_pending_jobs(observed)
             saved=pd.read_csv(pending)
-            self.assertEqual(len(saved),1)
-            self.assertEqual(saved.iloc[0]['description'],'new')
+            self.assertTrue(saved.empty)
             pd.DataFrame(columns=PENDING_COLUMNS).to_csv(pending,index=False)
             observed['description'] = float('nan')
             with patch.multiple(search_jobs,REPO_ROOT=root,PENDING_JOBS_PATH=pending,PROCESSED_IDS_PATH=processed):

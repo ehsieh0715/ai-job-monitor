@@ -123,8 +123,9 @@ and authorizes no Sheet writes; authorize the trial and recurring updates explic
 **No usable JD?** The listing is still shown as **Not assessed / JD needed**, with a blank
 score and its link. This is not 0 or Skip. Paste the full JD later and say `evaluate`.
 Profile/scoring changes do not automatically rescore your entire history; manually
-revisited jobs use the latest Profile/rules. Changed job requirements can trigger
-reassessment. PDF colours/email wording do not affect scores.
+revisited jobs use the latest Profile/rules. Searches do not automatically reassess
+previously processed jobs, even if their JD changes. PDF colours/email wording do
+not affect scores.
 
 **Recurring searches:** after one successful end-to-end trial, choose frequency/
 run times and timezone in your AI scheduler (or ask AI to create the task if supported).

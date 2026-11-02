@@ -170,8 +170,9 @@ job text. Invalid/ambiguous input identifiers must be reported, not silently los
 
 Read the latest Profile and scoring/evidence policies for every new or explicitly
 revisited job. Do not bulk re-score synchronized history merely because the Profile
-or a policy changed. Reassess a historical role when the user identifies/pastes it
-(or when a changed JD is actually observed); explain changes from its earlier
-assessment. Updating that existing Sheet row still needs sync authorization.
+or a policy changed. Reassess a historical role only when the user explicitly asks to revisit it
+(for example, by pasting its JD for evaluation); explain changes from its earlier
+assessment. Search never automatically requeues synchronized jobs, even if the
+scraped JD has changed. Updating that existing Sheet row still needs sync authorization.
 Unfinished output must be revalidated if its scoring inputs changed before upload.
 PDF/email/style changes are not job-fit changes.

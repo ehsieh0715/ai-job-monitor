@@ -121,14 +121,9 @@ def update_pending_jobs(jobs):
         | pending_ids
     )
 
-    history_path = REPO_ROOT / "data/job_history.csv"
-    history = pd.read_csv(history_path, dtype=str, keep_default_na=False) if history_path.exists() else pd.DataFrame(columns=PENDING_COLUMNS)
-    previous = dict(zip(history['job_id'], history['description']))
-    changed = {str(row['job_id']) for _, row in jobs.iterrows()
-               if pd.notna(row.get('description')) and str(row.get('description', '')).strip()
-               and str(row['job_id']) in previous
-               and str(row['description']).strip() != str(previous[str(row['job_id'])]).strip()}
-    new_jobs = jobs[~jobs['job_id'].isin(known_ids - changed)].copy()
+    # Search never reopens processed jobs, even when their scraped JD changes.
+    # Explicit conversational reassessment is handled separately.
+    new_jobs = jobs[~jobs['job_id'].isin(known_ids)].copy()
 
     if new_jobs.empty:
         print("No new jobs found.")
