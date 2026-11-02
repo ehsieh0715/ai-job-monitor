@@ -5,7 +5,7 @@ Version: 1.0. Read `evidence-policy.md` and the current job assessment first.
 ## Content selection
 
 Assess the current JD under job-evaluation.md first; its questions and drafting
-gate apply. After confirmation to proceed, compose the CV from Candidate Profile and its relevant
+gate and workflow.md's interactive continuation apply. Once drafting is authorized, compose the CV from Candidate Profile and its relevant
 verified project sections for the JD. No Master CV, existing CV or single base
 version is required. Consult relevant old CVs for useful expression only; do not
 read every version by default or treat their repetition as evidence.
@@ -44,9 +44,9 @@ Use supported JD terms naturally, never keyword stuffing.
 Follow the target market/employer. For Ireland/UK roles normally use up to two
 pages, city/country, no photo, age, marital status, full street address or unsolicited
 references; include work authorization only when helpful and verified. Other
-markets/user preferences can differ. Use standard headings, ordinary links,
-consistent bullets and clear reading order. Do not assume every column layout
-fails ATS; inspect actual extraction. Prefer content prioritization over tiny fonts.
+markets/user preferences can differ. Default generated documents to single-column layout, standard headings, ordinary
+links and selectable body-text contact details. Avoid layout tables, text boxes,
+icons and graphics; verify actual reading order rather than promising ATS success. Prefer content prioritization over tiny fonts.
 
 Return a concise positioning rationale and the complete Markdown CV; apply
 resume-review.md before delivery. Ask about ambiguous company/title/start date.
@@ -63,3 +63,5 @@ do not guess dates, NofD or status.
 
 Create needed application directories within authorized scope using the fixed
 layout and safe naming rules in workflow.md; users do not configure these paths.
+
+PDF conversion, colour, content fidelity and filenames are owned by document-export.md.

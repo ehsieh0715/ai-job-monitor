@@ -103,8 +103,10 @@ For material unknown experience give a **provisional** score based only on known
 evidence, identify pending questions and ask before finalizing. No hypothetical
 credit or automatic failure. Batch runs record this limitation in the summary.
 
-Lead with score/recommendation, strongest evidence, decisive gap and application
-value. Usually 1–2 short paragraphs; expose weights/evidence mapping when useful
+For a single JD lead with score/recommendation (a reasoned priority estimate,
+not interview probability), up to three supported strengths, material concerns
+and application value. Follow workflow.md for short-command continuation.
+Keep the response concise; expose weights/evidence mapping when useful
 or requested. Prioritize eligibility, mandatory gaps, core work, seniority, then
 preferred familiarity. State policy version and whether provisional; record the
 JD source and profile/evidence version or review date when available, never invent
@@ -113,8 +115,8 @@ versions. Existing CSV fields remain unchanged; put necessary context in summary
 When structural/non-waivable gaps make preparation low-value, say `reconsider
 applying` and stop before document drafting. Give the strongest transferable
 point, decisive gap, why wording cannot fix it and any narrow condition worth
-checking. This stop rule does not apply to ordinary stretches. Draft only after
-the user confirms proceeding (or explicitly requests drafting for this job).
+checking. This stop rule does not apply to ordinary stretches. For drafting and its confirmation/automatic-continuation conditions, follow the
+interactive contract in workflow.md; explicit user constraints take precedence.
 
 ## Unattended batch
 

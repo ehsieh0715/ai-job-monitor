@@ -22,3 +22,5 @@ Return only material corrections and unresolved verification questions. Supply
 complete replacement sections when useful, not a compulsory long checklist or
 arbitrary resume 'match score'. Mark work needing source or layout verification
 rather than claiming it passed.
+
+For PDF exports also apply document-export.md; do not rewrite source during conversion.

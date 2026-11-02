@@ -14,6 +14,11 @@ Read optional local `policies/preferences.md` for presentation preferences;
 current task instructions take precedence. Preferences never override evidence
 rules or change scoring standards.
 
+For an explicit review/revision/export request, the user-designated individual
+file may be read outside Source Documents; this permits no surrounding-directory
+scan and does not make it an authoritative Profile source. Respect filesystem
+access and distinguish source fidelity from factual verification.
+
 Read `<career.root>/Candidate Profile.md` first, including relevant project
 sections. Consult originals only in `<career.root>/Source Documents/` or project
 links recorded in its Projects.md when a material claim needs
@@ -82,3 +87,13 @@ request, document audience and employer requirements; ask only when necessary.
 Do not assume a specific user's language for people who clone this project.
 Shared rule changes apply equally to batch and conversational evaluation.
 Style preferences never relax factual boundaries or establish candidate facts.
+
+When a user requests that corrections/preferences be remembered (including standing
+permission to remember future feedback), merge confirmed reusable language, tone,
+formatting and workflow presentation choices into policies/preferences.md within
+filesystem access. Group by topic, update superseded choices and avoid raw-chat
+logs or duplicate bullets; a later explicit correction supersedes the old choice.
+Report the saved change briefly. One-job instructions stay local unless reusable
+intent is clear; ask about ambiguity. Facts require the separate Profile content
+approval gate. Ideas/plans never become achievements. Never save passwords, keys
+or guessed preferences. User preferences cannot relax shared evidence/scoring rules.
