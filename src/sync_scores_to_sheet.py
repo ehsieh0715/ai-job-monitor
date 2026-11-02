@@ -1,257 +1,99 @@
+"""Idempotent score upsert; preserve user columns and refuse incompatible sheets."""
+import argparse
 import json
-from pathlib import Path
+import math
 
-import subprocess
 import pandas as pd
+from gspread.utils import rowcol_to_a1
+from configuration import REPO_ROOT
+from google_sheets import get_worksheet
+from schema import PENDING_COLUMNS, SCORED_COLUMNS
 
-from google_sheets import (
-    get_existing_job_ids,
-    get_worksheet,
-)
-from schema import (
-    PENDING_COLUMNS,
-    SCORED_COLUMNS,
-)
-
-
-SCORED_JOBS_PATH = Path(
-    "data/scored_jobs.csv"
-)
-
-PENDING_JOBS_PATH = Path(
-    "data/pending_jobs.csv"
-)
-
-PROCESSED_IDS_PATH = Path(
-    "data/processed_job_ids.json"
-)
+SCORED_JOBS_PATH = REPO_ROOT / 'data/scored_jobs.csv'
+PENDING_JOBS_PATH = REPO_ROOT / 'data/pending_jobs.csv'
+PROCESSED_IDS_PATH = REPO_ROOT / 'data/processed_job_ids.json'
 
 
 def clean_value(value):
-    if value is None:
-        return ""
-
-    try:
-        if pd.isna(value):
-            return ""
-    except (TypeError, ValueError):
-        pass
-
-    return value
+    return '' if value is None or (isinstance(value, float) and math.isnan(value)) else value
 
 
-def load_processed_ids():
-    if not PROCESSED_IDS_PATH.exists():
-        return set()
-
-    with open(
-        PROCESSED_IDS_PATH,
-        "r",
-        encoding="utf-8",
-    ) as file:
-        return set(json.load(file))
-
-
-def save_processed_ids(processed_ids):
-    with open(
-        PROCESSED_IDS_PATH,
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            sorted(processed_ids),
-            file,
-            indent=2,
-        )
-
-
-def ensure_header(worksheet):
-    current_header = worksheet.row_values(1)
-
-    if current_header == SCORED_COLUMNS:
-        return
-
-    worksheet.update(
-        range_name="A1:K1",
-        values=[SCORED_COLUMNS],
-    )
-
-
-def remove_processed_from_pending(
-    processed_job_ids,
-):
-    if not PENDING_JOBS_PATH.exists():
-        return
-
-    pending = pd.read_csv(
-        PENDING_JOBS_PATH
-    )
-
-    if pending.empty:
-        return
-
-    pending = pending[
-        ~pending["job_id"].astype(str).isin(
-            processed_job_ids
-        )
-    ]
-
-    pending = pending[
-        [
-            column
-            for column in PENDING_COLUMNS
-            if column in pending.columns
-        ]
-    ]
-
-    pending.to_csv(
-        PENDING_JOBS_PATH,
-        index=False,
-    )
+def plan_sync(values, records):
+    """Pure validation/planning, no network or local state writes."""
+    header = values[0] if values else SCORED_COLUMNS.copy()
+    if not header or len(set(header)) != len(header) or not set(SCORED_COLUMNS) <= set(header):
+        raise ValueError('Incompatible Sheet header; use an empty worksheet or required named columns')
+    idx = header.index('job_id')
+    existing = {}
+    for number, row in enumerate(values[1:], 2):
+        id = str(row[idx]).strip() if idx < len(row) else ''
+        if id:
+            if id in existing:
+                raise ValueError('Duplicate job_id in Sheet')
+            existing[id] = (number, row + [''] * (len(header) - len(row)))
+    updates, appends, seen = [], [], set()
+    for record in records:
+        if not set(SCORED_COLUMNS) <= set(record):
+            raise ValueError('Missing required scored columns')
+        record = {k: clean_value(v) for k, v in record.items()}
+        id = str(record['job_id']).strip()
+        if not id or id in seen:
+            raise ValueError('Missing/duplicate job_id in scored data')
+        seen.add(id)
+        try:
+            score = float(record['match_score'])
+        except (ValueError, TypeError):
+            raise ValueError('Invalid match_score') from None
+        if not math.isfinite(score) or not score.is_integer() or not 0 <= score <= 100:
+            raise ValueError('match_score must be an integer 0–100')
+        label = 'Strong Apply' if score >= 85 else 'Apply' if score >= 70 else 'Consider' if score >= 55 else 'Skip'
+        if record['recommendation'] != label:
+            raise ValueError('Score/recommendation disagreement')
+        if id in existing:
+            number, old = existing[id]
+            # Only patch owned cells, so manual columns/formulas are untouched.
+            for col, name in enumerate(header, 1):
+                if name in SCORED_COLUMNS and str(old[col - 1]) != str(record[name]):
+                    updates.append({'range': rowcol_to_a1(number, col), 'values': [[record[name]]]})
+        else:
+            appends.append([record.get(name, '') if name in SCORED_COLUMNS else '' for name in header])
+    return {'initialize': not values, 'updates': updates, 'appends': appends, 'ids': seen}
 
 
-def sync_scores():
+def sync_scores(dry_run=False):
     if not SCORED_JOBS_PATH.exists():
-        print(
-            "data/scored_jobs.csv "
-            "does not exist."
-        )
+        raise FileNotFoundError(f'Missing scored data: {SCORED_JOBS_PATH}')
+    scored = pd.read_csv(SCORED_JOBS_PATH, dtype=str, keep_default_na=False)
+    if scored.empty:
+        print('No scored jobs to sync.')
         return
-
-    scored_jobs = pd.read_csv(
-        SCORED_JOBS_PATH
-    )
-
-    if scored_jobs.empty:
-        print("No scored jobs to sync.")
-        return
-
-    missing_columns = [
-        column
-        for column in SCORED_COLUMNS
-        if column not in scored_jobs.columns
-    ]
-
-    if missing_columns:
-        raise ValueError(
-            "Missing columns in scored_jobs.csv: "
-            + ", ".join(missing_columns)
-        )
-
+    from prepare_evaluation import verify_seal, COMPLETED
+    context = verify_seal()
     worksheet = get_worksheet()
-
-    ensure_header(worksheet)
-
-    existing_sheet_ids = (
-        get_existing_job_ids(worksheet)
-    )
-
-    processed_ids = load_processed_ids()
-
-    jobs_to_upload = scored_jobs[
-        ~scored_jobs["job_id"]
-        .astype(str)
-        .isin(existing_sheet_ids)
-    ].copy()
-
-    if jobs_to_upload.empty:
-        print(
-            "All scored jobs already exist "
-            "in Google Sheet."
-        )
-
-        processed_ids.update(
-            scored_jobs["job_id"]
-            .astype(str)
-            .tolist()
-        )
-
-        save_processed_ids(
-            processed_ids
-        )
-
-        remove_processed_from_pending(
-            set(
-                scored_jobs["job_id"]
-                .astype(str)
-                .tolist()
-            )
-        )
-
+    plan = plan_sync(worksheet.get_all_values(), scored.to_dict('records'))
+    print(f"Sync plan: {len(plan['updates'])} changed cells; {len(plan['appends'])} new rows.")
+    if dry_run:
         return
-
-    rows = []
-
-    for _, job in jobs_to_upload.iterrows():
-        row = [
-            clean_value(
-                job.get(column)
-            )
-            for column in SCORED_COLUMNS
-        ]
-
-        rows.append(row)
-
-    worksheet.append_rows(
-        rows,
-        value_input_option="USER_ENTERED",
-    )
-
-    uploaded_ids = set(
-        jobs_to_upload["job_id"]
-        .astype(str)
-        .tolist()
-    )
-
-    processed_ids.update(
-        uploaded_ids
-    )
-
-    save_processed_ids(
-        processed_ids
-    )
-
-    remove_processed_from_pending(
-        uploaded_ids
-    )
-
-    print(
-        f"Uploaded {len(rows)} scored jobs "
-        "to Google Sheet."
-    )
+    if plan['initialize']:
+        worksheet.update(range_name='A1:K1', values=[SCORED_COLUMNS], value_input_option='RAW')
+    if plan['updates']:
+        worksheet.batch_update(plan['updates'], value_input_option='RAW')
+    if plan['appends']:
+        worksheet.append_rows(plan['appends'], value_input_option='RAW')
+    # Mark processed only after every remote operation succeeded. Retrying is safe
+    # for a single writer: the next plan reconciles successful remote writes.
+    processed = set(json.loads(PROCESSED_IDS_PATH.read_text())) if PROCESSED_IDS_PATH.exists() else set()
+    processed.update(plan['ids'])
+    PROCESSED_IDS_PATH.write_text(json.dumps(sorted(processed), indent=2))
+    if PENDING_JOBS_PATH.exists():
+        pending = pd.read_csv(PENDING_JOBS_PATH, dtype=str, keep_default_na=False)
+        pending = pending[~pending['job_id'].isin(plan['ids'])]
+        pending[PENDING_COLUMNS].to_csv(PENDING_JOBS_PATH, index=False)
+    COMPLETED.write_text(json.dumps(context, indent=2))
+    print('Scores synchronized.')
 
 
-def send_mac_notification(job):
-    recommendation = str(
-        job.get("recommendation", "")
-    )
-
-    if recommendation not in {
-        "Apply",
-        "Strong Apply",
-    }:
-        return
-
-    title = str(job.get("title", ""))
-    company = str(job.get("company", ""))
-    score = str(job.get("match_score", ""))
-
-    message = (
-        f"{title} — {company}\\n"
-        f"Match Score: {score}"
-    )
-
-    script = (
-        f'display notification "{message}" '
-        f'with title "AI Job Monitor" '
-        f'subtitle "{recommendation}"'
-    )
-
-    subprocess.run(
-        ["osascript", "-e", script],
-        check=False,
-    )
-
-
-if __name__ == "__main__":
-    sync_scores()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--dry-run', action='store_true', help='Read Sheet and plan without any writes')
+    sync_scores(parser.parse_args().dry_run)

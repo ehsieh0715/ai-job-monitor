@@ -7,7 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = REPO_ROOT / 'config' / 'config.local.yaml'
 
 
-def load_search_config(path=None):
+def load_config(path=None):
     path = Path(path) if path is not None else CONFIG_PATH
     if not path.is_file():
         raise FileNotFoundError(
@@ -18,6 +18,13 @@ def load_search_config(path=None):
         config = yaml.safe_load(path.read_text(encoding='utf-8'))
     except yaml.YAMLError as exc:
         raise ValueError(f'Invalid YAML in {path}: {exc}') from exc
+    if not isinstance(config, dict):
+        raise ValueError(f"{path}: configuration must be a mapping")
+    return config
+
+
+def load_search_config(path=None):
+    config = load_config(path)
     if not isinstance(config, dict) or not isinstance(config.get('search'), dict):
         raise ValueError(f'{path}: search must be a mapping')
     search = config['search']
@@ -41,3 +48,23 @@ def load_search_config(path=None):
     if type(search['linkedin_fetch_description']) is not bool:
         raise ValueError(f'{path}: search.linkedin_fetch_description must be boolean')
     return {key: search[key] for key in required}
+
+
+def load_sheets_config(path=None):
+    config = load_config(path)
+    sheets = config.get('google_sheets')
+    if not isinstance(sheets, dict):
+        raise ValueError('Configure google_sheets in config/config.local.yaml')
+    for key in ('worksheet', 'credentials_path'):
+        if not isinstance(sheets.get(key), str) or not sheets[key].strip():
+            raise ValueError(f'Missing google_sheets.{key}')
+    target = sheets.get('spreadsheet', '')
+    name = sheets.get('spreadsheet_name', '')
+    if not isinstance(target, str) or not isinstance(name, str) or not (target.strip() or name.strip()):
+        raise ValueError('Set google_sheets.spreadsheet to a Sheet URL or ID')
+    credentials = Path(sheets['credentials_path']).expanduser()
+    if not credentials.is_absolute():
+        credentials = REPO_ROOT / credentials
+    if not credentials.is_file():
+        raise FileNotFoundError(f'Missing Google credential file: {credentials}')
+    return {**sheets, 'spreadsheet': target.strip(), 'credentials_path': str(credentials)}

@@ -6,6 +6,7 @@ from jobspy import scrape_jobs
 
 from schema import PENDING_COLUMNS, RAW_JOB_COLUMNS
 from configuration import load_search_config, REPO_ROOT
+from job_history import merge_jobs
 
 
 RAW_JOBS_PATH = REPO_ROOT / "data/raw_jobs.csv"
@@ -120,9 +121,14 @@ def update_pending_jobs(jobs):
         | pending_ids
     )
 
-    new_jobs = jobs[
-        ~jobs["job_id"].isin(known_ids)
-    ].copy()
+    history_path = REPO_ROOT / "data/job_history.csv"
+    history = pd.read_csv(history_path, dtype=str, keep_default_na=False) if history_path.exists() else pd.DataFrame(columns=PENDING_COLUMNS)
+    previous = dict(zip(history['job_id'], history['description']))
+    changed = {str(row['job_id']) for _, row in jobs.iterrows()
+               if pd.notna(row.get('description')) and str(row.get('description', '')).strip()
+               and str(row['job_id']) in previous
+               and str(row['description']).strip() != str(previous[str(row['job_id'])]).strip()}
+    new_jobs = jobs[~jobs['job_id'].isin(known_ids - changed)].copy()
 
     if new_jobs.empty:
         print("No new jobs found.")
@@ -137,13 +143,7 @@ def update_pending_jobs(jobs):
         PENDING_COLUMNS
     ]
 
-    updated_pending = pd.concat(
-        [
-            pending_jobs,
-            new_jobs,
-        ],
-        ignore_index=True,
-    )
+    updated_pending = merge_jobs(pending_jobs, new_jobs)
 
     updated_pending.to_csv(
         PENDING_JOBS_PATH,
@@ -180,6 +180,17 @@ def run_search():
     )
 
     update_pending_jobs(jobs)
+
+    # Archive every observed JD, including already-processed IDs.
+    archive = jobs.copy()
+    if not archive.empty:
+        archive["job_id"] = archive.apply(make_job_id, axis=1)
+        archive["found_at"] = datetime.now().astimezone().isoformat()
+        history_path = REPO_ROOT / "data/job_history.csv"
+        if history_path.exists():
+            previous = pd.read_csv(history_path, dtype=str, keep_default_na=False)
+            archive = merge_jobs(previous, archive)
+        archive.reindex(columns=PENDING_COLUMNS).to_csv(history_path, index=False)
 
     return jobs
 

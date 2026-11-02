@@ -15,3 +15,7 @@ data/processed_job_ids.json
 
 # Private machine-specific configuration
 config/config.local.yaml
+
+# Private preferences and evaluation freshness state
+config/preferences.local.md
+data/*context.json

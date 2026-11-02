@@ -1,35 +1,17 @@
-from pathlib import Path
-
+"""Connect to the user's configured spreadsheet without printing credentials."""
 import gspread
-
-
-CREDENTIALS_PATH = Path(
-    "google-service-account.json"
-)
-
-SPREADSHEET_NAME = "AI Job Monitor"
-WORKSHEET_NAME = "Jobs"
+from configuration import load_sheets_config
 
 
 def get_worksheet():
-    client = gspread.service_account(
-        filename=str(CREDENTIALS_PATH)
-    )
-
-    spreadsheet = client.open(
-        SPREADSHEET_NAME
-    )
-
-    return spreadsheet.worksheet(
-        WORKSHEET_NAME
-    )
-
-
-def get_existing_job_ids(worksheet):
-    records = worksheet.get_all_records()
-
-    return {
-        str(record["job_id"])
-        for record in records
-        if record.get("job_id")
-    }
+    settings = load_sheets_config()
+    client = gspread.service_account(filename=settings['credentials_path'])
+    target = settings['spreadsheet']
+    if target.startswith('https://docs.google.com/spreadsheets/'):
+        spreadsheet = client.open_by_url(target)
+    elif target:
+        spreadsheet = client.open_by_key(target)
+    else:
+        # Explicit legacy name support; URL/ID is preferred to avoid ambiguity.
+        spreadsheet = client.open(settings['spreadsheet_name'])
+    return spreadsheet.worksheet(settings['worksheet'])

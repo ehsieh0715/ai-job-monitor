@@ -1,5 +1,4 @@
-# Copy to config/config.local.yaml and edit your own paths and search.
-# career.root is absolute; other career paths are relative unless absolute.
+# Copy to config.local.yaml; set your own Career and Google settings.
 career:
   root: /absolute/path/to/01 Career
   profile: Candidate Profile.md
@@ -12,9 +11,9 @@ search:
   - data analyst
   - analytics engineer
   location: Dublin, Ireland
-  # JobSpy 1.1.82 values: linkedin, indeed, glassdoor, zip_recruiter,
-  # bayt, naukri, bdjobs, google. See config/README.md for limitations.
-  # google is recognized by the library but not usable in this pipeline.
+  # Values and geographic limits: see config/README.md.
+  # linkedin, indeed, glassdoor, zip_recruiter, bayt, naukri, bdjobs
+  # google is recognized upstream but unavailable in this pipeline.
   sites:
   - linkedin
   - indeed
@@ -22,3 +21,8 @@ search:
   results_wanted: 100
   country_indeed: Ireland
   linkedin_fetch_description: true
+preferences_path: null
+google_sheets:
+  spreadsheet: https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit
+  worksheet: Jobs
+  credentials_path: /absolute/private/path/google-service-account.json
