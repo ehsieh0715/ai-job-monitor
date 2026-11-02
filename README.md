@@ -84,7 +84,7 @@ it creates data/scored_jobs.csv, seal and preview:
 ```
 
 Configure your Sheet URL/ID, tab and service-account JSON path in config.local.yaml.
-[Google setup instructions](config/README.md#google-sheets-setup) cover enabling
+[Google setup instructions](#google-sheets-setup-first-time) cover enabling
 APIs, creating credentials and sharing the Sheet. When ready/authorized, run:
 
 ```sh
@@ -104,6 +104,137 @@ service. The runner needs access to the machine/files, Python, network and Googl
 credentials; calling main.py alone performs no AI evaluation. Empty queues stop
 without uploading old scores. Actual board/Google access must be verified in your
 own environment; offline tests do not establish successful live authentication.
+
+## Google Sheets setup (first time)
+
+This project's Python connector uses a **service account**, not an API-key string
+or an OAuth desktop-client JSON. The code runs on your computer/chosen runner;
+Google Cloud supplies the identity and API access, not a server for this pipeline.
+Each user should create their own credentials and use their own Sheet.
+
+### A. Select a Google Cloud project and enable APIs
+
+1. Sign in to [Google Cloud Console](https://console.cloud.google.com/).
+2. Open the project selector at the top. Select an existing project or choose
+   **New project**, enter a name such as `job-monitor`, and create/select it.
+3. Open **APIs & Services → Library**. Search for **Google Sheets API**, open it,
+   and click **Enable**. If already enabled, leave it enabled.
+4. Return to Library and enable **Google Drive API** in the same project.
+5. Check **APIs & Services → Enabled APIs & services** for both entries.
+
+Keep that project selected throughout setup. If controls are unavailable, ask the
+project administrator for permission to enable services. See Google's
+[API enablement guide](https://developers.google.com/workspace/guides/enable-apis).
+
+### B. Create the service account
+
+1. Open **IAM & Admin → Service Accounts** and click **Create service account**.
+2. Enter a name such as `job-monitor-sync`, then **Create and continue**.
+3. For this shared-Sheet workflow, leave optional project-role and user-access
+   grants empty and finish. Do not grant project Owner/Editor just to edit a Sheet:
+   file access is granted in step D.
+4. Open the account and note its email, shaped like
+   `job-monitor-sync@YOUR_PROJECT_ID.iam.gserviceaccount.com`.
+
+You do not need an OAuth consent-screen setup or domain-wide delegation for this
+explicitly shared-Sheet workflow. See Google's
+[credential guide](https://developers.google.com/workspace/guides/create-credentials).
+
+### C. Download and store a JSON key
+
+1. In that service account, open **Keys → Add key → Create new key**.
+2. Select **JSON**, click **Create**, and save the downloaded file.
+3. Store it outside the repo and vault, for example:
+   `/Users/YOUR_NAME/.config/ai-job-monitor/google-service-account.json` on macOS,
+   or a private directory on your own OS. Use your actual path in step E.
+4. Confirm locally that the JSON contains `"type": "service_account"` and a
+   `client_email`. Do not paste the file or its private key into chat or Git.
+
+If key creation is blocked by organization policy, ask your administrator about an
+approved authentication method; the current connector expects a JSON key and
+cannot bypass that policy. If you lose the downloaded key, create a replacement
+and revoke the old one rather than expecting to download it again. See Google's
+[key management guide](https://docs.cloud.google.com/iam/docs/keys-create-delete).
+
+### D. Create and share your spreadsheet
+
+1. Create/open your own Google Sheet. Add a dedicated, empty tab named `Jobs`
+   (or choose another exact tab name).
+2. Click **Share** and add the service account email from step B (also available
+   as `client_email` in the JSON). Set its file permission to **Editor**.
+3. Keep general link access restricted; public sharing is not required.
+4. Copy the spreadsheet URL from the address bar, not merely its display name.
+
+The service identity is separate from your personal Google login, so you must
+share the file with it even when you own the Sheet. See
+[gspread service-account authentication](https://docs.gspread.org/en/latest/oauth2.html).
+
+### E. Fill your private configuration
+
+If not already done, copy config/config.example.yaml to config/config.local.yaml.
+Add/edit this section without deleting your Career and search settings:
+
+```yaml
+google_sheets:
+  spreadsheet: "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"
+  worksheet: "Jobs"
+  credentials_path: "/absolute/private/path/google-service-account.json"
+```
+
+The spreadsheet ID is the segment between `/d/` and `/edit`; either the full URL
+or just that ID works. `worksheet` is the bottom tab name, not the document title;
+the URL's `gid` does not select a tab for this connector. Credentials must exist
+on the machine running the task. Do not commit config.local.yaml or the key.
+
+### F. Check the connection without changing the Sheet
+
+After installing dependencies, run this from the repository root (macOS/Linux):
+
+```sh
+.venv/bin/python -c 'import sys; sys.path.insert(0, "src"); from google_sheets import get_worksheet; get_worksheet().row_values(1); print("Google Sheet read access OK")'
+```
+
+On Windows, use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
+This authenticates and reads the configured tab; it needs network access but no
+Profile or scored CSV. It does not write cells or prove write permission.
+
+### G. Preview and perform the first synchronization
+
+Complete the search → prepare → AI evaluation → seal steps in section 3 first.
+Then run:
+
+```sh
+.venv/bin/python src/sync_scores_to_sheet.py --dry-run
+```
+
+This reads the Sheet and validates the sealed evaluation; it writes neither
+cells nor local processed state. Check the target and reported changes. To apply:
+
+```sh
+.venv/bin/python src/sync_scores_to_sheet.py
+```
+
+An empty tab receives the required header on this first write. Existing compatible
+tabs are matched by column names; extra manual columns are preserved. Incompatible
+headers stop the sync. Do not use your application tracker tab as the search tab.
+
+### Troubleshooting
+
+| Symptom | Check |
+| --- | --- |
+| Credential file not found | Use the real JSON path on this runner; expand/move it locally, not into the repo. |
+| SpreadsheetNotFound / 404 | Confirm URL/ID and share that exact file with the JSON's client_email. |
+| WorksheetNotFound | Create the tab; match spelling, spaces and capitalization in worksheet. |
+| API disabled / SERVICE_DISABLED | Enable the named API in the project that owns the credential. |
+| Permission denied / 403 | Check Editor file access, protected ranges and organization sharing restrictions. |
+| Invalid grant / invalid JWT | Check key/account revocation and machine clock; replace credentials if necessary. |
+| Incompatible Sheet header | Use a dedicated empty tab or the required columns from src/schema.py. |
+| Missing/stale seal or changed queue | Prepare, reevaluate and seal current jobs; do not reuse an old scored CSV. |
+| Key creation unavailable | Ask your organization administrator; do not disable policy as a workaround. |
+
+Cloud Console labels can change; use the linked Google guides if the screens differ.
+This setup enables Google access only. Recurring execution still needs the
+[scheduler and available AI runner](examples/scheduled-run.md).
 
 ## 4. Prepare an application after deciding to proceed
 

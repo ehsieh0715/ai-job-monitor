@@ -83,19 +83,10 @@ relative to repo root; `~` is expanded. Do not put credential contents in YAML.
 For legacy installations only, an empty spreadsheet plus explicit spreadsheet_name
 opens by name; URL/ID avoids ambiguous titles.
 
-1. Create/select a Google Cloud project; enable Google Sheets API and Google Drive API.
-2. Create a service account and download a JSON key when your organization allows
-   that authentication method. Keep the key private on the executing machine.
-3. Share the target Sheet with the JSON's client_email as Editor. This gives the
-   service identity access to that file; it does not require public link sharing.
-4. Create/select a compatible worksheet and fill the local configuration.
-5. After AI evaluates and seals current scores, run sync with --dry-run before
-   the first write. This still authenticates and reads Google; it is not offline.
-
-See [gspread authentication](https://docs.gspread.org/en/latest/oauth2.html).
-This uses Google API credentials, not a hosted Google server. Your local computer
-or chosen runner executes Python. A schedule and an available execution environment
-are separate from the Google identity. Do not use another person's JSON key.
+Follow the [complete Google setup walkthrough](../README.md#google-sheets-setup-first-time)
+for Cloud project selection, API enablement, service-account/key creation, Sheet
+sharing, read-only connection checks, preview and troubleshooting. The walkthrough
+is maintained in the main README only.
 
 ## Runtime state and synchronization
 
