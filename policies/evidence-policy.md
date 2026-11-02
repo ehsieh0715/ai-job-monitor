@@ -1,6 +1,6 @@
 # Evidence policy
 
-Version: 1.0. Applies to every assessment and application document.
+Version: 1.1. Applies to every assessment and application document.
 
 ## Sources and access
 
@@ -52,12 +52,23 @@ fit: context, owned action, completion, scope/result and supporting source.
 Do not repeatedly ask facts already recorded. In unattended runs mark pending
 questions without guessing answers or blocking the entire batch.
 
-When the user confirms an actual experience, update the relevant Profile section
-or Project Evidence summary within authorized scope, retaining context, limits
-and source (including user confirmation when that is the source). Do not append
-raw conversation as verified facts. Uncertain answers remain open questions.
-Reassess afterward and explain any changed judgment. If a necessary write is not
-permitted, report it; do not claim the shared profile was updated.
+When the user supplies experience, first prepare a source-linked proposed edit to
+Profile or Project Evidence, with context, limits and confirmation provenance.
+Present exact target paths and additions/replacements/removals for approval.
+Answering factual questions is not permission to write. A general build/update
+request is permission to inspect and propose, not to save unseen Markdown content.
+After explicit approval of the displayed edit, apply only that approved scope;
+do not ask again for unchanged already-approved content. Uncertain claims remain
+questions. If further changes are discovered, propose them separately.
+
+This gate applies to initial Profile generation and later updates. It does not
+change separately authorized CV/letter/tracker or pipeline writes. Filesystem
+permission is still required. Until approval, keep the proposal in conversation,
+not an unapproved draft file; distinguish hypothetical/pending evidence from the
+saved Profile in any provisional discussion. Never let unattended runs update
+these Markdown sources or treat unapproved new claims as established evidence.
+Reassess confirmed saved changes and explain changed judgments. If blocked, report
+it rather than claiming an update. Project review follows project-evidence.md.
 
 ## Language and preferences
 

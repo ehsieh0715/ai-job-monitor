@@ -1,6 +1,6 @@
 # Career workflow
 
-Version: 1.0. This is the end-to-end procedure for a fresh conversation or a
+Version: 1.1. This is the end-to-end procedure for a fresh conversation or a
 scheduled AI run. Standards remain in their individual policies, not copied here.
 
 ## Start every run
@@ -22,15 +22,19 @@ uploaded materials but must not claim local writes or command execution.
 
 1. Initialize/update Profile with profile-building.md. If absent, this bootstrap
    stage applies before the ordinary existing-Profile requirement. Preserve facts
-   and source files. User-requested lasting presentation changes go to the configured
+   and source files. Read configured Source Documents/Projects.md under
+   project-evidence.md when present; plain repo links suffice. Present Profile/
+   Project Evidence edits and obtain content approval before any Markdown write.
+   User-requested lasting presentation changes go to the configured
    private preferences file when authorized, not shared policies. If none is set,
    offer the example; do not silently create a note in the vault. One-off changes
    need not become persistent defaults.
 2. Identify input: a JD asks job fit (job-evaluation.md); a CV is source material
    or a resume-review request. CV-only input cannot establish fit to an unknown job:
    ask for JD/target role when relevant. A pasted JD needs no Sheet membership.
-3. Ask targeted material questions, update confirmed Profile/evidence under the
-   evidence policy, then reassess and explain changed judgments. Mark unknowns,
+3. Ask targeted material questions, propose exact Profile/evidence changes,
+   obtain explicit approval of that content, write within scope, then reassess and
+   explain changed judgments. An answer alone does not authorize writing. Mark unknowns,
    do not invent answers. Context changes invalidate earlier batch output.
 4. Once the user confirms preparation or requests a document, follow resume-writing
    and resume-review, or cover-letter-writing. Save at configured paths only within

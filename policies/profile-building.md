@@ -1,6 +1,6 @@
 # Build and update Candidate Profile
 
-Version: 1.0. Apply `evidence-policy.md`; this file owns profile initialization.
+Version: 1.1. Apply `evidence-policy.md`; this file owns profile initialization.
 This is an AI-assisted document workflow, not a Python conversion command.
 
 ## Input and destination
@@ -8,8 +8,9 @@ This is an AI-assisted document workflow, not a Python conversion command.
 A user-supplied absolute Career root is sufficient to start profile initialization.
 For initialization only, a missing local configuration or Profile is expected:
 these bootstrap rules replace the existing-file prerequisite in evidence-policy.md.
-Use the supplied root/defaults and create the requested files within authorized
-access; still stop for unavailable source data or filesystem permission.
+Use the supplied root/defaults to inspect and propose content. Create Profile
+only after approval under evidence-policy.md; still stop for unavailable sources
+or filesystem permission.
 Use explicit paths if supplied; otherwise use these paths relative to that root:
 `Candidate Profile.md`, `Source Documents/`, `Project Evidence/`,
 `Applications/`, `Applications/Applications.md`.
@@ -18,10 +19,10 @@ ask whether to switch rather than silently reading/mixing two people's data.
 When initializing configuration, preserve existing search/other settings; copy
 missing fields from the public example, but never invent personal preferences.
 
-A request to initialize/build and save a Profile authorizes that destination
-write within granted filesystem access, not unrestricted vault edits. Report the
-exact path needing access if blocked. Local file paths are not web URLs; resolve
-a provided file URL to a local path before using it. Do not invent remote access.
+A build/update request authorizes inspection and a proposal, not writing unseen
+Profile/Project Evidence content. Apply evidence-policy.md's approval gate,
+including initial creation. Local filesystem permission is separately required.
+Resolve a file URL to its local path; do not invent remote access.
 
 Inventory only the configured Source Documents subtree, without following symlinks
 outside it. If missing/empty, explain where to put files or request an explicit
@@ -44,18 +45,16 @@ clone repositories, move originals or create synchronized copies.
 4. Reconcile conflicts explicitly. Preserve existing confirmed facts over an
    unverified older claim; uncertain dates/titles/metrics go in Open Questions,
    not silently into factual sections. Ask focused high-impact questions and
-   save the rest as unresolved; initialization need not wait for every detail.
-5. Read existing project summaries first. If technical depth is needed, inspect
-   authorized relevant code/tests/config and documentation at the original local
-   path or accessible repository URL. README-only claims remain unverified.
-   Never invent an inspected commit or personal contribution. Detailed reviewed
-   summaries may go in Project Evidence when authorized; include concise project
-   evidence in the Profile even if no separate summary is needed.
-6. Save one coherent Markdown Profile at the configured destination. Review
-   against the source inventory and existing Profile for lost facts, unsupported
-   claims, duplicates and leaked credentials. Report destination, sources reviewed,
-   unreadable/skipped materials and important pending questions; do not create
-   separate progress logs, source indexes or a parallel JSON profile.
+   propose the rest as unresolved; initialization need not wait for every detail.
+5. Read Source Documents/Projects.md (relative to configured source_documents)
+   and follow project-evidence.md for every listed repo. Plain URLs are sufficient.
+   Read existing summaries first, inspect relevant source when required, then
+   propose one Profile subsection per project; no automatic summary-file creation.
+6. Present the proposed Markdown and precise destination/change list. Ask material
+   questions and revise the proposal; write only after explicit approval of that
+   content. Preserve other verified facts. Review for lost facts, duplicate projects,
+   unsupported claims and credentials. Report written sections and source/access
+   limits. No progress/index notes, parallel JSON or unapproved draft files.
 
 ## Profile shape
 
@@ -65,9 +64,8 @@ Use these sections as a compact consistent structure, omitting empty subsections
   suggested directions. Do not invent preferences or motivation.
 - **Work Experience:** employer, actual title, dates, employment type/location;
   responsibilities, owned contributions, achievements, technologies and limits.
-- **Projects:** professional/portfolio/academic context, completion/operating
-  status, candidate contribution, verified functions/results, source links and
-  inspected commit if actually reviewed.
+- **Projects:** one named subsection per repository, using project-evidence.md
+  for role/contribution, capabilities, achievements, limits, sources and commit.
 - **Skills & Evidence:** capability, evidence type and relevant experience/project
   reference, depth and boundaries; learning is not implementation.
 - **Education & Certifications:** exact supported qualification, dates/status.

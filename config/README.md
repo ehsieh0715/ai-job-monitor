@@ -20,6 +20,10 @@ paths, not Obsidian URLs. Filesystem access must be authorized separately.
 
 Source documents are retained as evidence, not automatically treated as verified
 facts. Project repositories remain at their original locations.
+Place plain repository URLs (one per line) in Projects.md inside source_documents;
+see [example](../examples/Projects.md). AI reviews under
+[project-evidence.md](../policies/project-evidence.md) and presents exact proposed
+Profile/Project Evidence edits for approval before writing.
 
 ## Search settings
 

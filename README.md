@@ -24,7 +24,23 @@ notes or old candidate JSON in `Source Documents/`:
 01 Career/
   Source Documents/
     ...your original files
+    Projects.md             # Optional: one GitHub repo URL per line
 ```
+
+For GitHub projects, add plain repo links to `Source Documents/Projects.md`:
+
+```text
+https://github.com/YOUR_USERNAME/PROJECT_ONE
+https://github.com/YOUR_USERNAME/PROJECT_TWO
+```
+
+Copy the [link-only example](examples/Projects.md) if useful. No project download,
+role form or skill checklist is needed. The AI follows
+[project-evidence.md](policies/project-evidence.md): read README and relevant code,
+tests/config/docs, ask about unknown personal contributions, and propose a separate
+Profile subsection for each project. Private repos require authorized access.
+For later updates it compares inspected commits and proposes edits to that same
+project section rather than adding duplicates. README-only access is labelled.
 
 Copy `config/config.example.yaml` to `config/config.local.yaml`. For Profile
 initialization, only change `career.root`; keep the other Career paths at their
@@ -36,17 +52,21 @@ Ask in ordinary language, for example:
 > Use career-assistant. My Career root is `/absolute/path/to/01 Career`.
 > Read Source Documents and build/update Candidate Profile.md there, following
 > policies/profile-building.md. Preserve my original files and existing confirmed
-> facts; flag conflicts and ask about important missing evidence.
+> facts; flag conflicts and ask about important missing evidence. Show the proposed
+> Markdown and wait for my approval before writing Profile or Project Evidence.
 
 You may also supply the root in conversation and ask the assistant to create the
-private configuration using the example. This initial request authorizes writing
-the Profile/configuration within granted access, not searching or uploading data.
+private configuration using the example. A Profile request starts inspection and
+a proposal; only explicit approval of the displayed content authorizes saving
+Profile/Project Evidence Markdown. Answering factual questions alone is not approval.
+Configuration changes need their own requested/authorized scope; no searching or
+uploading is implied.
 No Master CV or existing Profile is required. Initialization needs an AI assistant
 and document-reading capabilities; running Python alone does not generate it.
 
-The assistant reads available materials, consolidates evidence and saves a
-Markdown Profile. Unknown claims stay marked; it does not turn every CV assertion
-or README feature into verified experience. Subsequent confirmed experience updates
+The assistant reads available materials, consolidates evidence, presents the
+proposed Markdown Profile and saves it after your approval. Unknown claims stay marked; it does not turn every CV assertion
+or README feature into verified experience. Subsequent experience is proposed and approved before updating
 this same Profile rather than another JSON database. Original sources stay intact.
 
 The old project's exact Profile-generation prompt was not found in the reviewed
@@ -63,6 +83,8 @@ it each time. Shared evidence requirements still apply.
 Paste any complete JD and say “評估這份工作”. It need not appear in a Sheet or CSV.
 The assistant reads the Profile and relevant evidence, gives a common score and
 recommendation, and asks about experience that could materially change the result.
+Any Profile/evidence edit is shown for approval before writing, even after you
+answer those questions.
 Unknowns receive no assumed credit; a changed judgment includes its reason.
 If the Profile is incomplete, the assessment is provisional rather than invented.
 
@@ -278,6 +300,7 @@ entry point; it selects the references below without duplicating their rules.
 | --- | --- |
 | [Workflow](policies/workflow.md) | Interactive stages and scheduled search/evaluate/sync |
 | [Profile building](policies/profile-building.md) | Initialize/merge documents into the configured Profile |
+| [Project evidence](policies/project-evidence.md) | Link-only repo input, source review and per-project approved updates |
 | [Evidence](policies/evidence-policy.md) | Sources, claim boundaries, questions and updates |
 | [Job evaluation](policies/job-evaluation.md) | Same scoring standard for manual JDs and batches |
 | [Resume writing](policies/resume-writing.md) | Select and compose relevant factual content |
