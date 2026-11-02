@@ -16,7 +16,7 @@ job search and Sheet synchronization need their respective sections too.
 | `search.results_wanted` | Requested results per keyword; positive integer, not a guaranteed count. | `100` |
 | `search.country_indeed` | Country name used by Indeed and Glassdoor. | `Ireland` |
 | `search.linkedin_fetch_description` | Whether to fetch LinkedIn job descriptions. | `true` |
-| `google_sheets.spreadsheet` | Destination Google Sheet URL or ID. | `https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit` |
+| `google_sheets.spreadsheet_name` | Exact, unique spreadsheet title shared with the service account. | `AI Job Monitor` |
 | `google_sheets.worksheet` | Exact tab name inside that Sheet, including capitalization and spaces. | `Jobs` |
 
 Search fields are all required when running the crawler. Supported `sites` values
@@ -33,10 +33,11 @@ for pinned JobSpy 1.1.82:
 | `bdjobs` | Bangladesh |
 
 `google` is not usable in this pipeline. Board availability and filter support
-can vary. No Google account credentials belong in this YAML: the intended Sheet
-workflow uses the connected Google Drive account with Sheets read/write access.
-**Connector sync integration is pending; the existing Python sync command still
-requires a service-account key.** See [current status and setup](../README.md#google-sheets-setup-first-time).
+can vary. Save your own service-account JSON as `google-service-account.json` at
+the repository root (Git-ignored). Its location is fixed; no path setting is needed.
+Never put the key contents in config or include it in a shared ZIP. Follow the [six-step credential setup](../README.md#google-sheets-setup-first-time).
+No connector login is needed. Existing spreadsheet URL/ID configurations remain
+compatible, but the public example uses a spreadsheet name for simpler setup.
 
 Personal presentation preferences are optional and live at the fixed, Git-ignored
 `policies/preferences.md` path, outside config. No preferences path field is needed.

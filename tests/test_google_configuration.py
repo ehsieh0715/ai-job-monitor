@@ -22,10 +22,16 @@ class GoogleConfigurationTests(unittest.TestCase):
 
     def test_load_and_missing_credentials(self):
         with tempfile.TemporaryDirectory() as folder:
-            root = Path(folder); credentials = root/'private.json'; credentials.write_text('{}')
+            root = Path(folder); credentials = root/'google-service-account.json'; credentials.write_text('{}')
             path = root/'settings.yaml'
-            cfg = {'google_sheets': {'spreadsheet':'example', 'worksheet':'Jobs', 'credentials_path':str(credentials)}}
+            cfg = {'google_sheets': {'spreadsheet':'example', 'worksheet':'Jobs'}}
             path.write_text(yaml.safe_dump(cfg))
-            self.assertEqual(load_sheets_config(path)['credentials_path'], str(credentials))
-            credentials.unlink()
-            with self.assertRaises(FileNotFoundError): load_sheets_config(path)
+            with patch('configuration.REPO_ROOT', root):
+                self.assertEqual(load_sheets_config(path)['credentials_path'], str(credentials))
+                # Old overrides cannot redirect credential reads elsewhere.
+                cfg['google_sheets']['credentials_path'] = '/unrelated/secret.json'
+                path.write_text(yaml.safe_dump(cfg))
+                self.assertEqual(load_sheets_config(path)['credentials_path'], str(credentials))
+                credentials.unlink()
+                with self.assertRaisesRegex(FileNotFoundError, 'google-service-account.json'):
+                    load_sheets_config(path)

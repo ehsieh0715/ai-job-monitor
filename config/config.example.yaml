@@ -1,4 +1,4 @@
-# Copy to config.local.yaml; set your own Career and Google settings.
+# Copy to config.local.yaml; edit your Career root, search and Sheet name.
 career:
   root: /absolute/path/to/01 Career
 search:
@@ -6,9 +6,6 @@ search:
   - data analyst
   - analytics engineer
   location: Dublin, Ireland
-  # Values and geographic limits: see config/README.md.
-  # linkedin, indeed, glassdoor, zip_recruiter, bayt, naukri, bdjobs
-  # google is recognized upstream but unavailable in this pipeline.
   sites:
   - linkedin
   - indeed
@@ -16,8 +13,6 @@ search:
   results_wanted: 100
   country_indeed: Ireland
   linkedin_fetch_description: true
-# Target connector setup; legacy Python sync still requires credentials_path.
-# See README migration status before attempting synchronization.
 google_sheets:
-  spreadsheet: https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit
+  spreadsheet_name: AI Job Monitor
   worksheet: Jobs

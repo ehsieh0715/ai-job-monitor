@@ -78,16 +78,14 @@ def load_sheets_config(path=None):
     sheets = config.get('google_sheets')
     if not isinstance(sheets, dict):
         raise ValueError('Configure google_sheets in config/config.local.yaml')
-    for key in ('worksheet', 'credentials_path'):
+    for key in ('worksheet',):
         if not isinstance(sheets.get(key), str) or not sheets[key].strip():
             raise ValueError(f'Missing google_sheets.{key}')
     target = sheets.get('spreadsheet', '')
     name = sheets.get('spreadsheet_name', '')
     if not isinstance(target, str) or not isinstance(name, str) or not (target.strip() or name.strip()):
-        raise ValueError('Set google_sheets.spreadsheet to a Sheet URL or ID')
-    credentials = Path(sheets['credentials_path']).expanduser()
-    if not credentials.is_absolute():
-        credentials = REPO_ROOT / credentials
+        raise ValueError('Set google_sheets.spreadsheet_name to your exact spreadsheet title')
+    credentials = REPO_ROOT / 'google-service-account.json'
     if not credentials.is_file():
-        raise FileNotFoundError(f'Missing Google credential file: {credentials}')
+        raise FileNotFoundError(f'Missing Google credential file: {credentials}. Save your downloaded service-account JSON at this exact path.')
     return {**sheets, 'spreadsheet': target.strip(), 'credentials_path': str(credentials)}

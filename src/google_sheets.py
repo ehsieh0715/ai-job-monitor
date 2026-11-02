@@ -12,6 +12,6 @@ def get_worksheet():
     elif target:
         spreadsheet = client.open_by_key(target)
     else:
-        # Explicit legacy name support; URL/ID is preferred to avoid ambiguity.
+        # Open by exact name; use a unique title to avoid selecting a duplicate.
         spreadsheet = client.open(settings['spreadsheet_name'])
     return spreadsheet.worksheet(settings['worksheet'])
