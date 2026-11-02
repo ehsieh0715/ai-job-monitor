@@ -33,6 +33,33 @@ All fields are required; config.example.yaml supplies a complete example:
 | `country_indeed` | Indeed country name supported by JobSpy |
 | `linkedin_fetch_description` | Boolean; fetch LinkedIn descriptions |
 
+## Site values
+
+For the pinned `python-jobspy==1.1.82`, use these exact lowercase identifiers.
+Choose a subset; listing every site does not improve coverage in every country.
+
+| Value | Service | Region / limitations |
+| --- | --- | --- |
+| `linkedin` | LinkedIn | Global; uses `location` |
+| `indeed` | Indeed | Multiple countries; uses `country_indeed` and `location` |
+| `glassdoor` | Glassdoor | Supported country domains, including Ireland; uses `country_indeed` and `location` |
+| `zip_recruiter` | ZipRecruiter | US and Canada |
+| `bayt` | Bayt | Location coverage depends on the board; e.g. Dubai, UAE or Saudi Arabia |
+| `naukri` | Naukri | India |
+| `bdjobs` | BDJobs | Bangladesh |
+| `google` | Google Jobs | Recognized by the pinned library, but not usable in this pipeline: it does not expose `google_search_term`; current upstream also reports Google Jobs unavailable |
+
+Example: `sites: [linkedin, indeed, glassdoor]`. The default remains LinkedIn and
+Indeed; no additional site was enabled automatically. Supported identifiers do
+not guarantee successful scraping or consistent filter support. No live board
+availability was tested for this documentation change.
+
+The list was checked against the installed 1.1.82 `Site` enum and scraper mapping.
+[Upstream documentation](https://github.com/speedyapply/JobSpy/blob/main/README.md)
+explains geographic coverage and current service limitations. Newer upstream
+versions include `hellowork`, but this project's pinned version does not; do not
+add it without upgrading and verifying compatibility.
+
 Your old keywords were migrated to private local configuration. The public
 example uses generic keywords. Search configuration is validated before any
 search request; invalid or missing configuration fails with setup guidance.

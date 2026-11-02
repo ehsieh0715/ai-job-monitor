@@ -12,6 +12,9 @@ search:
   - data analyst
   - analytics engineer
   location: Dublin, Ireland
+  # JobSpy 1.1.82 values: linkedin, indeed, glassdoor, zip_recruiter,
+  # bayt, naukri, bdjobs, google. See config/README.md for limitations.
+  # google is recognized by the library but not usable in this pipeline.
   sites:
   - linkedin
   - indeed
