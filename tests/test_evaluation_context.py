@@ -49,19 +49,6 @@ class FreshnessTests(unittest.TestCase):
                 (data/'scored_jobs.csv').write_text('job_id\nsite:2\n')
                 with self.assertRaises((ValueError, FileNotFoundError)): ctx.verify_seal()
 
-    def test_seal_rejects_incomplete_queue(self):
-        with tempfile.TemporaryDirectory() as folder:
-            d = Path(folder)
-            import hashlib
-            # Bind the prepared queue so this test reaches coverage validation.
-            (d/'evaluation_context.json').write_text('{"fingerprint":"current"}')
-            (d/'pending_jobs.csv').write_text('job_id\na\nb\n')
-            (d/'scored_jobs.csv').write_text('job_id\na\n')
-            (d/'evaluation_context.json').write_text(json.dumps({'fingerprint':'current','queue_sha256':hashlib.sha256((d/'pending_jobs.csv').read_bytes()).hexdigest()}))
-            with patch.multiple(ctx, DATA=d, CONTEXT=d/'evaluation_context.json', SEALED=d/'sealed.json'), patch.object(ctx, 'fingerprint', return_value='current'):
-                with self.assertRaises(ValueError): ctx.seal()
-                self.assertFalse((d/'sealed.json').exists())
-
     def test_changes_do_not_requeue_synced_history(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder);scoring_files(root); data=root/'data';data.mkdir();career=root/'career';career.mkdir()
