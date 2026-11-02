@@ -1,21 +1,17 @@
 """Idempotent score upsert; preserve user columns and refuse incompatible sheets."""
 import argparse
 import json
-import math
 
 import pandas as pd
 from gspread.utils import rowcol_to_a1
 from configuration import REPO_ROOT
 from google_sheets import get_worksheet
 from schema import PENDING_COLUMNS, SCORED_COLUMNS
+from evaluation_validation import validate_evaluations
 
 SCORED_JOBS_PATH = REPO_ROOT / 'data/scored_jobs.csv'
 PENDING_JOBS_PATH = REPO_ROOT / 'data/pending_jobs.csv'
 PROCESSED_IDS_PATH = REPO_ROOT / 'data/processed_job_ids.json'
-
-
-def clean_value(value):
-    return '' if value is None or (isinstance(value, float) and math.isnan(value)) else value
 
 
 def plan_sync(values, records):
@@ -32,23 +28,9 @@ def plan_sync(values, records):
                 raise ValueError('Duplicate job_id in Sheet')
             existing[id] = (number, row + [''] * (len(header) - len(row)))
     updates, appends, seen = [], [], set()
-    for record in records:
-        if not set(SCORED_COLUMNS) <= set(record):
-            raise ValueError('Missing required scored columns')
-        record = {k: clean_value(v) for k, v in record.items()}
-        id = str(record['job_id']).strip()
-        if not id or id in seen:
-            raise ValueError('Missing/duplicate job_id in scored data')
+    for record in validate_evaluations(records):
+        id = str(record['job_id'])
         seen.add(id)
-        try:
-            score = float(record['match_score'])
-        except (ValueError, TypeError):
-            raise ValueError('Invalid match_score') from None
-        if not math.isfinite(score) or not score.is_integer() or not 0 <= score <= 100:
-            raise ValueError('match_score must be an integer 0–100')
-        label = 'Strong Apply' if score >= 85 else 'Apply' if score >= 70 else 'Consider' if score >= 55 else 'Skip'
-        if record['recommendation'] != label:
-            raise ValueError('Score/recommendation disagreement')
         if id in existing:
             number, old = existing[id]
             # Only patch owned cells, so manual columns/formulas are untouched.

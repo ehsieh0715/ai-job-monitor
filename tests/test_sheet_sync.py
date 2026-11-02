@@ -8,7 +8,7 @@ from sync_scores_to_sheet import plan_sync
 
 def job(id='site:1', score=75):
     row = {c: '' for c in SCORED_COLUMNS}
-    row.update(job_id=id, match_score=score, recommendation='Apply', title='=unsafe')
+    row.update(job_id=id, match_score=score, recommendation='Apply', title='=unsafe', match_summary='Verified evidence and gap')
     return row
 
 
@@ -77,3 +77,13 @@ class SyncExecutionTests(unittest.TestCase):
                 self.assertTrue((root/'completed.json').exists())
                 self.assertTrue(pd.read_csv(pending).empty)
                 self.assertEqual(ws.append_rows.call_args.kwargs['value_input_option'],'RAW')
+
+class MissingJDTests(unittest.TestCase):
+    def test_missing_jd_clears_old_score_and_is_idempotent(self):
+        from evaluation_validation import NEEDS_JD
+        old=job();new=dict(old,match_score='',recommendation=NEEDS_JD,match_summary='請貼上 JD 後重新評估')
+        before=[SCORED_COLUMNS,[str(old[c]) for c in SCORED_COLUMNS]]
+        plan=plan_sync(before,[new])
+        self.assertIn({'range':'I2','values':[['']]},plan['updates'])
+        after=[SCORED_COLUMNS,[str(new[c]) for c in SCORED_COLUMNS]]
+        self.assertEqual(plan_sync(after,[new])['updates'],[])

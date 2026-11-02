@@ -1,14 +1,26 @@
 # Job Fit Evaluation
 
-Version: 1.0. Read with `candidate-evidence-standards.md`. The same standard applies to batch
+Version: 1.1. Read with `candidate-evidence-standards.md`. The same standard applies to batch
 search results, pasted JDs and manually found jobs; neither Sheet membership nor
 an existing CV is required. The score measures the value of preparing and applying.
 
 ## JD and requirements
 
 Use a complete supplied/local JD first. Fetch an official source only for material
-omissions; do not repeatedly browse complete local descriptions. If unavailable,
-state JD limitations and mark the assessment provisional; invent no requirements.
+omissions; do not repeatedly browse complete local descriptions. If JD is absent
+or too incomplete to identify substantive duties and requirements, do not assign
+any numeric score or Apply/Skip advice. Use `未評分／待補 JD`, leave match_score
+blank, preserve the URL/company/title and explain that the user may paste the JD
+for evaluation. A title or generic company description is not sufficient. Never
+use 0/Skip as a missing-information placeholder. In conversation invite the user
+to paste the JD; in batch continue the other jobs. Incomplete candidate evidence
+with a sufficient JD is a different case: it can receive provisional assessment.
+
+If a real JD is recovered from an official URL or supplied by the user for an
+existing queued job, retain that text in the corresponding pending/history record
+before preparing/sealing a fresh assessment. Do not alter a prepared queue and
+then seal the old results; prepare again and evaluate the current queue. This is
+source recovery, not permission to guess requirements or overwrite other jobs.
 For public appointments inspect referenced official booklets/application packs
 for citizenship, qualifications, post-qualification years, licences, vetting and
 clearance. Unavailable eligibility is unverified, not a confirmed failure.
@@ -124,6 +136,7 @@ Read every row of `data/pending_jobs.csv`; use stored description first. Preserv
 separate job IDs across sites even when substantive assessment can be reused.
 Apply the same policy; record pending questions, eligibility/JD uncertainty and
 provisional status in match_summary without assuming answers or updating Profile.
+JD-insufficient rows use the unscored state above, not a provisional numeric score.
 
 Create/replace only `data/scored_jobs.csv` with these exact columns:
 
@@ -132,7 +145,10 @@ job_id,found_at,site,title,company,location,search_term,job_url,match_score,reco
 ```
 
 Preserve the first eight fields from pending input, excluding description. Scores
-are integers 0–100 with the policy's four allowed labels. Use the requested
+are integers 0–100 with the policy's four allowed labels for assessable JDs.
+For `未評分／待補 JD`, score must be blank and summary explains the missing JD
+and how to supply it. These rows are synchronized so users can still inspect the
+listing; processed means synchronized, not that a fit assessment was possible. Use the requested
 summary language or local policies/preferences.md. The summary normally uses
 2–4 sentences and includes relevant uncertainty and policy
 version. Do not change pending rows, source documents, tracker, processed IDs or
@@ -141,5 +157,15 @@ Google Sheets; synchronization is a separate action.
 Validate one output row per input row, preserved job IDs/metadata, no extra jobs,
 exact column order, valid score/label agreement, required uncertainty disclosures
 and supported claims. Report total, counts per recommendation and counts with
-incomplete JD, pending evidence, eligibility or structural gaps; do not dump all
+unscored/missing JD, pending evidence, eligibility or structural gaps; do not dump all
 job text. Invalid/ambiguous input identifiers must be reported, not silently lost.
+
+## Reassessment scope
+
+Read the latest Profile and scoring/evidence policies for every new or explicitly
+revisited job. Do not bulk re-score synchronized history merely because the Profile
+or a policy changed. Reassess a historical role when the user identifies/pastes it
+(or when a changed JD is actually observed); explain changes from its earlier
+assessment. Updating that existing Sheet row still needs sync authorization.
+Unfinished output must be revalidated if its scoring inputs changed before upload.
+PDF/email/style changes are not job-fit changes.
