@@ -1,0 +1,10 @@
+# Copy to config/config.local.yaml and set your own paths.
+# root must be absolute. Other paths are relative to root unless absolute.
+# Paths do not grant filesystem permission; authorize access separately.
+career:
+  root: "/absolute/path/to/01 Career"
+  profile: "Candidate Profile.md"
+  source_documents: "Source Documents"
+  project_evidence: "Project Evidence"
+  applications: "Applications"
+  application_tracker: "Applications/Applications.md"

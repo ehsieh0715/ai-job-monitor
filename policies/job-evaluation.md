@@ -1,0 +1,117 @@
+# Job evaluation
+
+Version: 1.0. Read with `evidence-policy.md`. The same standard applies to batch
+search results, pasted JDs and manually found jobs; neither Sheet membership nor
+an existing CV is required. The score measures the value of preparing and applying.
+
+## JD and requirements
+
+Use a complete supplied/local JD first. Fetch an official source only for material
+omissions; do not repeatedly browse complete local descriptions. If unavailable,
+state JD limitations and mark the assessment provisional; invent no requirements.
+For public appointments inspect referenced official booklets/application packs
+for citizenship, qualifications, post-qualification years, licences, vetting and
+clearance. Unavailable eligibility is unverified, not a confirmed failure.
+
+Identify requirements from the JD before comparing the candidate. Group roughly
+5–8 material capabilities; classify each as explicit mandatory, core success
+criterion, or preferred/wish-list. Ambiguous wording is not an automatic gate.
+A repeated keyword is not an independent capability. Recognize a role-defining
+cluster only when several specialized capabilities form the role's essential
+foundation (e.g. clinical systems, integration standards and operational support).
+Generic SQL/Python or project evidence cannot offset a missing specialized
+foundation by receiving full credit for every component.
+
+## Common score
+
+Assign group weights totaling 100, normally in steps of 5, by importance to doing
+the job. Score each group 0–10 using the strongest relevant verified evidence:
+
+| Anchor | Evidence |
+| --- | --- |
+| 0 | No supporting evidence |
+| 2 | Mentioned-only familiarity or weak adjacency |
+| 4 | Relevant academic/training evidence or limited practical exercise |
+| 6 | Directly relevant project implementation or meaningful adjacent professional work |
+| 8 | Direct, substantial professional evidence |
+| 10 | Exceptional direct professional depth, ownership, scope and results |
+
+These are anchors, not automatic ceilings by background. Consider directness,
+context, depth, scope, outcomes and materially relevant recency. A strong academic
+implementation may warrant project-level technical credit. Specialized operational
+groups normally warrant 2–4 for generic adjacent work, 4–6 for relevant projects,
+and 7–10 only for direct/comparable professional operations. Explain exceptions.
+Do not double-count the same capability or mistake an adjacent activity for the
+exact requested activity (e.g. ticket coordination is not formal programme ownership).
+
+`base score = sum(group score / 10 * group weight)`
+
+Round the final score to an integer 0–100. Keep it close to the base; material
+adjustments require a stated reason such as eligibility, structural seniority,
+role-defining capability or genuinely equivalent transferable responsibility.
+Do not tune a score merely to reach a preferred label.
+
+| Final score | Recommendation |
+| --- | --- |
+| 85–100 | Strong Apply |
+| 70–84 | Apply |
+| 55–69 | Consider |
+| 0–54 | Skip |
+
+Verified failure of a non-waivable legal, language, licence, work-authorization
+or similar gate means Skip; keep the final score in the Skip band and explain
+the gate adjustment. A likely screening requirement reduces priority in proportion
+to its importance; a missing preferred item does not automatically reject.
+Strong Apply requires credible coverage of nearly all core/mandatory groups.
+Unverified important eligibility, an unsupported role-defining requirement, or
+multiple required capabilities supported only indirectly prevents Strong Apply;
+reconsider the score consistently rather than emitting conflicting score/label.
+
+## Gaps and investment
+
+- **Manageable:** verified work substantially transfers; state the remaining context gap.
+- **Quick improvement:** about one focused day could create genuine evidence or
+  useful interview readiness. Do not credit future work before completion.
+- **Structural:** cannot be solved by wording or one day: extensive relevant
+  commercial experience, people management, deep domain operations or mandatory certification.
+
+Judge years by actual relevant responsibilities and expected independence. A
+modest gap is not automatic Skip; distinguish absolute eligibility, screening
+risk and wish-list. Do not count unrelated work or projects as direct commercial
+years. Do not penalize overqualification without a concrete reason. Mentoring
+language can reduce expected depth, but does not automatically waive an essential
+platform/domain foundation. Group material gaps; omit irrelevant missing tools.
+
+Before suggesting a project, ask whether its correctly labelled evidence would
+actually change viability or merely prepare for interviews. If the decisive
+production/domain gap remains, it cannot materially raise the recommendation.
+Use one rating: No project needed (default), Optional improvement, High-value
+project, or Priority project. Consider JD importance, recurring career value,
+existing adjacent evidence, effort and interview-preparation alternatives.
+Suggest at most one extension/project normally, with scope, value and timing;
+never delay an application for an optional improvement.
+
+## Conversation, uncertainty and consistency
+
+Show the same numeric score and recommendation for a manual JD. Initial and deep
+assessment differ in detail, not standards. Recompute independently of old labels,
+then compare with available prior results. Explain changes through new JD details,
+confirmed evidence, corrected interpretation or policy version; do not change
+judgment simply because the user selected the job.
+
+For material unknown experience give a **provisional** score based only on known
+evidence, identify pending questions and ask before finalizing. No hypothetical
+credit or automatic failure. Batch runs record this limitation in the summary.
+
+Lead with score/recommendation, strongest evidence, decisive gap and application
+value. Usually 1–2 short paragraphs; expose weights/evidence mapping when useful
+or requested. Prioritize eligibility, mandatory gaps, core work, seniority, then
+preferred familiarity. State policy version and whether provisional; record the
+JD source and profile/evidence version or review date when available, never invent
+versions. Existing CSV fields remain unchanged; put necessary context in summary.
+
+When structural/non-waivable gaps make preparation low-value, say `reconsider
+applying` and stop before document drafting. Give the strongest transferable
+point, decisive gap, why wording cannot fix it and any narrow condition worth
+checking. This stop rule does not apply to ordinary stretches. Draft only after
+the user confirms proceeding (or explicitly requests drafting for this job).

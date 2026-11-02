@@ -12,3 +12,6 @@ candidate/candidate_profile.json
 
 data/*.csv
 data/processed_job_ids.json
+
+# Private machine-specific configuration
+config/config.local.yaml
