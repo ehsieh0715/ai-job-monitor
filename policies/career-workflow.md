@@ -1,6 +1,6 @@
 # Career Workflow
 
-Version: 1.7. This is the end-to-end procedure for a fresh conversation or a
+Version: 1.8. This is the end-to-end procedure for a fresh conversation or a
 scheduled AI run. Standards remain in their individual policies, not copied here.
 
 ## Start every run
@@ -183,7 +183,10 @@ For an authorized unattended cycle, from the repo root:
    use current evidence/rules. Only Profile and scoring/evidence policies affect
    unfinished-output freshness; presentation policies/preferences do not.
 4. Screen every pending row under job-fit-evaluation.md, stop early for decisive
-   gaps, deeply assess the remaining roles, and replace scored_jobs.csv.
+   gaps, deeply assess the remaining roles, and replace scored_jobs.csv. Retain
+   and explicitly validate the compact per-job calculation records required by
+   job-fit-evaluation.md; reuse valid records for unchanged inputs across chat
+   and batch. Structural sealing alone does not establish scoring quality.
    Empty queue: stop successfully with no sync. Material unknowns remain provisional
    through short decision-relevant conditions; do not ask blocking questions,
    append stock disclaimers or award hypothetical credit. Record common policy

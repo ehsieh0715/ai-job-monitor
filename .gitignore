@@ -19,6 +19,7 @@ config/config.local.yaml
 # Private preferences and evaluation freshness state
 config/preferences.local.md
 data/*context.json
+data/evaluation_audit.jsonl
 
 # Personal presentation preferences (local only)
 /policies/preferences.md

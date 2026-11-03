@@ -1,6 +1,6 @@
 # Job Fit Evaluation
 
-Version: 1.3. Read with `candidate-evidence-standards.md`. The same standard applies to batch
+Version: 1.4. Read with `candidate-evidence-standards.md`. The same standard applies to batch
 search results, pasted JDs and manually found jobs; neither Sheet membership nor
 an existing CV is required. The score measures the value of preparing and applying.
 
@@ -74,6 +74,13 @@ foundation by receiving full credit for every component.
 Assign group weights totaling 100, normally in steps of 5, by importance to doing
 the job. Score each group 0–10 using the strongest relevant verified evidence:
 
+Choose and classify the groups and weights from the JD before assigning evidence
+scores or looking at an old recommendation. Keep independent capabilities
+separate, but do not count dashboards, reporting, KPIs and analytics repeatedly
+unless their responsibilities are genuinely distinct. Keep preferred exposure
+separate from required/core capabilities; do not silently promote it to a gate.
+Freeze this rubric for the assessment's inputs and use it for both batch and chat.
+
 | Anchor | Evidence |
 | --- | --- |
 | 0 | No supporting evidence |
@@ -97,6 +104,12 @@ Round the final score to an integer 0–100. Keep it close to the base; material
 adjustments require a stated reason such as eligibility, structural seniority,
 role-defining capability or genuinely equivalent transferable responsibility.
 Do not tune a score merely to reach a preferred label.
+Use deterministic rounding: round the weighted total plus explicit adjustments
+to the nearest integer, with exact halves rounded up. Derive the recommendation
+from that number; never choose a label and then assign a number to match it.
+Scores of 9–10 require a short reference explaining the additional direct depth,
+ownership or outcomes beyond the 8 anchor. General praise or numerous matching
+keywords is not evidence of exceptional depth.
 
 | Final score | Recommendation |
 | --- | --- |
@@ -143,11 +156,48 @@ For early-stop roles omit improvement plans, project suggestions and default
 
 ## Conversation, uncertainty and consistency
 
-Show the same numeric score and recommendation for a manual JD. Initial and deep
-assessment differ in detail, not standards. Recompute independently of old labels,
-then compare with available prior results. Explain changes through new JD details,
-confirmed evidence, corrected interpretation or policy version; do not change
-judgment simply because the user selected the job.
+Use one validated assessment for the same job, substantive JD, Profile/evidence
+and scoring policy, regardless of batch, chat, model, agent or summary length.
+First retrieve its calculation record, not only its prior score or prose summary.
+If inputs match and the record is supported and arithmetically valid, reuse its
+rubric, scores and recommendation; do not independently improvise a new score
+because the user pasted the JD into chat. Recalculate the stored arithmetic if
+needed without changing the evidence judgments.
+
+If no valid calculation record exists, assess from evidence without anchoring to
+the old number, then compare with available prior output. A saved CSV, successful
+sync or seal is not proof of an evidence-based assessment. Explain a discrepancy
+as an unsupported prior result when its reasoning cannot be reconstructed; do
+not invent a retrospective rubric to defend it or average conflicting scores.
+
+Changes need an identifiable new JD requirement, new/corrected evidence, scoring
+policy change, arithmetic correction or explicit correction of interpretation.
+For a correction, identify the changed groups/weights/scores and why the prior
+treatment was wrong. A different writing style or more detailed discussion is
+not a valid reason. This record is a reusable priority judgment, not a claim
+that a subjective integer is an objectively exact measure of employability.
+
+## Compact calculation record
+
+Retain private structured calculation records in `data/evaluation_audit.jsonl`,
+separate from the unchanged CSV/Sheet columns and short user-facing summaries.
+Use one compact record per job and input version: stable job identity, JD and
+Profile/evidence/policy fingerprints, the selected requirement groups with
+mandatory/core/preferred classification, weights, evidence scores and short
+source references, any explicit adjustment and reason, total and recommendation.
+Share batch-level provenance where possible. References and short factual reasons
+are sufficient; do not generate long reasoning narratives or copy source documents.
+Equivalent listings may share a substantive rubric while preserving their own IDs.
+
+Check weights total 100, evidence scores lie within 0–10, arithmetic and rounding
+match the final integer, adjustments have reasons, and the label matches the band.
+Check evidence supports the judgments as well as the arithmetic. Reject category-
+wide fixed-score fallbacks, title/keyword-only scoring and unexplained hand-entered
+totals, including on early-stop roles. Summary shortening never authorizes those
+shortcuts. A missing/inconsistent record must be resolved before claiming the
+batch follows this policy or synchronizing it. Current `--seal` checks alone do
+not enforce this calculation-record contract; perform these checks explicitly
+until code supports it, and do not claim automatic enforcement already exists.
 
 For roles proceeding beyond the screen, give a **provisional** score for material
 unknown experience based only on known evidence, identify pending questions and
@@ -187,7 +237,8 @@ Apply the same policy; retain decision-relevant eligibility/JD uncertainty throu
 short gap or reassessment wording, without assuming answers or updating Profile.
 JD-insufficient rows use the unscored state above, not a provisional numeric score.
 
-Create/replace only `data/scored_jobs.csv` with these exact columns:
+Create/replace `data/scored_jobs.csv` and retain its compact calculation records
+as above; do not modify other workflow state during evaluation. Exact CSV columns:
 
 ```text
 job_id,found_at,site,title,company,location,search_term,job_url,match_score,recommendation,match_summary

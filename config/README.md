@@ -70,6 +70,7 @@ These private files are created as the pipeline runs; users do not fill them in.
 | `data/job_history.csv` | Retained job descriptions for later reassessment. |
 | `data/pending_jobs.csv` | Jobs waiting for AI evaluation. |
 | `data/scored_jobs.csv` | AI evaluation output. |
+| `data/evaluation_audit.jsonl` | Private compact requirement weights, evidence references and calculation records, reused for consistent batch/chat assessments. |
 | `data/evaluation_context.json`, `data/scored_context.json` | Queue/input fingerprints and sealed score hash used for validation. |
 | `data/processed_job_ids.json`, `data/last_synced_context.json` | Processed IDs and evaluation context recorded after successful synchronization. |
 
