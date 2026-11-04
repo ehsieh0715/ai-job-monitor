@@ -213,6 +213,8 @@ change shared behavior, not for ordinary use.
 
 | Policy | Purpose |
 | --- | --- |
+| [Policy guide](policies/README.md) | Reading entry point and policy ownership |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Repo maintenance and policy-writing conventions |
 | [career-workflow.md](policies/career-workflow.md) | Workflow routing, fixed paths and interactive scope |
 | [scheduled-search-workflow.md](policies/scheduled-search-workflow.md) | Schedule setup, pipeline execution and Google sync |
 | [candidate-evidence-standards.md](policies/candidate-evidence-standards.md) | Facts, approval, remembered preferences |

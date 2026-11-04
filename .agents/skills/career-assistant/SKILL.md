@@ -31,4 +31,7 @@ Read only the additional policies relevant to the request:
 | Cover letter or whether one helps | `policies/job-fit-evaluation.md`, `policies/cover-letter-writing.md` |
 
 Policies own all standards, workflow steps and output contracts. Follow them
-rather than maintaining copies here.
+rather than maintaining copies here. `policies/README.md` is the reading index.
+Read `CONTRIBUTING.md` when modifying the repo or its policies, not for ordinary
+career tasks. Read required policies once per task; follow references as needed
+without recursively loading every linked file.
