@@ -1,58 +1,27 @@
 # Cover Letter Writing
 
-Version: 1.0. Read `candidate-evidence-standards.md` and the current job assessment first.
+Version: 1.2.
 
-Assess current fit under job-fit-evaluation.md first; its uncertainty and structural-gap
-stop rules apply. Asking whether a letter helps is not a request to draft.
-Draft when requested under career-workflow.md's document-creation rules. Decide
-whether it adds context beyond the CV; if optional and repetitive, say low value.
-Do not use a letter to disguise structural gaps or invent motivation.
+## Scope and evidence
 
-Choose 2–4 verified evidence points around the JD's strongest themes, not career
-chronology. Prefer relevant professional evidence, supplemented by clearly labelled
-project/academic evidence; if professional evidence is unavailable, state the
-actual context instead of inventing it. Reused CV evidence should add approach,
-judgment, relevance or business context, not repeat bullets.
+- Asking whether a letter helps is not a drafting request. Draft when currently requested or covered by explicit standing interactive authorization.
+- Apply fit rules for uncertainty and structural gaps. A letter cannot conceal a structural gap or invent motivation.
+- Assess whether it adds context beyond CV; report low value if optional and repetitive. Do not cancel an explicit instruction to prepare it; keep the requested draft concise.
+- Select 2–4 verified evidence points around core JD themes, not chronology. Prefer professional evidence; label any project or academic bridge accurately.
+- Reused CV evidence must add approach, judgment, relevance or context, not repeat bullets. No generic praise, keyword stuffing, invented affinity or apologetic "Although I lack..." framing.
 
-Default: 300–400 words, usually four paragraphs, one page when exported:
+## Structure
 
-1. Distinctive role/team/problem and the candidate's closest evidence.
-2. Primary evidence addressing the central responsibility.
-3. Secondary evidence or a truthful transferable/project bridge.
-4. Specific relevance and a concise close.
+- Default 300–400 words, four paragraphs, one exported page: connection to the role or problem; primary evidence; secondary or transferable evidence; specific close.
+- Short text boxes: normally 200–275 words. Employer limits and private preferences override defaults; shorten secondary detail, not evidence boundaries.
+- Follow requested or employer-required language and supported JD terms. Discuss gaps in strategy; use only completed, verified new work in the letter.
+- Research official company or JD facts only when useful, for at most 1–2 specific points. If a competitor's name fits unchanged, the opening is too generic.
+- Do not guess a hiring manager; Dear Hiring Manager is acceptable.
 
-For short text boxes, normally 200–275 words unless the form says otherwise.
-Limits and user preferences override these defaults. Shorten secondary detail,
-not evidence boundaries or role specificity.
+## Deliver
 
-Use direct professional wording in the requested or employer-required language,
-consulting local policies/preferences.md when present, and natural supported JD
-terms. Calibrate tone
-to the employer. Avoid generic praise, ornate enthusiasm, keyword stuffing and
-apologetic 'Although I lack...' framing. Discuss gaps in application strategy;
-bridge adjacent evidence accurately in the letter. Mention new practical work
-only after completion and verification.
-
-Use JD facts or verified official company sources for at most 1–2 useful specific
-points. Research only when it materially helps. The opening should connect the
-role's actual problem to the evidence; replacing the company with a competitor
-should not leave the motivation unchanged. Do not guess a hiring manager's name;
-Dear Hiring Manager is acceptable. Never invent personal affinity or history.
-
-When requested, provide a brief value assessment, chosen angles, the full letter
-and only useful attachment advice (Upload / Optional / Skip with reasons).
-Recommend certificates/transcripts/work samples only when requested or materially
-helpful; avoid duplicate CVs, portfolio dumps and unsolicited references.
-
-Before delivery check every factual/company claim, ownership and metric; clear
-professional/project separation; no repeated evidence across paragraphs; a specific
-opening/close; and length. Markdown goes to the fixed
-<career.root>/applications/Company Name/YYYY-MM-DD - Job Title/Cover Letter.md only within authorized scope. Export when needed/requested with
-CV-consistent typography and inspect the result. Preserve submitted versions.
-
-Use the folder naming/date and preservation rules in career-workflow.md. Ask about
-ambiguous company/title/start date. Create/update root applications.md only within
-authorized scope, preserving unrelated fields. Do not alter Google Sheets, queues,
-program files or shared policies as a side effect.
-
-PDF layout, source fidelity, colour and naming follow application-pdf-generation.md.
+- Provide a brief value assessment, selected angles, full letter and useful attachment advice (Upload / Optional / Skip with reasons).
+- Suggest certificates, transcripts or work samples only when requested or materially helpful; no portfolio dumps, duplicate CVs or unsolicited references.
+- Check claims, ownership, metrics and length. Keep professional and project evidence distinct; avoid repeated evidence and use a role-specific opening and close.
+- Save `Cover Letter.md` under workflow path/version rules when authorized. Changes to trackers, Sheets, queues, code or policies are separate scope.
+- Export when requested or needed under the PDF policy, using CV-consistent typography and actual verification. Drafting is not sending or submission.
