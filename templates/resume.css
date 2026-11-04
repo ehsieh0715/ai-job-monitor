@@ -1,0 +1,184 @@
+/* Obsidian Reading view + PDF. Add cssclasses: [resume] to the note. */
+/* Scoped to the note; no theme colors or fonts are inherited. */
+.resume.markdown-preview-view,
+.resume.markdown-rendered {
+  --font-text: "Times New Roman", Times, serif;
+  --font-print: "Times New Roman", Times, serif;
+  --p-spacing: 4pt;
+  --heading-spacing: 0;
+  --list-spacing: 3pt;
+  --link-color: #174ea6;
+  --link-external-color: #174ea6;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 10pt !important;
+  line-height: 1.25 !important;
+  color: #000 !important;
+  text-align: left;
+}
+.resume.markdown-rendered :is(p, li, span, strong, em, a, h1, h2, h3) {
+  font-family: "Times New Roman", Times, serif !important;
+  color: #000 !important;
+  letter-spacing: normal;
+}
+.resume.markdown-rendered h1 {
+  font-size: 16pt !important;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  margin: 0 0 4pt !important;
+  border: 0;
+}
+.resume.markdown-rendered h2 {
+  font-size: 11pt !important;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 9pt 0 4pt !important;
+  padding: 0 0 2pt;
+  border: 0;
+  border-bottom: .6pt solid #000;
+}
+.resume.markdown-rendered h3 {
+  font-size: 10.5pt !important;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 6pt 0 2pt !important;
+}
+.resume.markdown-rendered p { margin: 2pt 0 4pt !important; }
+.resume.markdown-rendered :is(ul, ol) {
+  margin: 3pt 0 5pt !important;
+  padding-left: 15pt !important;
+}
+.resume.markdown-rendered li { margin: 0 0 3pt !important; line-height: 1.25; }
+.resume.markdown-rendered li p { margin: 0 !important; }
+.resume.markdown-rendered strong { font-weight: 700; }
+.resume.markdown-rendered em { font-style: italic; }
+.resume.markdown-rendered a,
+.resume.markdown-rendered a:visited {
+  color: #174ea6 !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: .5pt;
+  text-underline-offset: 1.5pt;
+}
+.resume.markdown-rendered .external-link { background-image: none; padding-right: 0; }
+.resume.markdown-rendered .resume-contact {
+  font-size: 9pt !important;
+  text-align: center;
+  line-height: 1.2;
+  margin: 2pt 0 !important;
+}
+.resume.markdown-rendered .resume-date { font-size: 9pt; white-space: nowrap; }
+.resume.markdown-rendered .resume-tech { font-size: 9pt; }
+/* A visible marker only in Reading view; it is not PDF content. */
+@media screen {
+  .resume.markdown-rendered .resume-new-page { margin-top: 18pt !important; }
+}
+@media print {
+  /* Obsidian may not preserve note classes on the document root.
+     @page therefore sets paper/margins globally while this snippet is enabled. */
+  @page { size: A4; margin: 13mm 15mm; }
+  .resume.markdown-rendered { background: white !important; }
+  .resume.markdown-rendered .markdown-preview-sizer {
+    max-width: none !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+  .resume.markdown-rendered :is(h1, h2, h3, .resume-meta) {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .resume.markdown-rendered :is(li, .resume-contact) {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .resume.markdown-rendered p { orphans: 2; widows: 2; }
+  .resume.markdown-rendered .resume-new-page {
+    break-before: page;
+    page-break-before: always;
+    margin-top: 0 !important;
+  }
+  .resume.markdown-rendered :is(.heading-collapse-indicator, .list-collapse-indicator) {
+    display: none !important;
+  }
+}
+
+/* Shared CV structure: target role, role/date, company/location. */
+.resume.markdown-rendered .resume-headline {
+  font-size: 11pt !important;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 0 4pt !important;
+}
+.resume.markdown-rendered .resume-authorization {
+  font-size: 9pt !important;
+  text-align: center;
+}
+.resume.markdown-rendered h3:has(.resume-location),
+.resume.markdown-rendered h3:has(.resume-date),
+.resume.markdown-rendered .resume-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10pt;
+  row-gap: 1pt;
+}
+.resume.markdown-rendered .resume-location,
+.resume.markdown-rendered .resume-date {
+  margin-left: auto;
+  flex-shrink: 0;
+  text-align: right;
+}
+.resume.markdown-rendered .resume-location {
+  font-size: 9pt !important;
+  font-weight: 400;
+}
+.resume.markdown-rendered .resume-meta > em {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.resume.markdown-rendered .inline-title,
+.resume.markdown-rendered .metadata-container {
+  display: none;
+}
+@media print {
+  .resume.markdown-rendered .resume-headline {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+}
+
+/* Compact project metadata; linked headings keep the title dominant. */
+.resume.markdown-rendered h3 a {
+  font-size: 9pt !important;
+  font-weight: 400 !important;
+}
+.resume.markdown-rendered .resume-date,
+.resume.markdown-rendered .resume-date em {
+  font-size: 9pt !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+}
+.resume.markdown-rendered .resume-tech {
+  font-size: 9pt !important;
+  font-style: italic;
+  font-weight: 400;
+}
+.resume.markdown-rendered .resume-project-meta {
+  font-size: 9pt !important;
+  font-weight: 400;
+  line-height: 1.25;
+}
+.resume.markdown-rendered .resume-project-meta .resume-date {
+  float: right;
+  margin-left: 10pt;
+}
+.resume.markdown-rendered .resume-project-meta::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+@media print {
+  .resume.markdown-rendered .resume-project-meta {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+}
