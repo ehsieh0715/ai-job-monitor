@@ -213,7 +213,8 @@ change shared behavior, not for ordinary use.
 
 | Policy | Purpose |
 | --- | --- |
-| [career-workflow.md](policies/career-workflow.md) | Workflow routing, stages, scheduled runs |
+| [career-workflow.md](policies/career-workflow.md) | Workflow routing, fixed paths and interactive scope |
+| [scheduled-search-workflow.md](policies/scheduled-search-workflow.md) | Schedule setup, pipeline execution and Google sync |
 | [candidate-evidence-standards.md](policies/candidate-evidence-standards.md) | Facts, approval, remembered preferences |
 | [candidate-profile-generation.md](policies/candidate-profile-generation.md) | Consolidate source documents |
 | [project-evidence-evaluation.md](policies/project-evidence-evaluation.md) | Review project capabilities/contributions |
