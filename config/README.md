@@ -53,8 +53,8 @@ These paths are fixed relative to `career.root`; users do not configure them.
 | `Candidate Profile.md` | AI writes approved personal facts and reviewed project evidence here after content approval. |
 | `applications.md` | AI creates/updates the application tracker when authorized. |
 | `applications/Company Name/YYYY-MM-DD - Job Title/` | AI creates application folders when saving requested documents. Date is preparation start; submission date is recorded in the tracker. |
-| `…/CV.md`, `…/Cover Letter.md` | AI-generated application documents when requested. |
-| `…/CV.pdf` | Exported only when requested/needed. |
+| `…/CV_Name_Position.md`, `…/CoverLetter_Name_Position.md` | Requested formal application documents; names follow `career-workflow.md`. |
+| `…/CV_Name_Position.pdf` | Exported only when requested/needed, using the formal Markdown basename. |
 
 Use lowercase `applications` exactly. Project evidence stays inside Candidate
 Profile.md. Existing files are preserved; old custom paths are no longer used and

@@ -189,9 +189,9 @@ Files go under:
 ├── Candidate Profile.md
 ├── applications.md
 └── applications/Company Name/YYYY-MM-DD - Job Title/
-    ├── CV.md
-    ├── Cover Letter.md       # When needed
-    └── Application Email.md  # When requested
+    ├── CV_Name_Position.md
+    ├── CoverLetter_Name_Position.md       # When needed
+    └── ApplicationEmail_Name_Position.md  # When requested
 ```
 
 The folder date is preparation start, not submission date. Submitted files are
@@ -199,10 +199,10 @@ preserved. No email or application is sent automatically.
 
 To export, ask:
 
-> Convert /path/CV.md to PDF with purple accents, preserving the source text.
+> Convert /path/CV_Name_Position.md to PDF with purple accents, preserving the source text.
 
-Default filenames:
-`CV_Name_Position.pdf` / `CoverLetter_Name_Position.pdf`. PDF-capable tools are
+Formal filenames follow [workflow naming rules](policies/career-workflow.md#application-filenames);
+Markdown and PDF share the same basename. PDF-capable tools are
 required; this repo does not yet include a standalone exporter. AI must disclose
 missing tools/checks rather than claim successful conversion.
 

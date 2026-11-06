@@ -1,6 +1,6 @@
 # Career Workflow
 
-Version: 2.0.
+Version: 2.1.
 
 ## Start
 
@@ -29,6 +29,13 @@ Only `career.root` is configurable. Resolve these names relative to that absolut
 - **Tracker updates:** preserve existing rows and manual fields, link documents and leave unverified values blank.
 - **Legacy config:** ignore retired per-file overrides; do not claim obsolete keys still redirect paths.
 - **Legacy files:** report exact conflicts before reading or migrating old Profiles, `Applications/`, Project Evidence or nested trackers. Obtain migration authorization and handle case-only renames carefully.
+
+## Application filenames
+
+- Formal documents use `DocumentType_Name_Position`: `CV`, `CoverLetter` or `ApplicationEmail` as the type, with confirmed name and role. Use the same basename for Markdown and its PDF, changing only the extension.
+- Replace whitespace with underscores; remove path separators, control and unsafe characters. Retain readable Unicode and never interpret filename values as paths. Explicit safe user/employer names override defaults.
+- Preserve comparison drafts and submitted versions separately; never overwrite them. Use a distinct version basename for collisions, with matching Markdown/PDF names.
+- Naming changes do not authorize renaming existing files or changing their links. Retain existing names until a rename is authorized.
 
 ## Route by intent
 

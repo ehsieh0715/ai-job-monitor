@@ -29,7 +29,7 @@ Version: 1.8.
 - Ireland and UK default: at most two pages and city/country contact details. Omit photos, age, marital status, street address and unsolicited references; include verified work permission only when useful. Follow other employer or market requirements.
 - Use single-column selectable text, not layout tables, text boxes, icons or graphics; prioritize content over tiny fonts. Verify reading order rather than promise ATS acceptance.
 - Preserve template class names and truthful role, academic, team and portfolio context. Replace placeholders only with supported facts; omit unavailable fields, links and separators.
-- **Content source:** maintain CV.md without a second manually edited JSON copy.
+- **Content source:** maintain the application CV in Markdown under workflow naming rules, without a second manually edited JSON copy.
 - **Layout:** CSS controls appearance; adjust manual page breaks per document.
 - **Synchronization:** repo and installed CSS are separate copies; they do not update each other automatically.
 - Install or synchronize CSS only when requested, preserving local edits. Layout changes do not authorize text rewrites.

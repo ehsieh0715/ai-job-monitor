@@ -23,5 +23,5 @@ Version: 1.2.
 - Provide a brief value assessment, selected angles, full letter and useful attachment advice (Upload / Optional / Skip with reasons).
 - Suggest certificates, transcripts or work samples only when requested or materially helpful; no portfolio dumps, duplicate CVs or unsolicited references.
 - Check claims, ownership, metrics and length. Keep professional and project evidence distinct; avoid repeated evidence and use a role-specific opening and close.
-- Save `Cover Letter.md` under workflow path/version rules when authorized. Changes to trackers, Sheets, queues, code or policies are separate scope.
+- Save the letter as Markdown under workflow path, naming and version rules when authorized. Changes to trackers, Sheets, queues, code or policies are separate scope.
 - Export when requested or needed under the PDF policy, using CV-consistent typography and actual verification. Drafting is not sending or submission.

@@ -45,8 +45,9 @@ page break, but the template does not force every CV's skills section onto page 
 2. Copy `resume.css` into that folder, normally `<vault>/.obsidian/snippets/`.
    Inspect or back up any existing file before replacing it.
 3. Enable the `resume` snippet in Appearance settings.
-4. Use `CV.md` as a starting structure in the appropriate application folder.
-   Replace placeholders with supported facts and preserve `cssclasses: [resume]`.
+4. Copy `CV.md` into the appropriate application folder using the formal name
+   from `../policies/career-workflow.md`. Replace placeholders with supported
+   facts and preserve `cssclasses: [resume]`.
 5. Preview in Reading view, then export using Obsidian's PDF export. Check the
    actual PDF for page count, wrapping, links and text order.
 

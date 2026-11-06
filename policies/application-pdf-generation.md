@@ -29,9 +29,7 @@
 
 ## Save
 
-- Default names: `CV_Name_Position.pdf` / `CoverLetter_Name_Position.pdf`; safe explicit names override defaults.
-- **Filename inputs:** get name and position from confirmed facts or JD; ask if missing.
-- **Filename safety:** replace whitespace with underscores and remove path separators, control and unsafe characters. Retain readable Unicode; never interpret values as paths.
+- Follow `career-workflow.md` application naming and version rules, matching the formal Markdown basename. Resolve missing name/role from confirmed facts or JD; do not silently rename legacy sources.
 - Metadata Title equals output basename. Save beside source unless a destination was requested; do not move originals or overwrite a different/submitted version.
 
 ## Verify and report
