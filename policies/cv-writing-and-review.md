@@ -1,12 +1,12 @@
 # CV Writing and Review
 
-Version: 1.7.
+Version: 1.8.
 
 ## Evidence and wording
 
 - Compose from current Profile and reviewed projects. No Master CV is required; consult old CVs only for expression, not extra corroboration.
-- Prioritize relevant work and results, then projects. Preserve dates, role context, contribution and limits; do not disguise structural gaps. Education or projects may move up when they establish eligibility or a technical transition.
-- Describe the owned action, its method or context, and the supported result or purpose. CAR is a check, not a mandatory three-part sentence. Do not invent promotions, authority or metrics.
+- Select cases against core JD requirements; avoid similar cases crowding out other important evidence. Prioritize relevant work and results, then projects. Preserve dates, role context, contribution and limits; do not disguise structural gaps. Education or projects may move up when they establish eligibility or a technical transition.
+- Describe the owned action, its method or context, and the supported result or purpose. One bullet has a main goal, not an exclusive skill; combine requirements, measurement, collaboration, documentation and validation when they form one supported workflow. CAR is a check, not a mandatory three-part sentence. Do not invent promotions, authority or metrics.
 - Start bullets with actions, not routine bold category labels followed by colons. Skill-category labels remain appropriate in Technical Skills.
 - Keep technologies that explain implementation or a material JD requirement. Several tools in one coherent workflow are valid evidence; do not remove specificity merely because there are many tools.
 - Skills can appear in the index and relevant work; remove mechanical repetition, not implementation evidence. Avoid tool count, "complex" adjectives and generic soft skills as substitutes for scope or results.
@@ -39,7 +39,7 @@ Version: 1.7.
 
 - Follow workflow for authorization, fixed application paths and preparation dates, version preservation and separate tracker scope. No extra JD, progress or index notes by default.
 - CV work does not authorize changes to Sheets, queues, code or policies. PDF export follows its own fidelity, naming and verification rules; it cannot rewrite approved text.
-- **Evidence check:** verify JD relevance, personal ownership, metrics and useful technical detail.
+- **Evidence check:** verify JD relevance, personal ownership, metrics and useful technical detail. When shortening or replacing cases, retain required implementation and problem-solving evidence, including validation, investigation, correction and recovery where relevant.
 - **Presentation check:** verify template format, dates, links and GPA against private preferences and Profile.
 - **Delivery check:** verify the output version; disclose missing source or layout checks.
 - **Drafting:** return a short positioning rationale, complete Markdown and saved path.
